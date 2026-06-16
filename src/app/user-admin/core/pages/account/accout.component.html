@@ -1,136 +1,86 @@
-<main class="body-wrapper  p-b-60">
-       <div class="bread">
-            <div class="container">
-                <div class="breadcrumb-outer">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">My Account</li>
-                        </ol>
-                    </nav>
-                </div>
+<div class="dashboard">
+    <div class="dashboard__profile card profile-card">
+        <div class="card-body profile-card__body">
+            <div class="profile-card__avatar">
+                <img src="dist/images/avatar-3.jpg" alt="" />
             </div>
-        </div>
-    <div class="container m-t-32">
-     
-        <div class="row">
-            <div class="col-12 col-lg-3 d-flex">
-                <div class="account-nav flex-grow-1">
-                    <h3 class="account-nav__title">Navigation</h3>
-                    <ul>
-                        <li class="account-nav__item account-nav__item--active">
-                            <a href="dasboard.html">Manage My Account</a>
-                        </li>
-                        <li class="account-nav__item">
-                            <a href="edit-profile.html">Edit Profile</a>
-                        </li>
-                        <li class="account-nav__item">
-                            <a href="order-history.html">Order History</a>
-                        </li>
-                        <li class="account-nav__item">
-                            <a href="order-details.html">Order Details</a>
-                        </li>
-                        <li class="account-nav__item">
-                            <a href="address.html">Addresses</a>
-                        </li>
-                        <li class="account-nav__item">
-                            <a href="edit-address.html">Edit Address</a>
-                        </li>
-                        <li class="account-nav__item">
-                            <a href="edit-password.html">Password</a>
-                        </li>
-                        <li class="account-nav__item"><a href="">Logout</a></li>
-                    </ul>
-                </div>
+            <div class="profile-card__name">Helena Garcia</div>
+            <div class="profile-card__email">
+                <a href="mailto:dhanakkhatiwada@gmail.com">
+                    dhanakkhatiwada&#64;gmail.com
+                </a>
             </div>
-            <div class="col-12 col-lg-9 mt-4 mt-lg-0">
-                <div class="dashboard">
-                    <div class="dashboard__profile card profile-card">
-                        <div class="card-body profile-card__body">
-                            <div class="profile-card__avatar">
-                                <img src="dist/images/avatar-3.jpg" alt="" />
-                            </div>
-                            <div class="profile-card__name">Helena Garcia</div>
-                            <div class="profile-card__email">
-                                <a href="mailto:dhanakkhatiwada@gmail.com">
-                                    dhanakkhatiwada&#64;gmail.com
-                                </a>
-                            </div>
-                            <div class="profile-card__edit">
-                                <a class="btn btn-secondary btn-sm" href="">Edit Profile</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dashboard__address card address-card address-card--featured">
-                        <div class="address-card__badge"><strong>Default Address</strong> </div>
-                        <div class="address-card__body">
-                            <div class="address-card__row mb-3">
-                                <div class="address-card__row-title"><strong>Address</strong> </div>
-                                <div class="address-card__row-content">
-                                    Mid Baneshwor , Kathmandu, Nepal
-                                </div>
-                            </div>
-                            <div class="address-card__row mb-3">
-                                <div class="address-card__row-title"><strong>Phone Number</strong> </div>
-                                <div class="address-card__row-content">
-                                    38 972 588-42-36
-                                </div>
-                            </div>
-                            <div class="address-card__row mb-3">
-                                <div class="address-card__row-title"><strong>Email Address</strong> </div>
-                                <div class="address-card__row-content">
-                                    <a href="mailto:dhanakkhatiwada@gmail.com">
-                                        dhanakkhatiwada&#64;gmail.com
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="address-card__footer m-t-20">
-                                <a href="" class="btnLink">Edit Address</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dashboard__orders card">
-                        <div class="card-header">
-                            <h3>Recent Orders</h3>
-                        </div>
-                        <div class="card-divider"></div>
-                        <div class="card-table">
-                            <div class="table-responsive-sm">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Order</th>
-                                            <th>Place On</th>
-                                            <th>Items</th>
-                                            <th>Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><a href="">#8132</a></td>
-                                            <td>02 April, 2019</td>
-                                            <td>Pending</td>
-                                            <td>$2,719.00 for 5 item(s)</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="">#7592</a></td>
-                                            <td>28 March, 2019</td>
-                                            <td>Pending</td>
-                                            <td>$374.00 for 3 item(s)</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="">#7192</a></td>
-                                            <td>15 March, 2019</td>
-                                            <td>Shipped</td>
-                                            <td>$791.00 for 4 item(s)</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="profile-card__edit">
+                <a class="btn btn-secondary btn-sm" href="">Edit Profile</a>
             </div>
         </div>
     </div>
-</main>
+    <div class="dashboard__address card address-card address-card--featured">
+        <div class="address-card__badge"><strong>Default Address</strong> </div>
+        <div class="address-card__body">
+            <div class="address-card__row mb-3">
+                <div class="address-card__row-title"><strong>Address</strong> </div>
+                <div class="address-card__row-content">
+                    Mid Baneshwor , Kathmandu, Nepal
+                </div>
+            </div>
+            <div class="address-card__row mb-3">
+                <div class="address-card__row-title"><strong>Phone Number</strong> </div>
+                <div class="address-card__row-content">
+                    38 972 588-42-36
+                </div>
+            </div>
+            <div class="address-card__row mb-3">
+                <div class="address-card__row-title"><strong>Email Address</strong> </div>
+                <div class="address-card__row-content">
+                    <a href="mailto:dhanakkhatiwada@gmail.com">
+                        dhanakkhatiwada&#64;gmail.com
+                    </a>
+                </div>
+            </div>
+            <div class="address-card__footer m-t-20">
+                <a href="" class="btnLink">Edit Address</a>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard__orders card">
+        <div class="card-header">
+            <h3>Recent Orders</h3>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-table">
+            <div class="table-responsive-sm">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Place On</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="">#8132</a></td>
+                            <td>02 April, 2019</td>
+                            <td>Pending</td>
+                            <td>$2,719.00 for 5 item(s)</td>
+                        </tr>
+                        <tr>
+                            <td><a href="">#7592</a></td>
+                            <td>28 March, 2019</td>
+                            <td>Pending</td>
+                            <td>$374.00 for 3 item(s)</td>
+                        </tr>
+                        <tr>
+                            <td><a href="">#7192</a></td>
+                            <td>15 March, 2019</td>
+                            <td>Shipped</td>
+                            <td>$791.00 for 4 item(s)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

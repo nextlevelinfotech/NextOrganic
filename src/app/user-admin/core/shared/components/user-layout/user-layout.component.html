@@ -1,6 +1,58 @@
 <app-header></app-header>
-<main class="layout-main">
-    <router-outlet></router-outlet>
+
+
+
+<main class="body-wrapper  p-b-60">
+    <div class="bread">
+        <div class="container">
+            <div class="breadcrumb-outer">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">My Account</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container m-t-32">
+
+        <div class="row">
+            <div class="col-12 col-lg-3 d-flex">
+                <div class="account-nav flex-grow-1">
+                    <h3 class="account-nav__title">Navigation</h3>
+                    <ul>
+                        <li class="account-nav__item account-nav__item--active">
+                            <a routerLink="/account">Manage My Account</a>
+                        </li>
+                        <li class="account-nav__item">
+                            <a routerLink="/profile">Edit Profile</a>
+                        </li>
+                        <li class="account-nav__item">
+                            <a href="order-history.html">Order History</a>
+                        </li>
+                        <li class="account-nav__item">
+                            <a href="order-details.html">Order Details</a>
+                        </li>
+                        <li class="account-nav__item">
+                            <a href="address.html">Addresses</a>
+                        </li>
+                        <li class="account-nav__item">
+                            <a href="edit-address.html">Edit Address</a>
+                        </li>
+                        <li class="account-nav__item">
+                            <a href="edit-password.html">Password</a>
+                        </li>
+                        <li class="account-nav__item"><a href="">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 col-lg-9 mt-4 mt-lg-0">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
 </main>
+
 
 <app-footer></app-footer>

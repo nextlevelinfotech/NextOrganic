@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^20.1.8",
     "@angular/cdk": "^19.2.19",
     "@angular/common": "^19.2.0",
     "@angular/compiler": "^19.2.0",
@@ -26,6 +27,7 @@
     "bootstrap": "^5.3.7",
     "crypto-ts": "^1.0.2",
     "jquery": "^3.7.1",
+    "ngx-toastr": "^20.0.5",
     "remixicon": "^4.6.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

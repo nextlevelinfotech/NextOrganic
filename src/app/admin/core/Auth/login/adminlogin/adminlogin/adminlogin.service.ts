@@ -4,7 +4,7 @@ import { EncryptionService } from '../../../encryptionservice/encryption.service
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
-import { environment } from '../../../../../../environments/environment';
+import { environment } from '../../../../../../../environments/environment.development';
 import { Endpoint } from './adminloginUrl';
 import { changePswModel } from './adminlogin.model';
 
