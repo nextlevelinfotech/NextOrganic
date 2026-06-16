@@ -1,0 +1,34 @@
+<div class="container-fluid mt-4">
+  <div class="company-detail">
+    <h2 class="mb-2">All Users</h2>
+
+    <div class="table__wrapper table__wrapper-30 table_xxl-70 mt-4">
+      <table class="table">
+        <thead class="table__head">
+          <tr>
+            <th style="width: 110px" class="text-nowrap">S.N.</th>
+            <th class="text-nowrap">Username</th>
+            <th class="text-nowrap">Email</th>
+            <th class="text-nowrap">fullName</th>
+            <th class="text-nowrap">Phone</th>
+            <th class="text-nowrap">Role</th>
+            <th class="text-nowrap">isActive</th>
+            <th class="text-nowrap">createdAt</th>
+          </tr>
+        </thead>
+        <tbody class="table__body">
+          <tr *ngFor="let item of userList; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.username }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.fullName }}</td>
+            <td>{{ item.phone }}</td>
+            <td>{{ item.role }}</td>
+            <td>{{ item.isActive }}</td>
+            <td>{{ item.createdAt }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

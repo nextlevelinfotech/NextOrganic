@@ -1,0 +1,251 @@
+// Import necessary variables file
+@use '../abstracts/variables' as vars; // Assuming this path is correct for your variables file
+
+// Media List and Items Styling
+.media-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+
+    @media only screen and (max-width: 1200px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media only screen and (max-width: 992px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media only screen and (max-width: 767px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media only screen and (max-width: 520px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.media {
+    display: flex;
+    gap: 1rem;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+    // border: 1px solid vars.$grey-100;
+    box-shadow:  0 1px 2px rgba(56, 65, 74, 0.15);
+}
+.holidays,
+.birthday{
+    box-shadow:  0 1px 2px rgba(56, 65, 74, 0.15);
+
+}
+
+.media-body {
+    flex: 1;
+}
+
+.media-title {
+    font-weight: 500;
+}
+
+.media-icon {
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1.5px solid transparent;
+    transition: all 0.2s ease-in-out;
+    color: #fff;
+    font-size: 20px;
+
+    &-1 {
+        background: #E65C00;
+        background: linear-gradient(0deg, rgba(230, 92, 0, 1) 0%, rgba(249, 212, 35, 1) 100%);
+
+    }
+
+    &-2 {
+        background: #CC2B5E;
+        background: linear-gradient(0deg, rgba(204, 43, 94, 1) 0%, rgba(117, 58, 136, 1) 100%);
+
+    }
+
+    &-3 {
+        background: #1488CC;
+        background: linear-gradient(0deg, rgba(20, 136, 204, 1) 0%, rgba(43, 50, 178, 1) 100%);
+
+    }
+
+    &-4 {
+        background: #FFE259;
+        background: linear-gradient(0deg, rgba(255, 226, 89, 1) 0%, rgba(255, 167, 81, 1) 100%);
+
+    }
+
+    &-5 {
+        background: #8E2DE2;
+        background: linear-gradient(0deg, rgba(142, 45, 226, 1) 0%, rgba(74, 0, 224, 1) 100%);
+
+    }
+}
+
+.media-number {
+    font-weight: bold;
+    font-size: 26px;
+    margin-top: 4px;
+    color: vars.$headings-color;
+    font-family: vars.$headings-font-family-1;
+    transition: all 0.2s ease-in-out;
+    line-height: 1;
+}
+
+.media-meta {
+    color: vars.$primary-500;
+    font-weight: 500;
+
+    &-down {
+        color: vars.$secondary-500;
+
+    }
+}
+
+
+//recent-activities
+
+.recent-activities {
+    background: #fff;
+    border-radius: 8px;
+}
+
+.d-title {
+    padding: 12px;
+    border-bottom: 1px solid vars.$border;
+
+}
+
+
+.recent-activities-list {
+    li {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+    }
+}
+
+.recent-media {
+    flex: 1;
+    display: flex;
+    gap: 1rem;
+}
+
+.recent-activities-list {
+    padding: 1rem;
+}
+
+
+.recent-media-text {
+    color: vars.$grey-400;
+}
+
+.recent-media-img {
+    border-radius: 100%;
+    overflow: hidden;
+    height: 32px;
+    width: 32px;
+
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+// Chart and Notice Section
+.canvasjs-chart-credit {
+    display: none;
+}
+
+.chart {
+    padding: 2rem;
+    background: #fff;
+}
+
+.notice {
+    padding: 1rem;
+    background: #fff;
+    height: 290px;
+    overflow-y: scroll;
+    border-radius: 8px;
+}
+
+.accordion-button {
+    font-size: 13px;
+}
+
+.holidays {
+    padding: 1rem;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.birthday-list {
+    max-height: 80px;
+    height: 100px;
+    overflow-y: scroll;
+}
+
+.birthday-list-1 {
+    max-height: 100px;
+    height: 100px;
+}
+
+.birthday {
+    padding: 1rem;
+    background: #fff;
+    border-radius: 8px;
+
+
+    &-item {
+        padding-left: 1rem;
+        border-left: 2px solid vars.$secondary-500;
+    }
+
+    &-date {
+        color: #919697;
+        font-size: 13px;
+    }
+}
+
+.noticeChart {
+    //background: #fff;
+    border-radius: 8px;
+}
+
+.canvasjs-chart-canvas{
+    border-radius: 8px !important;
+}
+
+// Media Queries for responsiveness
+@media only screen and (max-width: 992px) {
+    .media-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media only screen and (max-width: 767px) {}
+
+@media only screen and (max-width: 620px) {
+    .media-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 575px) {}
+
+@media only screen and (max-width: 520px) {
+    .media-list {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,30 @@
+@use "../abstracts/variables" as vars;
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 60px;
+}
+
+
+.why-card {
+  text-align: center;
+  padding: 40px 25px;
+  border-right: 1px solid vars.$grey-100;
+}
+
+.why-card:last-child {
+  border-right: none;
+}
+
+.why-card i {
+  font-size: 45px;
+  color: #198c3a;
+  margin-bottom: 20px;
+}
+
+.why-card h3 {
+  margin-bottom: 15px;
+}
+

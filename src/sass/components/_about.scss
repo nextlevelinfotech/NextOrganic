@@ -1,0 +1,35 @@
+@use "../abstracts/variables" as vars;
+.counter-wrapper {
+  grid-template-columns: 1fr;
+}
+
+.counter-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 60px;
+}
+
+.counter-box {
+  text-align: center;
+  padding: 35px;
+  border: 1px solid vars.$grey-100;
+  border-radius: 10px;
+}
+
+.counter-box i {
+  font-size: 45px;
+  color: #198c3a;
+  margin-bottom: 15px;
+}
+
+.counter-box h3 {
+  font-size: 36px;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .counter-wrapper {
+    grid-template-columns: 1fr;
+  }
+}

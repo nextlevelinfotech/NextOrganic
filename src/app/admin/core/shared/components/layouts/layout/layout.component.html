@@ -1,0 +1,22 @@
+<mat-drawer-container class="layout-container" autosize>
+
+  <!-- Sidebar fixed on the left -->
+  <mat-drawer #drawer class="layout-sidenav" mode="side" [opened]="true"  [class.collapsed]="isSidebarCollapsed">
+    <app-page-sidebar (menuToggle)="toggleMenu()" [isToggle]="isToggle"  [isSidebarCollapsed]="isSidebarCollapsed"></app-page-sidebar>
+
+  </mat-drawer>
+
+  <!-- Main content area with fixed header and scrollable content -->
+  <mat-drawer-content class="layout-content"> 
+    <!-- Fixed header -->
+    <app-page-header (menuToggle)="toggleMenu()"></app-page-header>
+
+    <!-- Scrollable content area -->
+    <main class="layout-main">
+      <router-outlet></router-outlet>
+    </main>
+
+    <app-page-footer  [ngClass]="isSidebarCollapsed ? '': 'footer-copyright-pr'"></app-page-footer>
+  </mat-drawer-content>
+
+</mat-drawer-container>

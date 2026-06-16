@@ -1,0 +1,21 @@
+<a href="" class="btn btn-primary"><i class="ri-arrow-left-long-line"></i> Go Back</a>
+
+
+<section class="login col-10 col-md-6 p-t-32 col-xl-4 mx-auto  module">
+    <h2>Login</h2>
+    <form #userForm="ngForm">
+        <div class="mb-3">
+            <label for="">Username or Email address</label>
+            <input type="text" class="form-control" name="userName" [(ngModel)]="payload.userName" required>
+
+        </div>
+        <div class="mb-3">
+            <label for="">Password</label>
+            <input type="password" class="form-control" name="password" [(ngModel)]="payload.password"  required>
+
+        </div>
+        <button type="submit" class="btn btn-secondary  w-100 m-t-8" (click)="loginSubmit()">Login</button>
+        <p class="m-t-12 text-center"> Don't have an account? <a routerLink="/register" class="btnLink">Sign Up</a>
+        </p>
+    </form>
+</section>

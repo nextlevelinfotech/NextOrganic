@@ -1,0 +1,140 @@
+<div class="login">
+    <div class="login-left">
+        <div class="login-img">
+            <img src="assets/img/login-img.png" alt="Login Image" width="320">
+
+        </div>
+        <h2 class="login-title">Starting planning your journey</h2>
+        <p class="login-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+            been the
+            industry's standar.</p>
+    </div>
+    <div class="login-right">
+        <form class="login-form mx-auto col-lg-6"  [formGroup]="loginForm" >
+
+            <div class="login-logo m-b-40">
+                <img src="assets/img/logo.png" alt="">
+            </div>
+            <h2 class="text-center m-b-8 sign-in-title">Sign In</h2>
+            <p class="text-center m-b-40">Please enter your details to sign in</p>
+
+            <div class="form-group mb-4">
+                <input autocomplete="off" type="text" class="form-control" id="userName" placeholder="User Name"  formControlName="username" #input1
+                    (keyup)="event($event, input1, input2)" >
+                <i class="fa fa-user field-icon"></i>
+            </div>
+            <div class="form-group mb-4 ">
+                <input autocomplete="off" [type]="isPasswordVisible ? 'text' : 'password'" class="form-control"   formControlName="password"
+                    id="password" placeholder="Password" #input2 (keyup)="event($event, input2, input3)"
+                    #password="" />
+
+                <i class="fa fa-fw field-icon toggle-password"
+                    [ngClass]="{'fa-eye': !isPasswordVisible, 'fa-eye-slash': isPasswordVisible}"
+                    (click)="togglePasswordVisibility()" aria-hidden="true"></i>
+            </div>
+            <div class="Lflex">
+                <!-- <div class="small custom-checkbox">
+                    <input class="checkboxsize" type="checkbox" id="RememberMe">
+
+                    <small class="remember-me"> Remember me</small>
+                </div> -->
+                <div>
+                    <span class="forgot-link" (click)="openPopup()" >Forgot Password ?</span>
+                </div>
+            </div>
+            <button (click)="loginsubmit()" type="button" #input3 autocomplete="off" value ="Login" class=" btn btn-secondary mt-4 w-100 btn-shadow h-40"
+              [disabled]="isLoginLoading" >  {{ isLoginLoading ? 'Processing...' : 'LOGIN' }}
+            </button>
+
+            <!-- <div class="signUp mt-3 text-center">
+                <p>Don’t have an account? <a href="">Register</a></p>
+            </div> -->
+
+        </form>
+
+    </div>
+</div>
+
+<!-- Overlay -->
+<div class="popup-overlay" *ngIf="showPopup"></div>
+<div class="popup-overlay" *ngIf="showChangePswPopup"></div>
+
+<!-- Popup -->
+<div class="popup-container w-520" *ngIf="showPopup">
+  <div class="popup-header">
+    <p class="mb-0 section-title">Send OTP To Your Email Address</p>
+    <span class="close-btn" (click)="closePopup()">×</span>
+  </div>
+
+  <div class="popup-body">
+    <form #forgotForm="ngForm">
+        <div class="form-group mb-2 ">
+            <label>Email</label>
+            <input autocomplete="off" class="form-control mb-2" type="text" name="email"  [(ngModel)]="model.email" required />
+
+            <!-- Response message -->
+            <p *ngIf="status === 'success'" class="success">
+                <i class="fa-regular fa-circle-check me-1"></i> {{ message }}
+            </p>
+
+            <p *ngIf="status === 'error'" class="error">
+                <i class="fa-regular fa-circle-xmark me-1"></i> {{ message }}
+            </p>
+
+            <p *ngIf="status === 'empty'" class="empty">
+                <i class="fa-regular fa-circle-xmark me-1"></i> {{ message }}
+            </p>
+        </div>
+
+
+        <button class="btn btn-secondary" type="button" (click)="forgotPassword()" [disabled]="isLoading">
+            {{ isLoading ? 'Processing...' : ' Send Reset Link' }}
+        </button>
+
+    </form>
+
+
+  </div>
+
+
+</div>
+
+<div class="popup-container w-520" *ngIf="showChangePswPopup">
+  <div class="popup-header">
+    <p class="mb-0 section-title">Change Password</p>
+    <span class="close-btn" (click)="closeChangePswPopup()">×</span>
+  </div>
+
+  <div class="popup-body">
+    <form #changePswForm="ngForm">
+        <div class="form-group mb-2 ">
+            <label>OTP</label>
+            <input autocomplete="off" class="form-control mb-2" type="text"  name="otp"  [(ngModel)]="this.service.changePswModel.otp" required />
+
+        </div>
+        <div class="form-group mb-2 ">
+            <label>Email</label>
+            <input autocomplete="off" class="form-control mb-2" type="text"  name="email"  [(ngModel)]="this.service.changePswModel.email" required />
+
+        </div>
+
+        <div class="form-group mb-2 relative">
+            <label>New Password</label>
+            <input autocomplete="off" class="form-control  mb-2" [type]="isPasswordVisible ? 'text' : 'password'"  name="password"  [(ngModel)]="this.service.changePswModel.newPassword" required />
+            <i class="fa fa-fw field-icon toggle-password changePassword-eye-icon"  [ngClass]="{'fa-eye': !isPasswordVisible, 'fa-eye-slash': isPasswordVisible}"
+                    (click)="togglePasswordVisibility()" ></i>
+        </div>
+
+
+        <button class="btn btn-secondary" type="button" (click)="changePassword()"  [disabled]="isLoading">
+             {{ isLoading ? 'Processing...' : 'Change Password' }}
+        </button>
+
+    </form>
+
+
+  </div>
+
+
+</div>
+

@@ -1,0 +1,131 @@
+<div class="container-fluid mt-4">
+  <!-- CARD -->
+  <div class="card main-card">
+    <!-- HEADER -->
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span>User Registration</span>
+    </div>
+
+    <!-- FORM -->
+    <form [formGroup]="registerForm" autocomplete="off" class="p-4">
+      <div class="row g-2">
+        <div class="col-md-3">
+          <label>Full Name</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            formControlName="fullName"
+            (keydown.enter)="handleEnter($event, registerForm)"
+          />
+        </div>
+
+        <div class="col-md-2">
+          <label>Username</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            formControlName="username"
+            (keydown.enter)="handleEnter($event, registerForm)"
+          />
+        </div>
+
+        <div class="col-md-3">
+          <label>Email</label>
+          <input
+            type="email"
+            class="form-control form-control-sm"
+            formControlName="email"
+            (keydown.enter)="handleEnter($event, registerForm)"
+          />
+        </div>
+
+        <div class="col-md-2">
+          <label>Phone</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            formControlName="phone"
+            (keydown.enter)="handleEnter($event, registerForm)"
+          />
+        </div>
+
+        <div class="col-md-2">
+          <label>Role</label>
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            formControlName="role"
+            (keydown.enter)="handleEnter($event, registerForm)"
+          />
+        </div>
+
+        <div class="col-md-2">
+          <label>Password</label>
+          <input
+            type="password"
+            class="form-control form-control-sm"
+            formControlName="password"
+            (keydown.enter)="handleEnter($event, registerForm)"
+          />
+        </div>
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="d-flex justify-content-end gap-2 mt-2">
+        <!-- SAVE / UPDATE -->
+        <button
+          type="button"
+          class="btn btn-success btn-sm"
+          (click)="submit()"
+          title="Save"
+        >
+          <i class="fa fa-save"></i>
+        </button>
+
+        <!-- RESET -->
+        <button
+          type="button"
+          class="btn btn-danger btn-sm"
+          (click)="Reset()"
+          title="Reset"
+        >
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </form>
+
+    <!-- TABLE -->
+    <div class="table-section m-t-8">
+      <table class="table table-sm table-bordered table-hover mb-0">
+        <thead>
+          <tr>
+            <th>S.N</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Role</th>
+            <th width="120">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of userList; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phone }}</td>
+            <td>{{ user.role }}</td>
+            <td>
+              <button class="btn btn-edit btn-sm me-1">
+                <i class="fa fa-edit"></i>
+              </button>
+              <button class="btn btn-delete btn-sm">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+@use "../abstracts/variables" as vars;
+
+.cta-wrapper {
+  background: linear-gradient(to right, #0d6628, #2db356);
+  padding: 2rem;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  color: #fff;
+}
+
+.cta-wrapper-left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem;
+
+  h2 {
+    color: #fff;
+  }
+}
+@media (max-width: 991px) {
+  .cta-wrapper {
+    flex-direction: column;
+   align-items: flex-start;
+  }
+}
+
+@media (max-width: 576px) {
+
+  .cta-wrapper {
+    border-radius: 0;
+  }
+}

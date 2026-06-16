@@ -1,0 +1,289 @@
+<app-header></app-header>
+
+<div class="bread">
+    <div class="container">
+        <div class="breadcrumb-outer">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Product</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Categories</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<section class="page-shop-categories p-t-32 p-b-60 bg-light">
+    <div class="container">
+
+
+        <div class="row ">
+            <div class="col-md-3">
+                <div class="shop-sidebar">
+                    <div class="" widget-category-container>
+                        <h2 class="widget-title">
+                            <span>Category</span>
+                        </h2>
+                        <ul class="widget-category">
+                            <li>
+                                <a href="javascript:void(0)" (click)="filterCategory('all')">
+                                    All Products
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:void(0)" (click)="filterCategory('detox')">
+                                    Detox Products
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:void(0)" (click)="filterCategory('agro')">
+                                    Agro Products
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:void(0)" (click)="filterCategory('supplements')">
+                                    Food Supplements
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:void(0)" (click)="filterCategory('hair')">
+                                    Hair Care
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:void(0)" (click)="filterCategory('oral')">
+                                    Oral Care
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:void(0)" (click)="filterCategory('personal')">
+                                    Personal Care
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:void(0)" (click)="filterCategory('skin')">
+                                    Skin Care
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:void(0)" (click)="filterCategory('tea & coffee')">
+                                    Tea & Coffee
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="filter-box mt-4">
+
+                        <h4>Filter by price</h4>
+
+                        <div class="price-inputs">
+
+                            <div class="input-group">
+                                <label>Min price</label>
+                                <input type="number" id="minInput" value="30">
+                            </div>
+
+                            <div class="dash">-</div>
+
+                            <div class="input-group">
+                                <label>Max price</label>
+                                <input type="number" id="maxInput" value="2000">
+                            </div>
+
+                        </div>
+
+                        <div class="range-slider">
+
+                            <div class="slider-track"></div>
+
+                            <input type="range" id="minRange" min="0" max="2000" value="30">
+
+                            <input type="range" id="maxRange" min="0" max="2000" value="2000">
+
+                        </div>
+
+                        <div class="bottom-area">
+
+                            <div class="price-text">
+                                Price:
+                                $<span id="minPrice">40</span>
+                                —
+                                $<span id="maxPrice">1,220</span>
+                            </div>
+
+                            <button class="filter-btn" onclick="filterPrice()">
+                                FILTER
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="product-catg-content">
+                    <div class="product-catg-head">
+                        <div class="product-catg-head-left">
+                            <form action="" class="prduct-catg-sort">
+                                <label class="me-2 def">Sort by</label>
+                                <select class="me-3 sort-select">
+                                    <option value="Default" selected=""> Default</option>
+                                    <option value="Name"> Name</option>
+                                    <option value="Price">Price</option>
+                                    <option value="Date">Date</option>
+                                </select>
+                                <label class="me-2">Show</label>
+                                <select class="show-select">
+                                    <option value="6" selected="">6</option>
+                                    <option value="9">9</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </form>
+                        </div>
+                        <div class="product-catg-head-right d-flex gap-4 align-items-center">
+                            <div class="search-container">
+
+                                <div class="search-box">
+                                    <input type="text" placeholder="Search products...">
+
+                                    <button>
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="product-catg-body m-t-32">
+                        <div class="row">
+                            @for(product of paginatedProducts; track product.name) {
+                            <div class="col-md-6 col-lg-4">
+                                <div class="product-card">
+                                    <div class="product-img-holder">
+                                        <img [src]="product.image" [alt]="product.name">
+                                    </div>
+
+                                    <div class="product-content">
+                                        <div class="product-title">
+                                            {{ product.name }}
+                                        </div>
+
+                                        <div class="product-price">
+                                            Rs. {{ product.price }}
+                                        </div>
+                                    </div>
+                                    <ul class="product-action">
+
+                                        <li (click)="openPopup($event)">
+                                            <a href="#"><i class="fa-solid fa-basket-shopping"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="#!"><i class="fa-solid fa-heart"></i></a>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container text-center m-b-40">
+<div class="pagination-wrapper mt-4">
+    <ul class="pagination justify-content-center">
+
+        <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage - 1)">
+                Previous
+            </a>
+        </li>
+
+        @for(page of totalPages; track page) {
+        <li class="page-item" [class.active]="currentPage === page">
+            <a class="page-link" href="javascript:void(0)" (click)="changePage(page)">
+                {{ page }}
+            </a>
+        </li>
+        }
+
+        <li class="page-item" [class.disabled]="currentPage === totalPages.length">
+            <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage + 1)">
+                Next
+            </a>
+        </li>
+
+    </ul>
+</div>
+</div>
+
+<!-- Overlay -->
+<div class="popup-overlay" (click)="closePopup()" *ngIf="showPopup"></div>
+
+<!-- Popup -->
+<div class="popup-container w-520" *ngIf="showPopup">
+    <div class="popup-header">
+        <h4 class="mb-0 section-title"> Add To Cart</h4>
+        <span class="close-btn" (click)="closePopup()">×</span>
+    </div>
+
+    <div class="popup-body">
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="product-single-img-wrap">
+                    <div class="product-single-img text-center">
+                        <img src="../../../../assets/img/products/alovera-img-big.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="product-single-content">
+                    <h3 class="product-single-title mb-2">Aloe Vera Capsules</h3>
+
+                    <h4 class="product-single-price">Rs. 12800.00</h4>
+                    <div class="badge text-bg-secondary mb-3">In Stock (1)</div>
+
+                    <div class="outer d-flex mt-4 gap-4 align-items-center">
+                        <div class="quantity">
+                            <div class="quantity-button minus"> - </div>
+                            <input type="text" id="quantityInput" class="qtyText" name="quantityInput" min="1" max="84"
+                                autocomplete="off">
+                            <div class="quantity-button plus"> + </div>
+                        </div>
+                        <button href="" class="btn btn-primary ">Add To Cart<i
+                                class="ms-1 ri-arrow-right-long-line"></i></button>
+                    </div>
+
+                    <a routerLink="/shop/shop-single" class="btn-link mt-4 ">View Full Product<i
+                            class="ms-1 ri-arrow-right-long-line"></i></a>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer Buttons -->
+    <div class="popup-footer">
+
+    </div>
+</div>
+<app-footer></app-footer>

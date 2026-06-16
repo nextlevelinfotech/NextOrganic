@@ -1,0 +1,116 @@
+@use "../abstracts/variables" as vars;
+
+.header {
+  font-size: 13px;
+
+  &-top {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid vars.$border;
+    background: vars.$primary-500;
+    color: #fff;
+    a {
+      color: #fff;
+    }
+  }
+
+  &-info {
+    display: flex;
+    gap: 2rem;
+  }
+
+  &-text {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  &-middle {
+    padding: 1rem 0;
+  }
+}
+
+.logo {
+  text-align: center;
+  display: inline-block;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+
+.header__search-box {
+  select {
+    border: none;
+  }
+
+  select:focus {
+    border: none;
+    outline: none;
+  }
+}
+
+.cart-btn {
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: vars.$primary-800;
+  color: #fff;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cart-btn i {
+  font-size: 14px;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  background: vars.$secondary-500;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+@media only screen and (max-width: 1200px) {
+  .header-top {
+    height: auto;
+    line-height: 2;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+}
+
+@media only screen and (max-width: 767px) {
+  .product-catg-content {
+    margin-top: 2rem;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .header-info {
+    flex-direction: column;
+    gap: 0;
+  }
+}

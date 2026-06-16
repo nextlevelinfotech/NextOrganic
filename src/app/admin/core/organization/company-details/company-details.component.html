@@ -1,0 +1,441 @@
+<div class="body-layout">
+
+    <div class="leave-setting">
+        <div class="page-header">
+            <h3 class="page-header-title">Demo</h3>
+        </div>
+
+        <form class="form ">
+            <div class="row">
+                <div class="col-sm-4 col-md-3 col-lg-2">
+                    <div class="hr-input">
+                        <input autocomplete="off" type="text" id="Subject" name="subject" class="input-field req"
+                            required>
+                        <label class="input-label">Subject</label>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-2">
+                    <div class="hr-input ">
+                        <select class="input-field w-100 req" data-placeholder="--Choose--" id="LeaveType"
+                            name="leaveType" required>
+                            <option></option>
+
+                        </select>
+                        <label class="input-label">Leave Type</label>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-2">
+                    <div class="hr-input">
+                        <input type="date" id="dateFrom" name="fromDate" class="input-field required " required>
+                        <label class="input-label">From Date</label>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-2">
+                    <div class="hr-input">
+                        <input type="text" id="userStartDate" name="joinDate" #JoinDate1 class="input-field required"
+                            style="appearance: none">
+                        <label for="JoinDate1" class="input-label"></label>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-2">
+                    <div class="hr-input">
+                        <input type="date" id="DateTo" name="toDate" class="input-field required" required>
+                        <label class="input-label">To Date</label>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-2">
+                    <div class="hr-input">
+                        <input type="text" id="userToDate" name="validDate" #ValidDate1 class="input-field required"
+                            style="appearance: none">
+                        <label for="ValidDate1" class="input-label"></label>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-2 mt-3">
+                    <div class="hr-input">
+                        <select class="input-field w-100 req" data-placeholder="Choose..." id="RequestTo"
+                            name="Request To" required>
+                            <option></option>
+                        </select>
+                        <label class="input-label">Request To</label>
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="col-sm-4 col-md-3 col-lg-2 mt-3">
+                    <div class="hr-input ">
+                        <textarea name="reason" id="reasonLeave" class="input-field req"></textarea>
+
+
+                        <label class="input-label">Reason <span style="color: red;">*</span></label>
+                    </div>
+                </div>
+                <div class="col-sm-5 col-md-4 col-lg-3 mt-3">
+
+                    <div class="hr-input ">
+                        <textarea name="narration" id="narrationLeave" style="height: 60px;"
+                            class="input-field"></textarea>
+                        <label class="input-label">Narration</label>
+                    </div>
+
+                </div>
+
+
+
+                <div class="buttonContainer  justify-content-end">
+                    <button type="button" id="button" class="button btn btn-primary">
+                        <i class='fa fa-save'></i>
+
+                        {{ submitButton }}
+                    </button>
+                    <button type="button" id="resetButton" class="btn btn-danger">
+                        <i class='fa fa-refresh'></i>
+                        {{ resetButton }}
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+
+    </div>
+
+    <div class="search mt-2">
+        <input type="search" id="searchLS" class="form-control " placeholder="search" autocomplete="off">
+    </div>
+
+
+    <div class="table__wrapper h-lg-38 h-xl-20 mt-1">
+        <table class="table">
+            <thead class="table__head">
+                <th>S.N.</th>
+                <th> Emp Code</th>
+                <th>Name</th>
+                <th>Subject</th>
+                <th>Leave Type</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Request To</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Action</th>
+            </thead>
+            <tbody class="table__body">
+                <tr>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                </tr>
+                <tr>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>text</td>
+                    <td>
+                        <button type="button" (click)="popDegination()" id="popDegination" class="btn btn-danger">
+                            <i class='fa fa-refresh'></i>
+                            Add
+                        </button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+</div>
+
+
+<div *ngIf="openDesignation">
+    <div class="customPopupContainer">
+        <div class="customPopup w-lg-60 w-xl-29">
+            <div class="customPopupHeader "><span>Designation </span><span class="closeIcon"
+                    (click)="closeDesignationPopup()"><i class="fa-solid fa-xmark"></i>
+                </span>
+            </div>
+            <div class="customPopup-body h-lg-74">
+                <div class="table__wrapper h-lg-42 h-xl-20 mt-1">
+                    <table class="table">
+                        <thead class="table__head">
+                            <th>S.N.</th>
+                            <th> Emp Code</th>
+                            <th>Name</th>
+                            <th>Subject</th>
+                            <th>Leave Type</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Request To</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody class="table__body">
+                            <tr>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                            </tr>
+                            <tr>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>
+                                    <button type="button" (click)="popDegination()" id="popDegination"
+                                        class="btn btn-danger">
+                                        <i class='fa fa-refresh'></i>
+                                        Add
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table__wrapper h-lg-42 h-xl-20 mt-1">
+                    <table class="table">
+                        <thead class="table__head">
+                            <th>S.N.</th>
+                            <th> Emp Code</th>
+                            <th>Name</th>
+                            <th>Subject</th>
+                            <th>Leave Type</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Request To</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody class="table__body">
+                            <tr>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                            </tr>
+                            <tr>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>
+                                    <button type="button" (click)="popDegination()" id="popDegination"
+                                        class="btn btn-danger">
+                                        <i class='fa fa-refresh'></i>
+                                        Add
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table__wrapper h-lg-42 h-xl-20 mt-1">
+                    <table class="table">
+                        <thead class="table__head">
+                            <th>S.N.</th>
+                            <th> Emp Code</th>
+                            <th>Name</th>
+                            <th>Subject</th>
+                            <th>Leave Type</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Request To</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody class="table__body">
+                            <tr>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                            </tr>
+                            <tr>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>
+                                    <button type="button" (click)="popDegination()" id="popDegination"
+                                        class="btn btn-danger">
+                                        <i class='fa fa-refresh'></i>
+                                        Add
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table__wrapper h-l-42 h-xxl-20 mt-1">
+                    <table class="table">
+                        <thead class="table__head">
+                            <th>S.N.</th>
+                            <th> Emp Code</th>
+                            <th>Name</th>
+                            <th>Subject</th>
+                            <th>Leave Type</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Request To</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody class="table__body">
+                            <tr>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                            </tr>
+                            <tr>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>
+                                    <button type="button" (click)="popDegination()" id="popDegination"
+                                        class="btn btn-danger">
+                                        <i class='fa fa-refresh'></i>
+                                        Add
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table__wrapper h-l-42 h-xxl-20 mt-1">
+                    <table class="table">
+                        <thead class="table__head">
+                            <th>S.N.</th>
+                            <th> Emp Code</th>
+                            <th>Name</th>
+                            <th>Subject</th>
+                            <th>Leave Type</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th>Request To</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody class="table__body">
+                            <tr>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                            </tr>
+                            <tr>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>text</td>
+                                <td>
+                                    <button type="button" (click)="popDegination()" id="popDegination"
+                                        class="btn btn-danger">
+                                        <i class='fa fa-refresh'></i>
+                                        Add
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

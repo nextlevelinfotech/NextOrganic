@@ -1,0 +1,32 @@
+<header class="admin-header header-sticky d-flex align-items-center">
+  <div class="container-fluid d-flex justify-content-between">
+    <div class="header-left">
+      <button class="hamburger" (click)="onHamburgerClick()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <h2 class="mb-0 main-title">Welcome To Smriti Organic World Group</h2>
+    </div>
+    <div class="header-right">
+      <div ngbDropdown class="d-inline-block user toggle-dropdown">
+        <button type="button" class="btn btn-user" id="dropdown-user" ngbDropdownToggle>
+          <img src="../../../../../assets/img/thumb.png" alt="" width="40" />
+          <span class="ms-1">Lisa Farsay</span>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdown-user dropend">
+          <button ngbDropdownItem (click)="logout()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            Logout
+          </button>
+          <button ngbDropdownItem>
+            <i class="fa-solid fa-key me-2"></i>
+            Reset Password
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

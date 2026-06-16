@@ -1,0 +1,210 @@
+<div class="th-menu-wrapper">
+    <div class="th-menu-area text-center">
+        <button class="th-menu-toggle"> <i class="fa-solid fa-xmark"></i></button>
+
+        <div class="th-mobile-menu">
+            <ul>
+
+                <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <a routerLink="">Home</a>
+                </li>
+
+
+                <li routerLinkActive="active">
+                    <a routerLink="/about">About Us</a>
+                </li>
+
+                <li class="th-item-has-children" routerLinkActive="active">
+                    <a>Products</a>
+                    <ul class="sub-menu">
+                        <li routerLinkActive="active"><a routerLink="/shop/categories">Product Categories</a></li>
+                        <li routerLinkActive="active"><a routerLink="/shop/shop-single">Product Details</a></li>
+                        <li routerLinkActive="active"><a routerLink="/shop/shop-cart">Cart Page</a></li>
+                        <li routerLinkActive="active"><a routerLink="/shop/checkout">Checkout</a></li>
+
+                    </ul>
+                </li>
+
+                <li routerLinkActive="active">
+                    <a routerLink="/blog">Blog</a>
+                </li>
+
+
+
+                <li routerLinkActive="active">
+                    <a routerLink="/contact">Contact</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+<header class="header">
+
+    <div class="header-top">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6 col-lg-5 d-none d-sm-block">
+                    <div class="header-address">
+                        <i class="ri-map-pin-line me-2"></i>
+                        <span>Mid Baneshwor , Kathmandu, Nepal</span>
+                    </div>
+                </div>
+                <div class="col-lg-7 d-flex justify-content-between align-items-center justify-content-lg-end gap-4">
+                    <ul class="header-info">
+                        <li>
+                            <i class="ri-mail-send-line me-1"></i>
+                            <a href="mailto:dhanakkhatiwada@gmail.com">
+                                dhanakkhatiwada&#64;gmail.com
+                            </a>
+                        </li>
+                        <li>
+                            <i class="ri-phone-line  me-1"></i>
+                            <a href="tel:+977-984-1643759">984-1643759</a>
+                        </li>
+                    </ul>
+                    <div class="login-btn">
+
+                        <a *ngIf="!isLogin" routerLink="/login">
+                            <i class="ri-login-box-line me-1"></i>
+                            Login
+                        </a>
+
+                        <div *ngIf="isLogin" ngbDropdown class="d-inline-block">
+
+                            <button class="btn btn-login btn-primary d-flex align-items-center gap-1" ngbDropdownToggle>
+                                <i class="ri-user-line"></i>
+                                Umesh Kayastha
+                            </button>
+
+                            <div ngbDropdownMenu>
+
+                                <button ngbDropdownItem routerLink="/profile">
+                                    <i class="ri-user-line me-2"></i>
+                                    My Account
+                                </button>
+
+                                <button ngbDropdownItem routerLink="/orders">
+                                    <i class="ri-shopping-bag-line me-2"></i>
+                                    My Orders
+                                </button>
+
+                                <button ngbDropdownItem routerLink="/wishlist">
+                                    <i class="ri-heart-line me-2"></i>
+                                    My Wishlist
+                                </button>
+
+                                <button ngbDropdownItem routerLink="/reviews">
+                                    <i class="ri-star-line me-2"></i>
+                                    My Review
+                                </button>
+
+                                <button ngbDropdownItem routerLink="/returns">
+                                    <i class="ri-arrow-go-back-line me-2"></i>
+                                    Returns & Cancellations
+                                </button>
+
+                                <hr class="dropdown-divider">
+
+                                <button ngbDropdownItem (click)="logout()" class="text-danger">
+                                    <i class="ri-logout-box-r-line me-2"></i>
+                                    Logout
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="cart-btn">
+                        <i class="ri-shopping-cart-2-line"></i>
+                        <span class="cart-count">2</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="header-middle">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-10 col-md-10 col-lg-12">
+                    <a routerLink="" class="logo">
+                        <img src="../../assets/img/logo.png" class="d-none d-lg-block" alt="">
+                        <img src="../../assets/img/mobile-logo.png" class="d-block d-lg-none" alt="">
+
+                    </a>
+                </div>
+
+                <div class="col-2  col-md-2 d-flex d-lg-none justify-content-end">
+                    <button type="button" class="th-menu-toggle">
+                        <i class="fa-solid fa-bars"></i>
+
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <menu [ngClass]="{ 'sticky': isSticky }" class="menu d-none d-lg-block">
+        <div class="container d-flex align-items-center justify-content-between">
+            <nav class="main-menu d-none d-lg-inline-block">
+                <ul>
+
+                    <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                        <a routerLink="">Home</a>
+                    </li>
+
+                    <!-- <li class="menu-item-has-children" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: true }">
+
+                        <a>About us</a>
+
+                         <ul class="sub-menu">
+                            <li routerLinkActive="active">
+                                <a routerLink="/test1">Test 1</a>
+                            </li>
+
+                            <li routerLinkActive="active">
+                                <a routerLink="/test2">Test 2</a>
+                            </li>
+                        </ul> 
+                    </li> -->
+                    <li routerLinkActive="active">
+                        <a routerLink="/about">About Us</a>
+                    </li>
+
+                    <li class="menu-item-has-children" routerLinkActive="active">
+                        <a>Products</a>
+                        <ul class="sub-menu">
+                            <li routerLinkActive="active"><a routerLink="/shop/categories">Product Categories</a></li>
+                            <li routerLinkActive="active"><a routerLink="/shop/shop-single">Product Details</a></li>
+                            <li routerLinkActive="active"><a routerLink="/shop/shop-cart">Cart Page</a></li>
+                            <li routerLinkActive="active"><a routerLink="/shop/checkout">Checkout</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li routerLinkActive="active">
+                        <a routerLink="/blog">Blog</a>
+                    </li>
+
+
+
+                    <li routerLinkActive="active">
+                        <a routerLink="/contact">Contact</a>
+                    </li>
+
+                </ul>
+            </nav>
+
+
+        </div>
+    </menu>
+
+
+</header>
+<app-cart-sidebar></app-cart-sidebar>
