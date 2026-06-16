@@ -34,7 +34,9 @@ export class ProductService {
     { id: 5, name: 'Alfa Alfa', image: 'assets/img/products/product-img-5.jpg', price: 1050, originalPrice: 1150, category: 'agro-products', inStock: 20 },
     { id: 6, name: 'Curcumin', image: 'assets/img/products/product-img-6.jpg', price: 4000, originalPrice: 5000, category: 'food-supplements', inStock: 7 },
     { id: 7, name: 'Ganoderma', image: 'assets/img/products/product-img-7.jpg', price: 1650, originalPrice: 1850, category: 'detox-products', inStock: 12 },
-    { id: 8, name: 'Acer Nitro 5', image: 'assets/img/products/product-img-8.jpg', price: 128000, originalPrice: 55000, category: 'agro-products', inStock: 2 },
+    { id: 8, name: 'Gcombogia', image: 'assets/img/products/product-img-8.jpg', price: 1600, originalPrice: 1800, category: 'agro-products', inStock: 2 },
+    { id: 9, name: 'Gingano Pleasure', image: 'assets/img/products/product-img-8.jpg', price: 1600, originalPrice: 1800, category: 'soap', inStock: 2 },
+
   ];
 
   getCategories(): Observable<Category[]> {

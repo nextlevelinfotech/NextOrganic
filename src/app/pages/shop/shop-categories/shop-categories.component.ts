@@ -169,6 +169,59 @@ export class ShopCategoriesComponent implements AfterViewInit {
       image: '../../../assets/img/products/tea/Pearl.jpg',
       category: 'tea & coffee',
     },
+    {
+      name: 'Gingano Pleasure',
+      price: 150,
+      image: '../../../assets/img/products/soap/soap-1.png',
+      category: 'hair',
+    },
+    {
+      name: 'ANTL Soap',
+      price: 75,
+      image: '../../../assets/img/products/soap/soap-1.png',
+      category: 'hair',
+    },
+    {
+      name: 'Gingano Daily Shampo',
+      price: 450,
+      image: '../../../assets/img/products/soap/soap-1.png',
+      category: 'hair',
+    },
+
+    {
+      name: 'Gingano Face Wash',
+      price: 300,
+      image: '../../../assets/img/products/soap/soap-1.png',
+      category: 'facial',
+    },
+
+    {
+      name: 'Gingano Bliss Toothpaste',
+      price: 195,
+      image: '../../../assets/img/products/soap/soap-1.png',
+      category: 'oral',
+    },
+
+    {
+      name: 'Gingano Brush',
+      price: 65,
+      image: '../../../assets/img/products/soap/soap-1.png',
+      category: 'oral',
+    },
+    
+    {
+      name: 'Gingano Sunscreen Cream',
+      price: 450,
+      image: '../../../assets/img/products/soap/soap-1.png',
+      category: 'facial',
+    },
+     
+    {
+      name: 'Pure Nature Massage oil',
+      price: 580,
+      image: '../../../assets/img/products/soap/soap-1.png',
+      category: 'oil',
+    },
   ];
 
   filteredProducts = [...this.products];
