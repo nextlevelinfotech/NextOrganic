@@ -25,7 +25,7 @@ export class PageSidebarComponent implements AfterViewInit {
 
   @Output() menuToggle = new EventEmitter<void>();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   onHamburgerClick() {
     this.menuToggle.emit();
@@ -47,25 +47,25 @@ export class PageSidebarComponent implements AfterViewInit {
       setTimeout(() => {
         if ($('.layout-sidenav').hasClass('collapsed')) {
           component.onHamburgerClick();
-       
+
           console.log('collapsed aayo');
         } else {
         }
-      }); 
+      });
     });
   }
 
-  
+
 
   handleSubMenuClick(formName: any, menuName: any) {
     formName && menuName
       ? localStorage.setItem(
-          'pageHeadTab',
-          JSON.stringify({
-            formName: formName,
-            menuName: menuName,
-          }),
-        )
+        'pageHeadTab',
+        JSON.stringify({
+          formName: formName,
+          menuName: menuName,
+        }),
+      )
       : null;
   }
 
@@ -73,65 +73,21 @@ export class PageSidebarComponent implements AfterViewInit {
   Menulist: any[] = [
     {
       menuId: 1,
-      menuName: 'Dashboard',
-      Menuicon: 'fa-solid fa-home',
+      menuName: 'Product',
+      Menuicon: 'ri-shopping-bag-3-line',
       path: '',
       shortCutKey: '',
-      formName: 'Authorization',
+      formName: 'Product',
       extra1: 'HMS',
-      children: [
-        {
-          menuId: 12,
-          menuName: 'Menu Creation',
-          Menuicon: 'fa-solid fa-rectangle-list',
-          path: '/auth/menusetup',
-          shortCutKey: '',
-          formName: 'Menu Management',
-          extra1: '',
-          children: [
-            {
-              menuId: 14,
-              menuName: 'test 1',
-              Menuicon: 'fa-solid fa-user-plus',
-              path: '',
-              shortCutKey: '',
-              formName: 'Authorization',
-              extra1: 'HMS',
-              children: [
-                {
-                  menuId: 14,
-                  menuName: 'dashboard',
-                  Menuicon: 'fa-solid fa-user-plus',
-                  path: '/dashboard',
-                  shortCutKey: '',
-                  formName: 'Authorization',
-                  extra1: 'HMS',
-                },
-                {
-                  menuId: 18,
-                  menuName: 'company-details',
-                  Menuicon: 'fa-solid fa-user-plus',
-                  path: 'organization/company-details',
-                  shortCutKey: '',
-                  formName: 'Authorization',
-                  extra1: 'HMS',
-                },
-              ],
-            },
-            {
-              menuId: 15,
-              menuName: 'test 2',
-              Menuicon: 'fa-solid fa-user-plus',
-              path: '',
-              shortCutKey: '',
-              formName: 'Authorization',
-              extra1: 'HMS',
-            },
-          ],
-        },
-     
-      ],
     },
-   
+    {
+      menuId: 2,
+      menuName: 'Category',
+      Menuicon: 'ri-price-tag-3-line',
+      path: '',
+      shortCutKey: '',
+      formName: 'Category',
+      extra1: 'HMS',
+    }
   ];
 }

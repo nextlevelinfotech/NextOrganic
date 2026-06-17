@@ -181,3 +181,8 @@ input:focus {
 input:focus {
   border-color: vars.$secondary-500;
 }
+
+.admin .btn-sm{
+  height: 32px;
+  line-height: 32px;
+}

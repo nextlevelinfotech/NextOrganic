@@ -30,6 +30,7 @@
               "node_modules/owl.carousel/dist/assets/owl.carousel.min.css",
               "node_modules/owl.carousel/dist/assets/owl.theme.default.min.css",
               "node_modules/ngx-toastr/toastr.css",
+              "node_modules/select2/dist/css/select2.min.css",
               "node_modules/@splidejs/splide/dist/css/splide.min.css",
               "src/assets/libs/css/magnify.css",
 
@@ -38,6 +39,7 @@
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
+               "node_modules/select2/dist/js/select2.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]

@@ -15,15 +15,15 @@
 @use "base/typography";
 @use "base/utilities";
 
-// @use "components/button";
-// @use "components/heading";
-// @use "components/input";
+@use "components/button";
+@use "components/heading";
+@use "components/input";
 @use "components/modal";
 @use "components/table";
 @use "components/scrollbar";
 @use "components/form";
 @use "components/toastr";
-// @use "components/accordion";
+@use "components/accordion";
 
 @use "layout/header";
 @use "layout/sidebar";
@@ -36,9 +36,10 @@
 // @use "pages/login";
 @use "pages/dashboard";
 
-// @use "pages/mainlogin";
-// @use "pages/company-profile";
-// @use "pages/error-page";
+@use "pages/login";
+@use "pages/admin-products";
+@use "pages/company-profile";
+@use "pages/error-page";
 
 @use "custom";
 @use "responsive";

@@ -1,7 +1,7 @@
 @use "sass:color";
 @use "../abstracts/variables" as vars;
 
-.login {
+.admin-login .login {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   height: 100vh;

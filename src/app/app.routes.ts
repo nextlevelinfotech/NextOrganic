@@ -3,6 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import { LayoutComponent } from './admin/core/shared/components/layouts/layout/layout.component';
 import { UserLayoutComponent } from './user-admin/core/shared/components/user-layout/user-layout.component';
+import { authGuard } from './admin/core/Auth/Authguard/auth.guard';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,14 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./user-admin/core/auth/login/login.component').then(
             (m) => m.LoginComponent,
+          ),
+      },
+
+      {
+        path: 'admin-login',
+        loadComponent: () =>
+          import('./admin/core/Auth/login/adminlogin/adminlogin/adminlogin.component').then(
+            (m) => m.AdminloginComponent,
           ),
       },
 
@@ -74,12 +83,13 @@ export const routes: Routes = [
         component: LayoutComponent,
         children: [
           {
-            path: 'dashboard',
+            path: 'products',
             loadComponent: () =>
-              import('./admin/core/dashboard/dashboard.component').then(
-                (m) => m.DashboardComponent,
+              import('./admin/core/products/products.component').then(
+                (m) => m.ProductsComponent,
+
               ),
-            // canActivate: [authGuard],
+            canActivate: [authGuard],
           },
         ],
       },
@@ -96,7 +106,7 @@ export const routes: Routes = [
               ),
             // canActivate: [authGuard],
           },
-           {
+          {
             path: 'profile',
             loadComponent: () =>
               import('./user-admin/core/pages/profile/profile.component').then(

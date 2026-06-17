@@ -91,9 +91,13 @@ export class AdminloginComponent implements AfterViewInit {
     // JSON Body
     const payload = {
       userId: 0,
-      username: userName,
-      password: password,
+      // username: userName,
+      // password: password,
+      
+      username: 'string',
+      password: 'string',
       role: 'string',
+      
     };
 
     console.log(payload);
@@ -108,7 +112,7 @@ export class AdminloginComponent implements AfterViewInit {
           // console.log('Stored token:', localStorage.getItem('token'));
           // console.log('Decrypted token:', this.authService.gettoken());
           this.toastr.success('Login successful');
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/products']);
 
           this.loginForm.value.username = '';
           this.loginForm.value.password = '';
