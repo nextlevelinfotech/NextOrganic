@@ -22,13 +22,14 @@
 
                 <div class="product-single-img-wrap">
                     <div class="product-single-img text-center">
-                        <img src="../../../../assets/img/products/alovera-img-big.jpg" alt="">
+                        <img *ngIf="product?.productImageBase64"
+                            [src]="'data:image/png;base64,' + product.productImageBase64" [alt]="product?.productName">
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="product-single-content">
-                    <h3 class="product-single-title mb-2">Aloe Vera Capsules</h3>
+                    <h3 class="product-single-title mb-2">{{product?.productName}}</h3>
                     <!-- <div class="product-single-rating m-b-24">
 
                         <i class="fa-solid fa-star"></i>
@@ -38,19 +39,24 @@
                         <i class="fa-solid fa-star"></i>
 
                     </div> -->
-                    <h4 class="product-single-price">Rs. 12800.00</h4>
-                    <div class="badge text-bg-secondary mb-3">In Stock (1)</div>
+                    <h4 class="product-single-price">{{product?.price}}</h4>
+                    <div class="badge text-bg-secondary mb-3">In Stock {{product?.stockQuantity}}</div>
                     <div class="product-single-text">
-                        A natural digestive and immune support supplement. Aloe Vera helps improve digestion, cleanse
-                        the digestive tract,
-                        support skin health, and enhance overall body hydration.
+                        {{product?.description}}
                     </div>
                     <div class="outer d-flex mt-4 gap-4 align-items-center">
                         <div class="quantity">
-                            <div class="quantity-button minus"> - </div>
-                            <input type="text" id="quantityInput" class="qtyText" name="quantityInput" min="1" max="84"
-                                autocomplete="off">
-                            <div class="quantity-button plus"> + </div>
+
+                            <div class="quantity-button minus" (click)="decrease()">
+                                -
+                            </div>
+
+                            <input type="text" class="qtyText" [(ngModel)]="quantity" readonly>
+
+                            <div class="quantity-button plus" (click)="increase()">
+                                +
+                            </div>
+
                         </div>
                         <div class="social-share">
                             <h4 class="social-share-title mb-0">Share on </h4>
@@ -67,8 +73,9 @@
 
 
                     <div class="btns-group m-t-24">
-                        <button href="" class="btn btn-primary ">Add To Cart<i
-                                class="ms-1 ri-arrow-right-long-line"></i></button>
+                        <button href="" class="btn btn-primary " (click)="createCart()">
+                            Add To Cart
+                            <i class="ms-1 ri-arrow-right-long-line"></i></button>
                         <button href="" class="btn btn-outline-primary">Checkout<i
                                 class="ms-1 ri-arrow-right-long-line"></i></button>
                     </div>

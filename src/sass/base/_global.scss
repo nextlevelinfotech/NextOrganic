@@ -219,3 +219,19 @@ textarea:focus {
 .form-control{
   background: #fff;
 }
+
+.toast-container {
+  z-index: 100000000000 !important;
+}
+
+
+.toast-top-right {
+  top: 12px !important;
+  right: 12px !important;
+}
+
+.body-toaster .toast-top-right{
+  top: 50vh !important;
+  right: 12px !important;
+}
+

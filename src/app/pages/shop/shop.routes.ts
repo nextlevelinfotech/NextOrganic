@@ -10,7 +10,7 @@ export const shopRoutes: Routes = [
   },
 
   {
-    path: 'shop-single',
+    path: 'shop-single/:id',
     loadComponent: () =>
       import('./shop-single/shop-single.component').then(
         (m) => m.ShopSingleComponent,

@@ -1,16 +1,23 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RedZoomModule } from 'ngx-red-zoom';
+import { ActivatedRoute } from '@angular/router';
 import Splide from '@splidejs/splide';
 import { HeaderComponent } from '../../../header/header.component';
 import { FooterComponent } from '../../../footer/footer.component';
+import { ShopSingleService } from './shop-single.service';
+import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { ShopCommonService } from '../../../common/service/shop-common.service';
+import { CartEventService } from '../../../common/service/cart-event.service';
 
 @Component({
   selector: 'app-shop-single',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     MatTabsModule,
     RedZoomModule,
     HeaderComponent,
@@ -18,7 +25,18 @@ import { FooterComponent } from '../../../footer/footer.component';
   ],
   templateUrl: './shop-single.component.html',
 })
-export class ShopSingleComponent implements AfterViewInit {
+export class ShopSingleComponent implements AfterViewInit, OnInit {
+
+  isLoading: boolean = false;
+  productId!: number;
+  product: any;
+
+  //Add to cart
+  quantity: number = 1;
+  maxQty!: number;
+
+  constructor(private route: ActivatedRoute, public service: ShopCommonService, private toastr: ToastrService,
+    private cartEventService: CartEventService) { }
   images = [
     {
       id: 'img1',
@@ -42,25 +60,68 @@ export class ShopSingleComponent implements AfterViewInit {
     },
   ];
 
-  ngAfterViewInit(): void {
-    const main = new Splide('#main-carousel', {
-      type: 'fade',
-      pagination: false,
-      arrows: false,
-    });
-    const thumbnails = new Splide('#thumbnail-carousel', {
-      rewind: true,
-      fixedWidth: 100,
-      fixedHeight: 72,
-      isNavigation: true,
-      gap: 10,
-      focus: 'center',
-      pagination: false,
-      cover: true,
-    });
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const id = Number(params.get('id'));
+      this.productId = id;
 
-    main.sync(thumbnails);
-    main.mount();
-    thumbnails.mount();
+      this.service.getProductById(id).subscribe({
+        next: (res: any) => {
+          this.product = res;
+          this.maxQty = res.stockQuantity; // 🔥 FIX
+        }
+      });
+    });
   }
+  ngAfterViewInit(): void {
+
+  }
+
+
+
+  // Add to cart
+
+  decrease() {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+  }
+
+  increase() {
+
+    if (this.quantity < this.maxQty) {
+      this.quantity++;
+    }
+  }
+
+
+  createCart() {
+    let payload = {
+      productId: this.productId,
+      quantity: this.quantity
+    }
+
+
+    this.isLoading = true;
+    this.service.postCart(payload).subscribe({
+
+      next: (res: any) => {
+
+        this.isLoading = false;
+        // SIDEBAR LAI UPDATE GARAUNA YO TRIGGGER THAPNE
+        // SIDEBAR LAI UPDATE GARAUNA YO TRIGGGER THAPNE
+        this.cartEventService.notifyCartUpdate();
+          this.toastr.success('Successfully item added to cart',);
+        },
+        error: (err: any) => {
+          this.isLoading = false;
+        },
+        complete: () => {
+
+          this.isLoading = false; //  unlock button after response
+        },
+      });
+    }
+
+
 }

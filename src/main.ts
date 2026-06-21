@@ -17,7 +17,11 @@ bootstrapApplication(AppComponent, {
     provideAnimations(),
 
     importProvidersFrom(
-      ToastrModule.forRoot(),
+      ToastrModule.forRoot({
+        positionClass: 'toast-top-right',
+        timeOut: 1500,
+        preventDuplicates: true
+      }),
       RedZoomModule
     ),
 

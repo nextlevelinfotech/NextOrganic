@@ -39,6 +39,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.service.getProductsList().subscribe({
       next: (res: any) => {
         console.log(res, 'data g');
+          
         this.isLoading = false;
         this.productList = res
       },

@@ -25,71 +25,17 @@
                         <h2 class="widget-title">
                             <span>Category</span>
                         </h2>
+                        <!-- <option *ngFor="let item of categoryList" [value]="item.id">
+                                    {{ item.categoryName }}
+                                </option> -->
                         <ul class="widget-category">
                             <li>
-                                <a href="javascript:void(0)" (click)="filterCategory('all')">
-                                    All Products
-                                </a>
+                                <a href="javascript:void(0)" (click)="filterCategory(0)">All Products</a>
                             </li>
 
-                            <li>
-                                <a href="javascript:void(0)" (click)="filterCategory('detox')">
-                                    Detox Products
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="javascript:void(0)" (click)="filterCategory('agro')">
-                                    Agro Products
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="javascript:void(0)" (click)="filterCategory('supplements')">
-                                    Food Supplements
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="javascript:void(0)" (click)="filterCategory('hair')">
-                                    Hair Care
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="javascript:void(0)" (click)="filterCategory('facial')">
-                                   Facial
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="javascript:void(0)" (click)="filterCategory('oral')">
-                                    Oral Care
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="javascript:void(0)" (click)="filterCategory('personal')">
-                                    Personal Care
-                                </a>
-                            </li>
-                            
-                            <li>
-                                <a href="javascript:void(0)" (click)="filterCategory('oil')">
-                                    Oil
-                                </a>
-                            </li>
-                            
-
-                            <li>
-                                <a href="javascript:void(0)" (click)="filterCategory('skin')">
-                                    Skin Care
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="javascript:void(0)" (click)="filterCategory('tea & coffee')">
-                                    Tea & Coffee
+                            <li *ngFor="let item of categoryList">
+                                <a href="javascript:void(0)" (click)="filterCategory(item.id)">
+                                    {{ item.categoryName }}
                                 </a>
                             </li>
                         </ul>
@@ -128,14 +74,14 @@
 
                             <div class="price-text">
                                 Price:
-                                $<span id="minPrice">40</span>
+                                Rs<span id="minPrice">40</span>
                                 —
-                                $<span id="maxPrice">1,220</span>
+                                Rs<span id="maxPrice">1,220</span>
                             </div>
 
-                            <button class="filter-btn" onclick="filterPrice()">
+                            <!-- <button class="filter-btn" (click)="filterPrice()">
                                 FILTER
-                            </button>
+                            </button> -->
 
                         </div>
 
@@ -165,32 +111,28 @@
                             </form>
                         </div>
                         <div class="product-catg-head-right d-flex gap-4 align-items-center">
-                            <div class="search-container">
-
-                                <div class="search-box">
-                                    <input type="text" placeholder="Search products...">
-
-                                    <button>
-                                        <i class="fa-solid fa-magnifying-glass"></i>
-                                    </button>
-                                </div>
-
+                            <div class="search-box">
+                                <input type="text" placeholder="Search products..." (input)="onSearch($event)">
+                                <!-- <button>
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button> -->
                             </div>
-
                         </div>
                     </div>
                     <div class="product-catg-body m-t-32">
                         <div class="row">
-                            @for(product of paginatedProducts; track product.name) {
+                            @for(product of paginatedProducts; track product.id) {
                             <div class="col-md-6 col-lg-4">
-                                <div class="product-card">
+                                <app-product-card [product]="product" [isHomePage]="false" (addToCartClick)="openPopup($event)">
+                                </app-product-card>
+                                <!-- <div class="product-card">
                                     <div class="product-img-holder">
-                                        <img [src]="product.image" [alt]="product.name">
+                                        <img [src]="product.productImageBase64" [alt]="product.name">
                                     </div>
 
                                     <div class="product-content">
                                         <div class="product-title">
-                                            {{ product.name }}
+                                            {{ product.productName }}
                                         </div>
 
                                         <div class="product-price">
@@ -199,7 +141,7 @@
                                     </div>
                                     <ul class="product-action">
 
-                                        <li (click)="openPopup($event)">
+                                        <li (click)="openPopup($event, product)">
                                             <a href="#"><i class="fa-solid fa-basket-shopping"></i></a>
                                         </li>
                                         <li>
@@ -207,7 +149,7 @@
                                         </li>
                                     </ul>
 
-                                </div>
+                                </div> -->
                             </div>
                             }
                         </div>
@@ -218,31 +160,31 @@
     </div>
 </section>
 <div class="container text-center m-b-40">
-<div class="pagination-wrapper mt-4">
-    <ul class="pagination justify-content-center">
+    <div class="pagination-wrapper mt-4">
+        <ul class="pagination justify-content-center">
 
-        <li class="page-item" [class.disabled]="currentPage === 1">
-            <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage - 1)">
-                Previous
-            </a>
-        </li>
+            <li class="page-item" [class.disabled]="currentPage === 1">
+                <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage - 1)">
+                    Previous
+                </a>
+            </li>
 
-        @for(page of totalPages; track page) {
-        <li class="page-item" [class.active]="currentPage === page">
-            <a class="page-link" href="javascript:void(0)" (click)="changePage(page)">
-                {{ page }}
-            </a>
-        </li>
-        }
+            @for(page of totalPages; track page) {
+            <li class="page-item" [class.active]="currentPage === page">
+                <a class="page-link" href="javascript:void(0)" (click)="changePage(page)">
+                    {{ page }}
+                </a>
+            </li>
+            }
 
-        <li class="page-item" [class.disabled]="currentPage === totalPages.length">
-            <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage + 1)">
-                Next
-            </a>
-        </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages.length">
+                <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage + 1)">
+                    Next
+                </a>
+            </li>
 
-    </ul>
-</div>
+        </ul>
+    </div>
 </div>
 
 <!-- Overlay -->
@@ -261,29 +203,43 @@
 
                 <div class="product-single-img-wrap">
                     <div class="product-single-img text-center">
-                        <img src="../../../../assets/img/products/alovera-img-big.jpg" alt="">
+                        <img [src]="singleProduct.productImageBase64" alt="">
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="product-single-content">
-                    <h3 class="product-single-title mb-2">Aloe Vera Capsules</h3>
 
-                    <h4 class="product-single-price">Rs. 12800.00</h4>
-                    <div class="badge text-bg-secondary mb-3">In Stock (1)</div>
+                <div class="product-single-content">
+                    <h3 class="product-single-title mb-2">{{ singleProduct.productName }}</h3>
+
+                    <h4 class="product-single-price">{{singleProduct.price}}</h4>
+                    <div class="badge text-bg-secondary mb-3">In Stock {{singleProduct.stockQuantity}}</div>
 
                     <div class="outer d-flex mt-4 gap-4 align-items-center">
-                        <div class="quantity">
+                        <!-- <div class="quantity">
                             <div class="quantity-button minus"> - </div>
                             <input type="text" id="quantityInput" class="qtyText" name="quantityInput" min="1" max="84"
                                 autocomplete="off">
                             <div class="quantity-button plus"> + </div>
+                        </div> -->
+                        <div class="quantity">
+
+                            <div class="quantity-button minus" (click)="decrease()">
+                                -
+                            </div>
+
+                            <input type="text" class="qtyText" [(ngModel)]="quantity" readonly>
+
+                            <div class="quantity-button plus" (click)="increase()">
+                                +
+                            </div>
+
                         </div>
-                        <button href="" class="btn btn-primary ">Add To Cart<i
+                        <button href="" class="btn btn-primary " (click)="createCart()">Add To Cart<i
                                 class="ms-1 ri-arrow-right-long-line"></i></button>
                     </div>
 
-                    <a routerLink="/shop/shop-single" class="btn-link mt-4 ">View Full Product<i
+                    <a [routerLink]="['/shop/shop-single', singleProduct.id]" class="btn-link mt-4 ">View Full Product<i
                             class="ms-1 ri-arrow-right-long-line"></i></a>
 
 

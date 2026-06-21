@@ -1,0 +1,38 @@
+<div class="product-card">
+    <!-- १. डिस्काउन्ट ट्याग: जुन होम पेजमा मात्र चाहिन्छ -->
+    <div *ngIf="isHomePage" class="discount-tag">
+        {{ product.discountPercent }}% OFF
+    </div>
+    <div class="product-img-holder">
+        <img [src]="product.productImageBase64" [alt]="product.name">
+    </div>
+
+    <div class="product-content">
+        <div class="product-title">
+            {{ product.productName }}
+        </div>
+
+        <div class="product-price">
+            Rs. {{ product.price }}
+        </div>
+        <!-- २. सर्ट डिस्क्रिप्सन: यो पनि होम पेजमा मात्र थप्नु पर्यो रे -->
+        <p *ngIf="isHomePage" class="short-desc">
+            {{ product.description | slice:0:50 }}...
+        </p>
+
+    </div>
+    <ul class="product-action">
+        <li (click)="onBasketClick($event)">
+            <a href="#"><i class="fa-solid fa-basket-shopping"></i></a>
+        </li>
+        <li>
+            <a href="#!"><i class="fa-solid fa-heart"></i></a>
+        </li>
+    </ul>
+
+</div>
+
+
+<!-- HTML को Element नै थप-घट गर्नु छ: *ngIf="isHomePage" वा *ngIf="isCategoryPage" use garne.
+
+CSS को Class थप्नु वा बदल्नु छ: [ngClass]="isHomePage ? 'class-A' : 'class-B'" use garne. -->

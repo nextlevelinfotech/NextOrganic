@@ -16,7 +16,8 @@
                         <!-- Product Card -->
                         <div class="col-md-6" *ngFor="let item of productList; let i = index">
                             <div class="product-card">
-                                <img [src]="item.productImageUrl" class="product-image" alt="Product">
+                                <img [src]="item.productImageBase64" class="product-image" alt="Product">
+                 
 
                                 <div class="product-content">
                                     <h5 class="mb-2">{{item.productName}}</h5>
@@ -82,8 +83,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Product QTY</label>
-                            <input type="text" [(ngModel)]="this.service.productsModel.StockQuantity" name="StockQuantity"
-                                class="form-control" placeholder="Enter product qty">
+                            <input type="text" [(ngModel)]="this.service.productsModel.StockQuantity"
+                                name="StockQuantity" class="form-control" placeholder="Enter product qty">
                         </div>
 
                         <div class="mb-3">
