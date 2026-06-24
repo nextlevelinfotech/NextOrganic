@@ -4,4 +4,7 @@ export class Endpoint {
  static postProducts = '/api/Product';
  static category = '/api/admin/categories';
 
+ static productById = '/api/Product';
+
+
 }

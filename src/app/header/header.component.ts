@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, HostListener } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit, OnDestroy } from '@angular/core'; 
 declare var jQuery: any;
 import * as jquery from 'jquery';
 import { RouterModule } from '@angular/router';
@@ -7,6 +7,9 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartSidebarComponent } from '../components/cart-sidebar/cart-sidebar.component';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../user-admin/core/auth/authService/auth.service';
+import { ShopCommonService } from '../common/service/shop-common.service';
+import { CartEventService } from '../common/service/cart-event.service';
+import { Subscription } from 'rxjs'; 
 
 @Component({
   selector: 'app-header',
@@ -20,15 +23,63 @@ import { AuthService } from '../user-admin/core/auth/authService/auth.service';
   ],
   templateUrl: './header.component.html',
 })
-export class HeaderComponent implements AfterViewInit {
+export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy { 
   isLogin: boolean = false;
+  cartCount: number = 0; 
+  private cartSubscription!: Subscription; 
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private service: ShopCommonService,
+    private cartEventService: CartEventService
+  ) {
     this.isLogin = this.authService.isLoggedIn();
   }
 
+// ... (तपाईंको माथिको कोड उस्तै) ...
+  ngOnInit(): void {
+    // 🌟 बाहिरको this.loadCartCount(); हटाइयो
+    
+    this.cartSubscription = this.cartEventService.cartUpdated$.subscribe((updated: any) => {
+      if (updated !== null && updated !== undefined) {
+        if (Array.isArray(updated)) {
+          // पेमेन्ट पछि [] आउँदा सिधै जिरो बनाउने
+          this.calculateCountFromList(updated);
+        } else {
+          // साधारण ट्रिगर (true) आउँदा मात्र API कल गर्ने
+          this.loadCartCount(); 
+        }
+      } else {
+        // 🌟 पहिलो पटक एप्लिकेसन खुल्दा (null आउँदा) मात्र API कल गर्ने
+        this.loadCartCount();
+      }
+    });
+  }
+  // ... (तपाईंको तलको कोड उस्तै) ...
   ngAfterViewInit(): void {
     this.initMobileMenu();
+  }
+  
+  loadCartCount() {
+    this.service.getCartList().subscribe({
+      next: (res: any) => {
+        const list = res || [];
+        this.calculateCountFromList(list);
+      },
+      error: (err) => {
+        console.error('Cart count लोड हुन सकेन:', err);
+      }
+    });
+  }
+
+  // एरे लिस्टबाट काउन्ट निकाल्ने सहयोगी फङ्सन
+  calculateCountFromList(list: any[]) {
+    if (list && list.length > 0) {
+      // यदि टोटल सामानको संख्या (Quantity) जोड्ने हो भने:
+      this.cartCount = list.reduce((total: number, item: any) => total + (Number(item.quantity) || 1), 0);
+    } else {
+      this.cartCount = 0;
+    }
   }
 
   private initMobileMenu(): void {
@@ -118,8 +169,9 @@ export class HeaderComponent implements AfterViewInit {
 
       // Initialize the plugin on menu
       $('.th-menu-wrapper').thmobilemenu();
-    })(jQuery); // 👈 pass jQuery into the IIFE
+    })(jQuery); 
   }
+
   isSticky: boolean = false;
 
   @HostListener('window:scroll', [])
@@ -159,10 +211,14 @@ export class HeaderComponent implements AfterViewInit {
     },
   ];
 
-  //logout
-
   logout() {
     this.authService.logout();
     this.isLogin = false;
+  }
+
+  ngOnDestroy(): void {
+    if (this.cartSubscription) {
+      this.cartSubscription.unsubscribe();
+    }
   }
 }

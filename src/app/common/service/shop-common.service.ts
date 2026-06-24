@@ -10,6 +10,7 @@ import { finalize, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CartEventService } from './cart-event.service';
+import { checkoutModel } from '../models/checkout-model';
 
 
 @Injectable({
@@ -17,6 +18,11 @@ import { CartEventService } from './cart-event.service';
 })
 export class ShopCommonService {
   private baseurl = environment.apiBaseUrl;
+
+  checkoutModel: checkoutModel = new checkoutModel();
+
+
+
   constructor(
     private http: HttpClient,
     private toastr: ToastrService,
@@ -24,6 +30,9 @@ export class ShopCommonService {
   ) { }
 
 
+
+
+  //product
   getProductById(id: number) {
     return this.http.get(`${this.baseurl}${Endpoint.getProductById}/${id}`);
   }
@@ -38,6 +47,7 @@ export class ShopCommonService {
     return this.http.get(`${this.baseurl}${Endpoint.category}`);
   }
 
+  //cart
   postCart(data: any) {
     return this.http.post(`${this.baseurl}${Endpoint.cart}`, data);
   }
@@ -46,25 +56,39 @@ export class ShopCommonService {
     return this.http.get(`${this.baseurl}${Endpoint.cartList}`);
   }
 
-  // 🔥 यो एउटा फङ्सनले दुवै कम्पोनेन्टको ६० लाइन कोड बचाउँछ
-  addToCart(productId: number, quantity: number): Observable<any> {
-    const payload = { productId, quantity };
-
-    return this.http.post(`${this.baseurl}/api/cart`, payload).pipe(
-      tap({
-        next: (res: any) => {
-          // १. साइडबारलाई लिस्ट रिफ्रेश गर्न अलार्म दिने
-          this.cartEventService.notifyCartUpdate();
-          // २. टोस्टर नोटिफिकेसन देखाउने
-          this.toastr.success('Successfully item added to cart');
-        },
-        error: (err) => {
-          // ब्याकइन्डबाट एरर आए टोस्टर देखाउन मन लागे यहाँ थप्न सक्नुहुन्छ
-          this.toastr.error(err.error?.message || 'Something went wrong');
-        }
-      })
-    );
+  deleteCart(id: number) {
+    return this.http.delete(`${this.baseurl}${Endpoint.deleteCart}/${id}`);
   }
+
+
+  //order
+
+
+  order(data: any) {
+    return this.http.post(`${this.baseurl}${Endpoint.order}`, data);
+  }
+
+
+
+  //  यो एउटा फङ्सनले दुवै कम्पोनेन्टको ६० लाइन कोड बचाउँछ
+  // addToCart(productId: number, quantity: number): Observable<any> {
+  //   const payload = { productId, quantity };
+
+  //   return this.http.post(`${this.baseurl}/api/cart`, payload).pipe(
+  //     tap({
+  //       next: (res: any) => {
+  //         // १. साइडबारलाई लिस्ट रिफ्रेश गर्न अलार्म दिने
+  //         this.cartEventService.notifyCartUpdate();
+  //         // २. टोस्टर नोटिफिकेसन देखाउने
+  //         this.toastr.success('Successfully item added to cart');
+  //       },
+  //       error: (err) => {
+  //         // ब्याकइन्डबाट एरर आए टोस्टर देखाउन मन लागे यहाँ थप्न सक्नुहुन्छ
+  //         this.toastr.error(err.error?.message || 'Something went wrong');
+  //       }
+  //     })
+  //   );
+  // }
 
 
 }

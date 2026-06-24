@@ -158,147 +158,18 @@
     <div class="container">
         <div class="section-title d-flex align-items-center justify-content-between">
             <h2 class="mb-0">Our Product</h2>
-            <a href="" class="btn btn-outline-primary d-none d-md-block">View More products <i
+            <a routerLink="/shop/categories" class="btn btn-outline-primary d-none d-md-block">View More products <i
                     class="ri-arrow-right-long-line"></i></a>
         </div>
 
         <div class="row">
+            @for(product of products; track product.id) {
             <div class="col-md-4 col-lg-3">
-                <div class="product-card">
-                    <div class="product-img-holder"><img src="../../../assets/img/products/product-img-1.jpg" alt="">
-                    </div>
-                    <div class="product-content">
-                        <div class="product-title">Aloe Vera Capsules</div>
-                        <div class="product-price">
-                            <div class="product-price-main">Rs. 550.00</div>
-                            <div class="product-price-strike">Rs. 850.00</div>
-                        </div>
-                    </div>
-                    <ul class="product-action">
-                        <li><a href="#"><i class="fa-solid fa-basket-shopping"></i></a></li>
-                        <li><a href="#!"><i class="fa-solid fa-heart"></i></a></li>
-                    </ul>
-                </div>
+                <app-product-card [product]="product" [isHomePage]="false" (addToCartClick)="openPopup($event)">
+                </app-product-card>
+
             </div>
-            <div class="col-md-4 col-lg-3">
-                <div class="product-card">
-                    <div class="product-img-holder"><img src="../../../assets/img/products/product-img-2.jpg" alt="">
-                    </div>
-                    <div class="product-content">
-                        <div class="product-title">Aloevera B</div>
-                        <div class="product-price">
-                            <div class="product-price-main">Rs. 750.00</div>
-                            <div class="product-price-strike">Rs. 850.00</div>
-                        </div>
-                    </div>
-                    <ul class="product-action">
-                        <li><a href="#!"><i class="fa-solid fa-basket-shopping"></i></a></li>
-                        <li><a href="#!"><i class="fa-solid fa-heart"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3">
-                <div class="product-card">
-                    <div class="product-img-holder"><img src="../../../assets/img/products/product-img-3.jpg" alt="">
-                    </div>
-                    <div class="product-content">
-                        <div class="product-title">Cordyceps Capsules</div>
-                        <div class="product-price">
-                            <div class="product-price-main">Rs. 2,650.00</div>
-                            <div class="product-price-strike">Rs. 2,750.00</div>
-                        </div>
-                    </div>
-                    <ul class="product-action">
-                        <li><a href="#!"><i class="fa-solid fa-basket-shopping"></i></a></li>
-                        <li><a href="#!"><i class="fa-solid fa-heart"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3">
-                <div class="product-card">
-                    <div class="product-img-holder"><img src="../../../assets/img/products/product-img-4.jpg" alt="">
-                    </div>
-                    <div class="product-content">
-                        <div class="product-title">Ganoderma Capsules</div>
-                        <div class="product-price">
-                            <div class="product-price-main">Rs. 1,600.00</div>
-                            <div class="product-price-strike">Rs. 1,800.00</div>
-                        </div>
-                    </div>
-                    <ul class="product-action">
-                        <li><a href="#!"><i class="fa-solid fa-basket-shopping"></i></a></li>
-                        <li><a href="#!"><i class="fa-solid fa-heart"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3">
-                <div class="product-card">
-                    <div class="product-img-holder"><img src="../../../assets/img/products/product-img-5.jpg" alt="">
-                    </div>
-                    <div class="product-content">
-                        <div class="product-title">Alfa Alfa</div>
-                        <div class="product-price">
-                            <div class="product-price-main">Rs. 1,050.00 </div>
-                            <div class="product-price-strike">Rs. 1,150.00 </div>
-                        </div>
-                    </div>
-                    <ul class="product-action">
-                        <li><a href="#!"><i class="fa-solid fa-basket-shopping"></i></a></li>
-                        <li><a href="#!"><i class="fa-solid fa-heart"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3">
-                <div class="product-card">
-                    <div class="product-img-holder"><img src="../../../assets/img/products/product-img-6.jpg" alt="">
-                    </div>
-                    <div class="product-content">
-                        <div class="product-title">Curcumin</div>
-                        <div class="product-price">
-                            <div class="product-price-main">Rs. 4000.00</div>
-                            <div class="product-price-strike">Rs. 5000.00</div>
-                        </div>
-                    </div>
-                    <ul class="product-action">
-                        <li><a href="#!"><i class="fa-solid fa-basket-shopping"></i></a></li>
-                        <li><a href="#!"><i class="fa-solid fa-heart"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3">
-                <div class="product-card">
-                    <div class="product-img-holder"><img src="../../../assets/img/products/product-img-7.jpg" alt="">
-                    </div>
-                    <div class="product-content">
-                        <div class="product-title">Ganoderma</div>
-                        <div class="product-price">
-                            <div class="product-price-main">Rs. 1,650.00</div>
-                            <div class="product-price-strike">Rs. 1,850.00</div>
-                        </div>
-                    </div>
-                    <ul class="product-action">
-                        <li><a href="#!"><i class="fa-solid fa-basket-shopping"></i></a></li>
-                        <li><a href="#!"><i class="fa-solid fa-heart"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3">
-                <div class="product-card">
-                    <div class="product-img-holder"><img src="../../../assets/img/products/product-img-8.jpg" alt="">
-                    </div>
-                    <div class="product-content">
-                        <div class="product-title">Gcombogia</div>
-                        <div class="product-price">
-                            <div class="product-price-main">Rs. 1600.00</div>
-                            <div class="product-price-strike">Rs. 1800.00</div>
-                        </div>
-                    </div>
-                    <ul class="product-action">
-                        <li><a href="#!"><i class="fa-solid fa-basket-shopping"></i></a></li>
-                        <li><a href="#!"><i class="fa-solid fa-heart"></i></a></li>
-                    </ul>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
@@ -383,3 +254,72 @@
     </div>
 </section>
 <app-footer></app-footer>
+
+<!-- Overlay -->
+<div class="popup-overlay" (click)="closePopup()" *ngIf="showPopup"></div>
+
+<!-- Popup -->
+<div class="popup-container w-520" *ngIf="showPopup">
+    <div class="popup-header">
+        <h4 class="mb-0 section-title"> Add To Cart</h4>
+        <span class="close-btn" (click)="closePopup()">×</span>
+    </div>
+
+    <div class="popup-body">
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="product-single-img-wrap">
+                    <div class="product-single-img text-center">
+                        <img [src]="singleProduct.productImageBase64" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="product-single-content">
+                    <h3 class="product-single-title mb-2">{{ singleProduct.productName }}</h3>
+
+                    <h4 class="product-single-price">{{singleProduct.price}}</h4>
+                    <div class="badge text-bg-secondary mb-3">In Stock {{singleProduct.stockQuantity}}</div>
+
+                    <div class="outer d-flex mt-4 gap-4 align-items-center">
+                        <!-- <div class="quantity">
+                            <div class="quantity-button minus"> - </div>
+                            <input type="text" id="quantityInput" class="qtyText" name="quantityInput" min="1" max="84"
+                                autocomplete="off">
+                            <div class="quantity-button plus"> + </div>
+                        </div> -->
+                        <div class="quantity">
+
+                            <div class="quantity-button minus" (click)="decrease()">
+                                -
+                            </div>
+
+                            <input type="text" class="qtyText" [(ngModel)]="quantity" readonly>
+
+                            <div class="quantity-button plus" (click)="increase()">
+                                +
+                            </div>
+
+                        </div>
+                        <button href="" class="btn btn-primary " (click)="createCart()">Add To Cart<i
+                                class="ms-1 ri-arrow-right-long-line"></i></button>
+                    </div>
+
+                    <a [routerLink]="['/shop/shop-single', singleProduct.id]" class="btn-link mt-4 ">View Full Product<i
+                            class="ms-1 ri-arrow-right-long-line"></i></a>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer Buttons -->
+    <div class="popup-footer">
+
+    </div>
+</div>

@@ -18,7 +18,5 @@ export class HomeService {
 
   constructor(private http: HttpClient) { }
 
-  getProductList() {
-    return this.http.get(`${this.baseurl}${Endpoint.getProductList}`);
-  }
+
 }

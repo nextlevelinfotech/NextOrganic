@@ -30,4 +30,13 @@ export class ProductsService {
     return this.http.get(`${this.baseurl}${Endpoint.category}`);
   }
 
+
+  getProductById(id: number) {
+    return this.http.get(`${this.baseurl}${Endpoint.productById}/${id}`);
+  }
+
+
+
+
+
 }

@@ -6,7 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import Splide from '@splidejs/splide';
 import { HeaderComponent } from '../../../header/header.component';
 import { FooterComponent } from '../../../footer/footer.component';
-import { ShopSingleService } from './shop-single.service';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ShopCommonService } from '../../../common/service/shop-common.service';
@@ -108,7 +107,6 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
       next: (res: any) => {
 
         this.isLoading = false;
-        // SIDEBAR LAI UPDATE GARAUNA YO TRIGGGER THAPNE
         // SIDEBAR LAI UPDATE GARAUNA YO TRIGGGER THAPNE
         this.cartEventService.notifyCartUpdate();
           this.toastr.success('Successfully item added to cart',);

@@ -3,7 +3,6 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../../header/header.component';
 import { FooterComponent } from '../../../footer/footer.component';
-import { ShopCategoriesService } from './shop-categories.service';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ShopCommonService } from '../../../common/service/shop-common.service';
@@ -50,14 +49,9 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
   maxPrice!: HTMLElement;
 
   constructor(public service: ShopCommonService, private toastr: ToastrService,
-    private cartEventService: CartEventService // २. यहाँ Inject गर्नुहोस्
+    private cartEventService: CartEventService 
   ) { }
 
-  // 🌟 कार्ड भित्रको "Add to Cart" थिच्दा चल्ने फङ्सन
-  handleAddToCart(product: any) {
-    console.log('Home page bata cart ma add हुन लागेको प्रोडक्ट:', product);
-    // यहाँ तपाईँले पपअप खोल्ने (openPopup) वा सिधै cartSidebarService.addToCart कल गर्न सक्नुहुन्छ
-  }
 
   ngOnInit(): void {
     this.getCategoryList();
@@ -104,6 +98,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
       next: (res: any) => {
         this.isLoading = false;
         this.products = res;
+        console.log("product list", res)
         this.applyFilters(); // API बाट डाटा आएपछि फिल्टरहरू चल्छन्
       },
       error: (err: any) => { this.isLoading = false; },
@@ -268,7 +263,8 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
       next: (res: any) => {
         // --- यहाँ कल गर्नुहोस् ---
         // SIDEBAR LAI UPDATE GARAUNA YO TRIGGGER THAPNE
-        this.cartEventService.notifyCartUpdate();
+
+        this.cartEventService.notifyCartUpdate(true);
 
         this.fetchProductList();
         this.isLoading = false;

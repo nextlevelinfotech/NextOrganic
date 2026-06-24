@@ -17,7 +17,7 @@
                         <div class="col-md-6" *ngFor="let item of productList; let i = index">
                             <div class="product-card">
                                 <img [src]="item.productImageBase64" class="product-image" alt="Product">
-                 
+
 
                                 <div class="product-content">
                                     <h5 class="mb-2">{{item.productName}}</h5>
@@ -29,9 +29,10 @@
                                         <span class="price"> {{item.price}} </span>
 
                                         <div>
-                                            <button class="btn btn-sm btn-primary me-2">
+                                            <button class="btn btn-sm btn-primary me-2" (click)="getProductId(item.id)">
                                                 Edit
                                             </button>
+
 
                                             <button class="btn btn-sm btn-danger">
                                                 Delete
@@ -90,12 +91,17 @@
                         <div class="mb-3">
                             <label class="form-label">Description</label>
                             <textarea rows="4" class="form-control" [(ngModel)]="this.service.productsModel.Description"
-                                name="Description"></textarea>
+                                name="Description" required></textarea>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Product Image</label>
                             <input type="file" class="form-control" (change)="onFileSelected($event)">
+
+                            <div *ngIf="imagePreview" class="mt-2 text-center border p-2 rounded">
+                                <img [src]="imagePreview" alt="Product Preview"
+                                    style="max-height: 120px; object-fit: contain;">
+                            </div>
                         </div>
 
                         <div class="flex-wrap gap-4 d-flex">

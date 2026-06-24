@@ -117,9 +117,9 @@
                         </div>
 
                     </div>
-                    <div class="cart-btn">
+                    <div class="cart-btn" style="cursor: pointer;">
                         <i class="ri-shopping-cart-2-line"></i>
-                        <span class="cart-count">2</span>
+                        <span class="cart-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
                     </div>
                 </div>
             </div>

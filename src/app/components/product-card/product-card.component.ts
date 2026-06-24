@@ -11,12 +11,12 @@ export class ProductCardComponent {
   @Input() product: any;
   @Output() addToCartClick = new EventEmitter<any>(); //हामी कार्ड भित्र एउटा घण्टी (EventEmitter) बनाउँछौँ, जसको नाम addToCartClick राखौँ। जसले बाहिर डाटा बोकेर जान्छ
 
-  // 🌟 यो नयाँ फङ्सन थप्नुहोस् जसले बाहिर प्यारेन्ट (Category) लाई खबर गर्छ
+
 onBasketClick(event: Event) {
   // १. एउटा प्याकेट (Object) भित्र दुवै कुरा प्याक गर्ने
   const packet = {
-    clickEvent: event,      // क्लिकको जानकारी
-    productData: this.product // प्रोडक्टको डाटा
+    clickEvent: event,     
+    productData: this.product 
   };
   
   // २. अब .emit() भित्र त्यो 'packet' हालेर बाहिर पठाउने

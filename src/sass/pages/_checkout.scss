@@ -26,10 +26,8 @@
 .payment-card-header {
     padding: 1rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    border: 1px solid #d1ddd4;
-    background: #e5ede7;
+    gap: 1rem;
 }
 
 .payment-card-header-right {

@@ -1,32 +1,98 @@
 <!-- sidebar-info start -->
+
 <div class="cart-sidebar">
-    <button type="button" class="cart-close-btn"><i class="fa-solid fa-xmark"></i></button>
-    <h2 class="heading-title text-uppercase">Cart Items - <span>4</span></h2>
-    <div class="cart-items-list">
-        <div class="cart-item" *ngFor="let item of cartList">
-            <div class="item-image">
-                <img [src]="item.productImage" alt="image_not_found">
-            </div>
-            <div class="item-content">
-                <h4 class="item-title">
-                    {{item.productName}}
-                </h4>
-                <span class="item-price">{{item.price}}</span>
-                <button type="button" class="remove-btn"><i class="fa-solid fa-xmark"></i></button>
+
+    <button type="button" class="cart-close-btn">
+        <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <h2 class="heading-title text-uppercase">
+        Cart Items - <span>{{ cartList.length }}</span>
+    </h2>
+
+    <div *ngIf="cartList.length === 0" class="text-center p-4 text-muted">
+        Your cart is empty
+    </div>
+    <div *ngIf="cartList.length > 0">
+        <div class="cart-items-list">
+            <div class="cart-item" *ngFor="let item of cartList">
+                <div class="item-image">
+                    <img [src]="item.productImageBase64 || item.productImage" alt="image_not_found">
+                </div>
+
+                <div class="item-content">
+                    <h4 class="item-title">
+                        {{ item.productName }}
+                    </h4>
+
+                    <span class="item-price">
+                        Rs. {{ item.price }}
+                        <small *ngIf="item.quantity">
+                            x {{ item.quantity }}
+                        </small>
+                    </span>
+
+                    <button type="button" class="remove-btn" (click)="deleteProduct(item.cartDetailId)">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
             </div>
         </div>
 
+        <div class="cart-summary mt-4  rounded">
+            <table class="cart-totals-table w-100">
+                <tbody>
+                    <tr>
+                        <th>Subtotal</th>
+                        <td>
+                            <span class="price-amount clr-dark  font-bold">
+                                <span class="price-currencySymbol">Rs </span>{{ cartTotalPrice | number:'1.2-2' }}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> Shipping Charge</td>
+                        <td>
+                            <span class="price-amount clr-dark  font-bold">
+                                <span class="price-currencySymbol">Rs </span>{{ ( shippingCharge) | number:'1.2-2' }}
+                            </span>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <td>
+                            <span class="price-amount clr-dark  font-bold">
+                                <span class="price-currencySymbol">Rs </span>{{ (cartTotalPrice + shippingCharge) |
+                                number:'1.2-2' }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ul class="btns_group ul_li mt-4">
+                <li>
+                    <a routerLink="/shop/shop-cart" class="btn btn-primary">
+                        View Cart
+                    </a>
+                </li>
+
+                <li>
+                    <a routerLink="/shop/checkout" class="btn btn-secondary">
+                        Checkout
+                    </a>
+                </li>
+            </ul>
+
+        </div>
 
     </div>
 
-    <ul class="btns_group ul_li mt-4">
-        <li><a routerLink="/shop/shop-cart" class="btn btn-primary">
-                View Cart
-            </a></li>
-        <li><a routerLink="/shop/checkout" class="btn btn-secondary">
-                Checkout
-            </a></li>
-    </ul>
+
+
 </div>
+
 <div class="body-overlay"></div>
+
 <!-- sidebar-info end -->

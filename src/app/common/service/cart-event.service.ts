@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs'; // 🌟 Subject को सट्टा BehaviorSubject
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartEventService {
-  // Euta event emitter jasle cart update vayo vanera stream garchha
-private cartUpdateSubject = new Subject<boolean>();
+  // 🌟 null बाट सुरु गर्ने ताकि पहिलो पटक पेज लोड हुँदा थाहा होस्
+  private cartUpdateSubject = new BehaviorSubject<any>(null);
   cartUpdated$ = this.cartUpdateSubject.asObservable();
 
-  // Yo function components le call garchhan cart ma thapda
-  notifyCartUpdate() {
-    this.cartUpdateSubject.next(true);
+  // 🌟 भ्यालु आउँदा पास गर्ने, नआउँदा ट्रु (true) मान्ने
+  notifyCartUpdate(data: any = true) {
+    this.cartUpdateSubject.next(data);
   }
 }
