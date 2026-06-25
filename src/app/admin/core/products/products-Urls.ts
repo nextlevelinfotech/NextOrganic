@@ -5,6 +5,8 @@ export class Endpoint {
  static category = '/api/admin/categories';
 
  static productById = '/api/Product';
+ static deleteProduct = '/api/Product';
+ static updateProduct = '/api/Product';
 
 
 }

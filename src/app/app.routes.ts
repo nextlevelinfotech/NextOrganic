@@ -28,6 +28,7 @@ export const routes: Routes = [
           ),
       },
 
+
       {
         path: 'register',
         loadComponent: () =>
@@ -91,6 +92,15 @@ export const routes: Routes = [
               ),
             canActivate: [authGuard],
           },
+          {
+            path: 'admin-orders',
+            loadComponent: () =>
+              import('./admin/core/orders/orders.component').then(
+                (m) => m.OrdersComponent,
+
+              ),
+            canActivate: [authGuard],
+          },
         ],
       },
 
@@ -107,6 +117,14 @@ export const routes: Routes = [
             // canActivate: [authGuard],
           },
           {
+            path: 'orders',
+            loadComponent: () =>
+              import('./user-admin/core/pages/orders/orders.component').then(
+                (m) => m.OrdersComponent,
+              ),
+            // canActivate: [authGuard],
+          },
+          {
             path: 'profile',
             loadComponent: () =>
               import('./user-admin/core/pages/profile/profile.component').then(
@@ -114,6 +132,7 @@ export const routes: Routes = [
               ),
             // canActivate: [authGuard],
           },
+
         ],
       },
 

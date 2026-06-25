@@ -1,0 +1,104 @@
+<div class="body-layout admin">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="card-body">
+
+
+                <div class="card-table">
+                    <div class="table-responsive-sm">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Serial no.</th>
+                                    <th>OrderNo</th>
+                                    <th>Order Id</th>
+                                    <th>DeliveryCharge</th>
+                                    <th>Order Status</th>
+                                    <th>Total Amount</th>
+                                    <th>Grand Amount</th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of orderList; let i = index">
+                                    <td>{{ i + 1 }}</td>
+
+                                    <td>{{ item.orderNo }}</td>
+                                    <td>#{{ item.orderId }}</td>
+
+                                    <!-- ३. रकमहरू (पैसालाई हजारको कमा र २ वटा डेसिमलमा मिलाउन 'number' पाइप) -->
+                                    <td>Rs. {{ item.deliveryCharge | number:'1.2-2' }}</td>
+
+                                    <td>
+                                        <span class="badge" [ngClass]="{
+                                        'bg-warning text-dark': item.orderStatus?.toLowerCase() === 'pending',
+                                        'bg-success': item.orderStatus?.toLowerCase() === 'delivered' || item.orderStatus?.toLowerCase() === 'completed',
+                                        'bg-danger': item.orderStatus?.toLowerCase() === 'cancelled',
+                                        'bg-info text-dark': item.orderStatus?.toLowerCase() === 'shipped'
+                                    }">
+                                            {{ item.orderStatus }}
+                                        </span>
+                                    </td>
+
+                                    <td>Rs. {{ item.totalAmount | number:'1.2-2' }}</td>
+                                    <td class="fw-bold text-primary">Rs. {{ item.grandAmount | number:'1.2-2' }}</td>
+
+                                    <!-- ५. एक्शन बटन (अर्डर हेर्न वा डिलिट गर्नका लागि) -->
+                                    <td>
+                                        <button class="btn btn-sm btn-primary me-1" (click)="openPopup(item.orderId)">
+                                            <i class="fa fa-eye"></i> View
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Overlay -->
+<div class="popup-overlay" (click)="closePopup()" *ngIf="showPopup"></div>
+
+<!-- Popup -->
+<div class="popup-container w-520" *ngIf="showPopup">
+    <div class="popup-header">
+        <h3 class="mb-0 section-title"> Add To Cart</h3>
+        <span class="close-btn" (click)="closePopup()">×</span>
+    </div>
+
+    <div class="popup-body">
+        <div class="row">
+            <div class="col-md-6" *ngFor="let item of productList;">
+                <div class="product-card">
+                    <div class="product-content">
+                        <h5 class="mb-2">{{item.productName}}</h5>
+                        <p class="mb-1 text-muted">
+                            {{item.quantity}}
+                        </p>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price"> {{item.totalAmount}} </span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer Buttons -->
+    <div class="popup-footer">
+
+    </div>
+</div>

@@ -3,8 +3,10 @@ import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { ProductsService } from './products.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+
 declare var $: any;
 import 'select2';
+
 @Component({
   selector: 'app-products',
   imports: [CommonModule, FormsModule],
@@ -15,252 +17,259 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   isLoading: boolean = false;
   categoryList: any[] = [];
 
+  // Image Upload Variables
+  selectedFile: File | null = null;
+  imagePreview: string | ArrayBuffer | null = null;
+
+  // Track selected product ID for editing
+  selectedProductId: number | null = null;
+
   constructor(
     public service: ProductsService,
     private toastr: ToastrService,
-    private el: ElementRef,
-
+    private el: ElementRef
   ) { }
-
-
 
   ngOnInit(): void {
     this.fetchProductList();
     this.getCategoryList();
   }
+
   ngAfterViewInit(): void {
     $(this.el.nativeElement).find('select').select2();
   }
 
-
-  //fetechProductList
+  // Fetch Product List
   fetchProductList() {
     this.isLoading = true;
     this.service.getProductsList().subscribe({
       next: (res: any) => {
-        console.log(res, 'data g');
-
-        this.isLoading = false;
-        this.productList = res
-      },
-      error: (err: any) => {
-        this.isLoading = false;
-      },
-      complete: () => {
-        this.isLoading = false; //  unlock button after response
-      },
-    });
-  }
-
-  // onFileSelected(event: any) {
-  //   const file = event.target.files[0];
-
-  //   if (file) {
-  //     const reader = new FileReader();
-
-  //     reader.onload = () => {
-  //       this.service.productsModel.ProductImage =
-  //         reader.result as string;
-  //     };
-
-  //     reader.readAsDataURL(file);
-  //   }
-  // }
-
-
-  // Image Upload ===========================================================
-
-  selectedFile: File | null = null;
-  imagePreview: string | ArrayBuffer | null = null;
-
-  onFileSelected(event: any): void {
-    const file = event.target.files[0];
-
-    if (file) {
-      this.selectedFile = file;
-
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        this.imagePreview = reader.result;
-      };
-
-      reader.readAsDataURL(file);
-    }
-  }
-  resetImage(): void {
-    this.imagePreview = null;
-  }
-
-  // Image Upload End===========================================================
-
-
-  //getCategoryList
-
-  getCategoryList() {
-    this.service.getCategoryList().subscribe({
-      next: (res: any) => {
-        console.log(res, 'data here');
-        this.isLoading = false;
-        this.categoryList = res
-      },
-      error: (err: any) => {
-        this.isLoading = false;
-      },
-    })
-  }
-
-
-  //create Product
-  // postProduct() {
-
-  //   let payload = {
-  //     ProductName: this.service.productsModel.ProductName,
-  //     Description: this.service.productsModel.Description,
-  //     Price: this.service.productsModel.Price,
-  //     StockQuantity: this.service.productsModel.StockQuantity,
-  //     CategoryId: Number($("#product-category").val()),
-  //     ProductImage: this.imagePreview,
-  //     ProductImages: []
-  //   };
-
-  //   this.isLoading = true;
-  //   this.service.postProduct(payload).subscribe({
-  //     next: (res: any) => {
-  //       console.log(res, 'data');
-  //       this.isLoading = false;
-  //       this.fetchProductList();
-  //     },
-  //     error: (err: any) => {
-  //       this.isLoading = false;
-  //     },
-  //     complete: () => {
-  //       this.isLoading = false; //  unlock button after response
-  //     },
-  //   });
-  // }
-
-  postProduct() {
-
-    // ===== VALIDATION START =====
-    if (!this.service.productsModel.ProductName?.trim()) {
-      this.toastr.error('Product Name is required');
-      return;
-    }
-
-    if (!this.service.productsModel.Description?.trim()) {
-      this.toastr.error('Description is required');
-      return;
-    }
-
-    if (!this.service.productsModel.Price || this.service.productsModel.Price <= 0) {
-      this.toastr.error('Price must be greater than 0');
-      return;
-    }
-
-    if (!this.service.productsModel.StockQuantity || this.service.productsModel.StockQuantity < 0) {
-      this.toastr.error('Stock Quantity is required');
-      return;
-    }
-
-    const categoryId = Number($("#product-category").val());
-    if (!categoryId) {
-      this.toastr.error('Category is required');
-      return;
-    }
-
-    if (!this.selectedFile) {
-      this.toastr.error('Product Image is required');
-      return;
-    }
-    // ===== VALIDATION END =====
-
-
-    console.log('MODEL:', this.service.productsModel);
-
-    const formData = new FormData();
-
-    formData.append('ProductName', this.service.productsModel.ProductName.trim());
-    formData.append('Description', this.service.productsModel.Description.trim());
-    formData.append('Price', String(this.service.productsModel.Price));
-    formData.append('StockQuantity', String(this.service.productsModel.StockQuantity));
-    formData.append('CategoryId', String(categoryId));
-
-    formData.append('ProductImage', this.selectedFile);
-
-    for (const pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
-
-    this.isLoading = true;
-
-    this.service.postProduct(formData).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        this.reset();
-        this.fetchProductList();
-        this.toastr.success('Product added successfully');
-
+        this.productList = res;
         this.isLoading = false;
       },
       error: (err: any) => {
-        console.log('ERROR:', err.error);
+        console.error(err);
         this.isLoading = false;
       }
     });
   }
 
-  reset() {
-    this.service.productsModel.ProductName = '';
-    this.service.productsModel.Description = '';
-    this.service.productsModel.Price = 0;
-    this.service.productsModel.StockQuantity = 0;
-    this.service.productsModel.CategoryId = 0;
-    this.service.productsModel.ProductImage = '';
-    this.service.productsModel.ProductImages = [];
+  // Get Category List
+  getCategoryList() {
+    this.service.getCategoryList().subscribe({
+      next: (res: any) => {
+        this.categoryList = res;
+      },
+      error: (err: any) => {
+        console.error(err);
+      }
+    });
+  }
+
+  // File Selection & Preview
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // ==========================================
+  // १. Form Validation
+  // ==========================================
+  validateProduct(): boolean {
+    const categoryId = Number($("#product-category").val());
+
+    if (!this.service.productsModel.ProductName?.trim()) {
+      this.toastr.error('Product Name is required');
+      return false;
+    }
+
+    if (!this.service.productsModel.Description?.trim()) {
+      this.toastr.error('Description is required');
+      return false;
+    }
+
+
+    if (!this.service.productsModel.Price || this.service.productsModel.Price <= 0) {
+      this.toastr.error('Price must be greater than 0');
+      return false;
+    }
+
+    if (
+      this.service.productsModel.StockQuantity === null ||
+      this.service.productsModel.StockQuantity === undefined ||
+      this.service.productsModel.StockQuantity < 0
+    ) {
+      this.toastr.error('Valid Stock Quantity is required');
+      return false;
+    }
+
+    if (!categoryId) {
+      this.toastr.error('Category is required');
+      return false;
+    }
+
+    return true;
   }
 
 
-  //get Product By Id
-getProductId(ID: number) {
-  this.isLoading = true;
-
-  this.service.getProductById(ID).subscribe({
-    next: (res: any) => {
-
-      // 1. form model fill
-      this.service.productsModel = {
-        ProductName: res.productName,
-        Description: res.description,
-        Price: res.price,
-        StockQuantity: res.stockQuantity,
-        CategoryId: res.categoryId,
-        ProductImage: res.productImage, // यहाँ productImage राख्दा ठिक हुन्छ
-        ProductImages: []
-      };
-
-      // 2. image preview set (IMPORTANT)
-      // यहाँ productImageBase64 को सट्टा productImageUrl राख्नुहोस्
-      this.imagePreview = res.productImageUrl; 
-
-      // 3. reset file input (IMPORTANT)
-      this.selectedFile = null;
-
-      // 4. select2 category fix
-      setTimeout(() => {
-        $('#product-category')
-          .val(res.categoryId)
-          .trigger('change');
-      }, 0);
-
-      this.isLoading = false;
-    },
-
-    error: () => {
-      this.isLoading = false;
+  // ==========================================
+  // २. Save / Update Product
+  // ==========================================
+  saveProduct() {
+    if (!this.validateProduct()) {
+      return;
     }
-  });
-}
+
+    if (!this.selectedProductId && !this.selectedFile) {
+      this.toastr.error('Product Image is required');
+      return;
+    }
+
+    const categoryId = Number($("#product-category").val());
+    const formData = new FormData();
+
+    // १. अपडेट मोड हो भने सानो अक्षरमा मात्र 'id' पठाउने
+    if (this.selectedProductId) {
+      formData.append('id', String(this.selectedProductId));
+    }
 
 
+    formData.append('productName', this.service.productsModel.ProductName.trim());
+    formData.append('description', this.service.productsModel.Description.trim());
+    formData.append('price', String(this.service.productsModel.Price));
+    formData.append('stockQuantity', String(this.service.productsModel.StockQuantity));
+    formData.append('categoryId', String(categoryId));
+
+    // ३. बुलिएन भ्यालुहरू - केवल सानो अक्षरमा एउटा मात्र पठाउने ('true' वा 'false')
+    // यसले गर्दा भ्यालु डबल (true,true) पनि हुँदैन र ब्याकइन्डले सजिलै बुझ्छ
+    const isActiveValue = this.service.productsModel.IsActive ? 'true' : 'false';
+
+    formData.append('isActive', isActiveValue);
+    formData.append('discountPrice', String(this.service.productsModel.DiscountPrice || 0));
+
+    if (this.selectedFile) {
+      formData.append('productImage', this.selectedFile);
+    }
+
+    this.isLoading = true;
+
+    if (this.selectedProductId) {
+      // अपडेट गर्ने प्रकृया
+      this.service.updateProduct(this.selectedProductId, formData).subscribe({
+        next: () => {
+          this.toastr.success('Product updated successfully');
+          this.fetchProductList();
+          this.reset();
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error(err);
+          this.isLoading = false;
+        }
+      });
+    } else {
+      // नयाँ थप्ने प्रकृया
+      this.service.postProduct(formData).subscribe({
+        next: (res: any) => {
+          this.toastr.success('Product added successfully');
+          this.fetchProductList();
+          this.reset();
+          this.isLoading = false;
+        },
+        error: (err: any) => {
+          console.error(err);
+          this.isLoading = false;
+        }
+      });
+    }
+  }
+
+  // ==========================================
+  // ३. Edit मोडमा फारम भर्ने फङ्सन
+  // ==========================================
+  getProductId(ID: number) {
+    this.isLoading = true;
+    this.selectedProductId = ID;
+
+    this.service.getProductById(ID).subscribe({
+      next: (res: any) => {
+        // ब्याकइन्डले सानो वा ठूलो जुन अक्षरमा फर्काए पनि सुरक्षित रूपमा समात्ने तरिका
+        this.service.productsModel = {
+          Id: res.id ?? 0,
+          ProductName: res.productName ?? '',
+          Description: res.description ?? '',
+          Price: res.price ?? 0,
+          StockQuantity: res.stockQuantity ?? 0,
+          CategoryId: res.categoryId ?? 0,
+          ProductImage: res.productImage ?? '',
+          ProductImages: [],
+          DiscountPrice: res.discountPrice ?? 0,
+          IsActive: res.isActive ?? true
+
+        };
+
+        this.imagePreview = res.productImageUrl || res.ProductImageUrl;
+        this.selectedFile = null;
+
+        setTimeout(() => {
+          const catId = res.categoryId || res.CategoryId;
+          $('#product-category').val(catId).trigger('change');
+        }, 0);
+
+        this.isLoading = false;
+      },
+      error: (err: any) => {
+        console.error(err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  // Delete product
+  deleteProduct(ID: number) {
+    if (!confirm('Are you sure you want to delete this product?')) return;
+
+    this.isLoading = true;
+    this.service.deleteProduct(ID).subscribe({
+      next: (res: any) => {
+        this.toastr.success('Item removed from Product');
+        this.fetchProductList();
+        this.isLoading = false;
+      },
+      error: (err: any) => {
+        console.error(err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  // Reset Form
+  reset() {
+    this.service.productsModel = {
+      Id: 0,
+      ProductName: '',
+      Description: '',
+      Price: 0,
+      StockQuantity: 0,
+      CategoryId: 0,
+      ProductImage: '',
+      ProductImages: [],
+      DiscountPrice: 0,
+      IsActive: true
+    };
+
+    this.imagePreview = null;
+    this.selectedFile = null;
+    this.selectedProductId = null;
+
+    $('input[type="file"]').val('');
+    $('#product-category').val('').trigger('change');
+  }
 }

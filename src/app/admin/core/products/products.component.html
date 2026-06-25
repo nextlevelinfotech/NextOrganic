@@ -1,5 +1,4 @@
 <div class="body-layout admin">
-
     <div class="row">
 
         <!-- Product List -->
@@ -7,18 +6,14 @@
             <div class="card shadow-sm">
                 <div class="card-header d-flex justify-content-between align-items-center pt-0 pe-0">
                     <h3 class="mb-0">Product List</h3>
-
                 </div>
 
-                <div class="card-body  px-0">
+                <div class="card-body px-0">
                     <div class="row">
-
                         <!-- Product Card -->
                         <div class="col-md-6" *ngFor="let item of productList; let i = index">
                             <div class="product-card">
-                                <img [src]="item.productImageBase64" class="product-image" alt="Product">
-
-
+                                <img [src]="item.productImageUrl" class="product-image" alt="Product">
                                 <div class="product-content">
                                     <h5 class="mb-2">{{item.productName}}</h5>
                                     <p class="mb-1 text-muted">
@@ -32,9 +27,7 @@
                                             <button class="btn btn-sm btn-primary me-2" (click)="getProductId(item.id)">
                                                 Edit
                                             </button>
-
-
-                                            <button class="btn btn-sm btn-danger">
+                                            <button class="btn btn-sm btn-danger" (click)="deleteProduct(item.id)">
                                                 Delete
                                             </button>
                                         </div>
@@ -42,9 +35,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Duplicate Cards Here -->
-
                     </div>
                 </div>
             </div>
@@ -58,15 +48,17 @@
                 </div>
 
                 <div class="card-body">
-
                     <form #productForm="ngForm">
 
+                        <!-- 1. Product Name -->
                         <div class="mb-3">
                             <label class="form-label">Product Name</label>
                             <input type="text" [(ngModel)]="this.service.productsModel.ProductName" name="ProductName"
                                 class="form-control" placeholder="Enter product name">
                         </div>
 
+
+                        <!-- 3. Category -->
                         <div class="mb-3">
                             <label class="form-label">Category</label>
                             <select class="form-select" id="product-category">
@@ -77,23 +69,29 @@
                             </select>
                         </div>
 
+                        <!-- 4. Price -->
                         <div class="mb-3">
                             <label class="form-label">Price</label>
                             <input type="number" [(ngModel)]="this.service.productsModel.Price" name="Price"
                                 class="form-control" placeholder="Enter price">
                         </div>
+
+                        <!-- 5. Product QTY -->
                         <div class="mb-3">
                             <label class="form-label">Product QTY</label>
                             <input type="text" [(ngModel)]="this.service.productsModel.StockQuantity"
                                 name="StockQuantity" class="form-control" placeholder="Enter product qty">
                         </div>
 
+
+                        <!-- 7. Full Description -->
                         <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea rows="4" class="form-control" [(ngModel)]="this.service.productsModel.Description"
-                                name="Description" required></textarea>
+                            <label class="form-label">Detailed Description</label>
+                            <textarea rows="3" class="form-control" [(ngModel)]="this.service.productsModel.Description"
+                                name="Description" placeholder="Enter full details" required></textarea>
                         </div>
 
+                        <!-- 8. Product Image -->
                         <div class="mb-3">
                             <label class="form-label">Product Image</label>
                             <input type="file" class="form-control" (change)="onFileSelected($event)">
@@ -104,23 +102,23 @@
                             </div>
                         </div>
 
-                        <div class="flex-wrap gap-4 d-flex">
-                            <button type="submit" class="btn btn-sm btn-success w-48" (click)="postProduct()">
-                                Save Product
+                        <!-- Buttons -->
+                        <div class="flex-wrap gap-2 d-flex">
+                            <button type="button" class="btn btn-primary flex-grow-1" (click)="saveProduct()"
+                                [disabled]="isLoading">
+                                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1"></span>
+                                {{ selectedProductId ? 'Update Product' : 'Save Product' }}
                             </button>
 
-                            <button type="reset" class="btn btn-sm btn-secondary  w-48">
-                                Clear
+                            <button type="button" class="btn btn-secondary" (click)="reset()" *ngIf="selectedProductId">
+                                Cancel
                             </button>
                         </div>
 
                     </form>
-
                 </div>
             </div>
         </div>
 
     </div>
-
-
 </div>
