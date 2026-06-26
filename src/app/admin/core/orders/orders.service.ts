@@ -25,6 +25,9 @@ export class OrdersService {
     return this.http.get(`${this.baseurl}${Endpoint.GetAllOrders}`);
   }
 
+  getOrdersStatus(data: any) {
+    return this.http.put(`${this.baseurl}${Endpoint.orderStaus}`, data);
+  }
 
 }
 

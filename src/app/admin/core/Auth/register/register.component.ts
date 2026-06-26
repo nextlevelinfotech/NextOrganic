@@ -34,7 +34,7 @@ constructor(
 
 submit() {
 
-  const form = this.registerForm.value;
+  const form = this.registerForm.value; 
 
    if (!form.fullName || form.fullName.trim() === '') {
     this.toastr.error('FullName is required');

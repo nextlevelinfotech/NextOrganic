@@ -1,0 +1,99 @@
+<div class="body-layout admin">
+    <div class="row">
+
+        <!-- Product List -->
+        <div class="col-lg-8 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center pt-0 pe-0">
+                    <h3 class="mb-0">Product Categories</h3>
+                </div>
+
+                <div class="card-body px-0">
+                    <div class="row">
+                        <div class="card-table">
+                            <div class="table-responsive-sm">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 90px;">S.N.</th>
+                                            <th>Category Name</th>
+                                            <th>Description</th>
+                                            <th>isActive</th>
+                                            <th> Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of categoryList; let i = index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{item.categoryName}}</td>
+                                            <td>{{item.description}}</td>
+                                            <td>{{item.isActive}}</td>
+                                            <td>
+                                                <div class="d-flex gap-2">
+                                                    <button class="btn btn-sm btn-primary me-2"
+                                                        (click)="getCategoryId(item.id)">
+                                                        Edit
+                                                    </button>
+                                                    <button class="btn btn-sm btn-danger" (click)="deleteCategory(item.id)">
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <form action="" #categoryForm="ngForm">
+
+                    <div class="mb-3">
+                        <label class="form-label">Category Name</label>
+                        <input type="text" [(ngModel)]="this.service.categoryModel.categoryName" name="categoryName"
+                            class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <input type="text" [(ngModel)]="this.service.categoryModel.description" name="description"
+                            class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Date</label>
+                        <input type="date" [(ngModel)]="this.service.categoryModel.createdDate" name="createdDate"
+                            class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">IsActive</label>
+                        <select name="" id="" [(ngModel)]="this.service.categoryModel.isActive" class="form-control">
+                            <option value="">Select</option>
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                    </div>
+
+                    <div class="flex-wrap gap-2 d-flex">
+                        <button type="button" class="btn btn-primary flex-grow-1" (click)="saveCategory()">
+                            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1"></span>
+                            Save Category
+                        </button>
+
+                        <button type="button" class="btn btn-secondary">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>

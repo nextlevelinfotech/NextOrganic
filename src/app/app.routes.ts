@@ -84,6 +84,15 @@ export const routes: Routes = [
         component: LayoutComponent,
         children: [
           {
+            path: 'profile',
+            loadComponent: () =>
+              import('./admin/core/company-profile/company-profile.component').then(
+                (m) => m.CompanyProfileComponent,
+
+              ),
+            canActivate: [authGuard],
+          },
+          {
             path: 'products',
             loadComponent: () =>
               import('./admin/core/products/products.component').then(
@@ -97,6 +106,15 @@ export const routes: Routes = [
             loadComponent: () =>
               import('./admin/core/orders/orders.component').then(
                 (m) => m.OrdersComponent,
+
+              ),
+            canActivate: [authGuard],
+          },
+          {
+            path: 'category',
+            loadComponent: () =>
+              import('./admin/core/category/category.component').then(
+                (m) => m.CategoryComponent,
 
               ),
             canActivate: [authGuard],

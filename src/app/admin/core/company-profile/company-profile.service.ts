@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Endpoint } from './company-profile-Url';
-import { environment } from '../../../environments/environment';
 import { companyProfileModel } from './company-profile.model';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

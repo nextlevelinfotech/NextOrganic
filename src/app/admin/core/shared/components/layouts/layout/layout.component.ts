@@ -30,7 +30,7 @@ export class LayoutComponent implements AfterViewInit {
   ngAfterViewInit() {
     // Optional: you can do initialization here if needed
   }
-  isSidebarCollapsed = true;
+  isSidebarCollapsed = false;
   isToggle:boolean = false; 
 
   toggleMenu() {

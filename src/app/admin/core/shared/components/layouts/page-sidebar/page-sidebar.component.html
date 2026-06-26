@@ -1,35 +1,41 @@
 <aside class="sidebar">
   <a class="admin-logo" [ngClass]="isSidebarCollapsed ? 'logoLeft' : ''" [routerLink]="['/dashboard']">
-    <img [src]="
-        isSidebarCollapsed ? 'assets/img/fav.PNG' : 'assets/img/fav.PNG'
-      " alt="logo" [ngStyle]="{
-        height: isSidebarCollapsed ? '32px' : '60px',
+    <img [src]="isSidebarCollapsed ? 'assets/img/fav.PNG' : 'assets/img/fav.PNG'" alt="logo" [ngStyle]="{
+        height: isSidebarCollapsed ? '32px' : '60px'
       }" />
   </a>
   <div class="navigation-outer">
     <mat-accordion class="sidemenu">
-      <mat-expansion-panel *ngFor="let menus of Menulist">
-        <mat-expansion-panel-header class="">
+      
+      <mat-expansion-panel *ngFor="let menus of Menulist" [disabled]="!menus.children || menus.children.length === 0">
+        
+        <mat-expansion-panel-header 
+          [routerLink]="menus.children && menus.children.length > 0 ? null : [menus.path]"
+          (click)="menus.children && menus.children.length > 0 ? null : closeMenu()">
+          
           <mat-panel-title>
             <span class="matMenuIcon">
-              <i class="{{ menus.Menuicon }}"></i></span>
-            <span class="ps-2 user-select-none fs-5 matMenuName">{{
-              menus.menuName
-            }}</span>
+              <i class="{{ menus.Menuicon }}"></i>
+            </span>
+            <span class="ps-2 user-select-none fs-5 matMenuName">
+              {{ menus.menuName }}
+            </span>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <ul>
+
+        <ul *ngIf="menus.children && menus.children.length > 0">
           <li *ngFor="let subMenu of menus.children">
             <div *ngIf="subMenu.children != ''">
               <mat-expansion-panel>
                 <mat-expansion-panel-header class="" (click)="collapseSidebar()">
                   <mat-panel-title>
                     <span> <i class="{{ subMenu.Menuicon }}"></i></span>
-                    <span class="ps-2 user-select-none fs-5 matMenuName">{{
-                      subMenu.menuName
-                    }}</span>
+                    <span class="ps-2 user-select-none fs-5 matMenuName">
+                      {{ subMenu.menuName }}
+                    </span>
                   </mat-panel-title>
                 </mat-expansion-panel-header>
+                
                 <ul>
                   <li *ngFor="let subsubMenu of subMenu.children">
                     <div *ngIf="subsubMenu.children != ''">
@@ -37,27 +43,32 @@
                         <mat-expansion-panel-header class="">
                           <mat-panel-title class=" ">
                             <span class="matMenuIcon">
-                              <i class="{{ subsubMenu.Menuicon }}"></i></span>
-                            <span class="ps-2 user-select-none fs-5 matMenuName">{{ subsubMenu.menuName }}</span>
+                              <i class="{{ subsubMenu.Menuicon }}"></i>
+                            </span>
+                            <span class="ps-2 user-select-none fs-5 matMenuName">
+                              {{ subsubMenu.menuName }}
+                            </span>
                           </mat-panel-title>
                         </mat-expansion-panel-header>
+                        
                         <ul>
                           <li *ngFor="let subsubsubMenu of subsubMenu.children">
-                            <a [routerLink]="[subsubsubMenu.path]"
-                              (click)="closeMenu()">{{ subsubsubMenu.menuName }}</a>
+                            <a [routerLink]="[subsubsubMenu.path]" (click)="closeMenu()">
+                              {{ subsubsubMenu.menuName }}
+                            </a>
                           </li>
                         </ul>
                       </mat-expansion-panel>
                     </div>
                   </li>
                 </ul>
+
               </mat-expansion-panel>
             </div>
           </li>
         </ul>
+
       </mat-expansion-panel>
     </mat-accordion>
-
-
   </div>
 </aside>

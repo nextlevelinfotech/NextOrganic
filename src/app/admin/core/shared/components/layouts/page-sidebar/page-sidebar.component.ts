@@ -71,20 +71,41 @@ export class PageSidebarComponent implements AfterViewInit {
 
 
   Menulist: any[] = [
+    // {
+    //   menuId: 1,
+    //   menuName: 'Profile',
+    //   Menuicon: 'ri-shopping-bag-3-line',
+    //   path: '/profile',
+    //   shortCutKey: '',
+    //   formName: 'Product',
+    //   extra1: 'HMS',
+
+    // },
     {
-      menuId: 1,
-      menuName: 'Product',
+      menuId: 2,
+      menuName: 'Products',
       Menuicon: 'ri-shopping-bag-3-line',
-      path: '',
+      path: '/products',
       shortCutKey: '',
       formName: 'Product',
       extra1: 'HMS',
+
     },
     {
-      menuId: 2,
+      menuId: 3,
       menuName: 'Category',
       Menuicon: 'ri-price-tag-3-line',
-      path: '',
+      path: '/category',
+      shortCutKey: '',
+      formName: 'Category',
+      extra1: 'HMS',
+    },
+
+    {
+      menuId: 4,
+      menuName: 'Orders',
+      Menuicon: 'ri-price-tag-3-line',
+      path: '/admin-orders',
       shortCutKey: '',
       formName: 'Category',
       extra1: 'HMS',
