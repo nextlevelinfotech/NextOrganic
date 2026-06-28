@@ -60,7 +60,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
           categoryName: res.categoryName ?? '',
           description: res.description ?? '',
           isActive: res.isActive ?? true,
-          createdDate: res.createdDate ?? new Date()
+          createdDate: res.createdDate ? res.createdDate.split('T')[0] : ''
         };
 
 
@@ -143,7 +143,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   //deleteCategory
   deleteCategory(ID: number) {
     if (!confirm('Are you sure you want to delete this Category ?')) return;
-    
+
     this.isLoading = true;
     this.service.deleteCategory(ID).subscribe({
       next: (res: any) => {
