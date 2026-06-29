@@ -8,9 +8,19 @@
     padding: 16px;
 }
 
-.admin .product-card{
+
+.admin .product-card {
+    border: none;
+    box-shadow: none;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.admin .product-card-outer{
     box-shadow: none;
     border: 1px solid vars.$border;
+    margin-bottom: 20px;
+    border-radius: 12px;
 
 }
 
@@ -30,7 +40,6 @@
     display: flex;
     gap: 15px;
     padding: 15px;
-    border: 1px solid #e9ecef;
     border-radius: 10px;
     transition: 0.3s;
     background: #fff;
@@ -52,6 +61,10 @@
     flex: 1;
 }
 
+.admin .product-content p{
+    margin-bottom: 5px;
+}
+
 .admin .product-content h6 {
     font-weight: 600;
 }
@@ -62,7 +75,13 @@
     font-size: 18px;
 }
 
-
+.badge{
+    border-radius: 4px;
+    padding: 4px 16px;
+    background-color: #198754;  
+    color: #fff;
+    margin: 12px 15px;
+}
 
 @media (max-width: 768px) {
    .admin .product-card {

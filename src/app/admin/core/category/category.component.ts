@@ -3,7 +3,17 @@ import { CategoryService } from './category.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { error } from 'jquery';
+declare var $: any;
+import 'select2';
+
+export class categoryModel {
+  id: number = 0;
+  categoryId: number = 0;
+  categoryName: string = '';
+  description: string = '';
+  isActive: boolean = true;
+  createdDate: any;
+}
 
 @Component({
   selector: 'app-category',
@@ -15,18 +25,33 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   categoryList: any[] = [];
   // Track selected category ID for editing
   selectedCategoryId: number | null = null;
+
   constructor(
     public service: CategoryService,
     private toastr: ToastrService,
     private el: ElementRef
   ) { }
+
   ngOnInit(): void {
     this.fetchcategoryList();
   }
+
   ngAfterViewInit(): void {
+    const selectEl = $('#isActive');
 
+    // Select2 Initialize गर्ने
+    selectEl.select2();
+
+    // Select2 मा भ्यालु चेन्ज हुँदा Angular Model अपडेट गर्ने
+    selectEl.on('change', (e: any) => {
+      const val = $(e.target).val();
+   
+
+      if (val === 'true') this.service.categoryModel.isActive = true;
+      else if (val === 'false') this.service.categoryModel.isActive = false;
+      else this.service.categoryModel.isActive = null as any;
+    });
   }
-
 
   // Fetch category List
   fetchcategoryList() {
@@ -34,6 +59,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     this.service.getCategories().subscribe({
       next: (res: any) => {
         this.categoryList = res;
+        console.log(res, 'categoryList');
         this.isLoading = false;
       },
       error: (err: any) => {
@@ -43,17 +69,13 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-
-
-  //getCategoryId
+  // getCategoryId
   getCategoryId(ID: number) {
     this.isLoading = true;
     this.selectedCategoryId = ID;
 
     this.service.getCategoryById(ID).subscribe({
       next: (res: any) => {
-
         this.service.categoryModel = {
           id: res.id ?? 0,
           categoryId: res.categoryId ?? 0,
@@ -63,6 +85,11 @@ export class CategoryComponent implements OnInit, AfterViewInit {
           createdDate: res.createdDate ? res.createdDate.split('T')[0] : ''
         };
 
+        // Select2 लाई String भ्यालु दिएर UI अपडेट गर्ने
+        setTimeout(() => {
+          const activeStatus = String(res.isActive); // 'true' or 'false'
+          $('#isActive').val(activeStatus).trigger('change.select2');
+        }, 50);
 
         this.isLoading = false;
       },
@@ -72,7 +99,6 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
 
   // 1. Separate Validation Function
   validateForm(): boolean {
@@ -105,7 +131,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       categoryName: this.service.categoryModel.categoryName,
       description: this.service.categoryModel.description,
       isActive: this.service.categoryModel.isActive,
-      createdDate: new Date()
+      createdDate:new Date().toISOString()
     };
 
     if (this.service.categoryModel.id === 0) {
@@ -136,11 +162,10 @@ export class CategoryComponent implements OnInit, AfterViewInit {
           }
         });
       }
-
     }
   }
 
-  //deleteCategory
+  // deleteCategory
   deleteCategory(ID: number) {
     if (!confirm('Are you sure you want to delete this Category ?')) return;
 
@@ -167,7 +192,9 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       isActive: true,
       createdDate: new Date()
     };
+    // Reset गरेपछि Select2 UI लाई पनि 'true' (Default) मा फर्काउने
+    setTimeout(() => {
+      $('#isActive').val('').trigger('change.select2');
+    }, 50);
   }
-
-
 }

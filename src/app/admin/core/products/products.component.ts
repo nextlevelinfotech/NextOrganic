@@ -45,6 +45,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.service.getProductsList().subscribe({
       next: (res: any) => {
         this.productList = res;
+        console.log(this.productList);
         this.isLoading = false;
       },
       error: (err: any) => {
@@ -199,8 +200,10 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.selectedProductId = ID;
 
     this.service.getProductById(ID).subscribe({
+      
       next: (res: any) => {
-        // ब्याकइन्डले सानो वा ठूलो जुन अक्षरमा फर्काए पनि सुरक्षित रूपमा समात्ने तरिका
+
+
         this.service.productsModel = {
           Id: res.id ?? 0,
           ProductName: res.productName ?? '',
@@ -214,7 +217,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
           IsActive: res.isActive ?? true
 
         };
-
         this.imagePreview = res.productImageUrl || res.ProductImageUrl;
         this.selectedFile = null;
 
@@ -262,7 +264,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       ProductImage: '',
       ProductImages: [],
       DiscountPrice: 0,
-      IsActive: true
+      IsActive: false
     };
 
     this.imagePreview = null;

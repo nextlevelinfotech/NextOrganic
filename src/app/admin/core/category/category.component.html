@@ -29,14 +29,15 @@
                                             <td>{{item.categoryName}}</td>
                                             <td>{{item.description}}</td>
                                             <td>{{item.isActive}}</td>
-                                          <td>{{ item.createdDate | date:'yyyy-MM-dd' }}</td>
+                                            <td>{{ item.createdDate | date:'yyyy-MM-dd' }}</td>
                                             <td>
                                                 <div class="d-flex gap-2">
                                                     <button class="btn btn-sm btn-primary me-2"
                                                         (click)="getCategoryId(item.id)">
                                                         Edit
                                                     </button>
-                                                    <button class="btn btn-sm btn-danger" (click)="deleteCategory(item.id)">
+                                                    <button class="btn btn-sm btn-danger"
+                                                        (click)="deleteCategory(item.id)">
                                                         Delete
                                                     </button>
                                                 </div>
@@ -52,6 +53,7 @@
             </div>
         </div>
 
+        <!-- Add/Edit Form -->
         <div class="col-lg-4">
             <div class="card shadow-sm">
                 <form action="" #categoryForm="ngForm">
@@ -75,8 +77,11 @@
 
                     <div class="mb-3">
                         <label class="form-label">IsActive</label>
-                        <select name="isActive" id="" [(ngModel)]="this.service.categoryModel.isActive" class="form-control">
+                        <!-- Select2 सँग राम्रो काम गरोस् भनेर यहाँ value स्ट्रिङमा मिलाइएको छ -->
+                        <select name="isActive" id="isActive" [(ngModel)]="this.service.categoryModel.isActive"
+                            class="form-control">
                             <option value="">Select</option>
+                     
                             <option value="true">True</option>
                             <option value="false">False</option>
                         </select>
@@ -88,13 +93,12 @@
                             Save Category
                         </button>
 
-                        <button type="button" class="btn btn-secondary">
+                        <button type="button" class="btn btn-secondary" (click)="reset()">
                             Cancel
                         </button>
                     </div>
                 </form>
             </div>
-
         </div>
 
     </div>

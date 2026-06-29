@@ -10,6 +10,7 @@ import { AuthService } from '../user-admin/core/auth/authService/auth.service';
 import { ShopCommonService } from '../common/service/shop-common.service';
 import { CartEventService } from '../common/service/cart-event.service';
 import { Subscription } from 'rxjs'; 
+import { loginService } from '../user-admin/core/auth/login/login.service';
 
 @Component({
   selector: 'app-header',
@@ -28,9 +29,13 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
   cartCount: number = 0; 
   private cartSubscription!: Subscription; 
 
+  userList: any[] = [];
+
+
   constructor(
     private authService: AuthService,
     private service: ShopCommonService,
+    private loginService: loginService,
     private cartEventService: CartEventService
   ) {
     this.isLogin = this.authService.isLoggedIn();
@@ -38,6 +43,8 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
 
 // ... (तपाईंको माथिको कोड उस्तै) ...
   ngOnInit(): void {
+
+    this.fetchallusers();
     // 🌟 बाहिरको this.loadCartCount(); हटाइयो
     
     this.cartSubscription = this.cartEventService.cartUpdated$.subscribe((updated: any) => {
@@ -220,5 +227,22 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
     if (this.cartSubscription) {
       this.cartSubscription.unsubscribe();
     }
+  }
+
+
+  // get user info
+  fetchallusers(){
+    this.loginService.getallusers().subscribe({
+      next: (res: any) => {
+        this.userList
+        console.log(res, 'fetchallusers')
+      },
+      error: (err: any) => {
+        console.log(err)
+      },
+      complete: () => {
+        
+      }
+    })
   }
 }

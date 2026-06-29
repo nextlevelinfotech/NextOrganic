@@ -12,7 +12,7 @@ export class productsModel {
 
 
     DiscountPrice: number = 0;
-    IsActive: boolean = true;
+    IsActive!: boolean;
 
 
 

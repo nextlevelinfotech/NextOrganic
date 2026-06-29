@@ -65,7 +65,7 @@ export class AdminloginComponent implements AfterViewInit {
       userId: [0],
       username: ['', Validators.required],
       password: ['', Validators.required],
-      role: ['string'],
+      role: ['admin'],
     });
   }
 
@@ -91,12 +91,9 @@ export class AdminloginComponent implements AfterViewInit {
     // JSON Body
     const payload = {
       userId: 0,
-      // username: userName,
-      // password: password,
-      
-      username: 'string',
-      password: 'string',
-      role: 'string',
+      username: userName,
+      password: password,
+      role: 'Admin',
       
     };
 
