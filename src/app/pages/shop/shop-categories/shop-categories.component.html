@@ -63,7 +63,7 @@
                         <div class="range-slider">
 
                             <div class="slider-track"></div>
-                            
+
                             <input type="range" id="minRange" min="0" max="2650" value="30">
 
                             <input type="range" id="maxRange" min="0" max="2650" value="2650">
@@ -92,8 +92,8 @@
             </div>
             <div class="col-md-9">
                 <div class="product-catg-content">
-                    <div class="product-catg-head">
-                        <div class="product-catg-head-left">
+                    <div class="product-catg-head d-flex justify-content-end">
+                        <!-- <div class="product-catg-head-left">
                             <form action="" class="prduct-catg-sort">
                                 <label class="me-2 def">Sort by</label>
                                 <select class="me-3 sort-select">
@@ -109,7 +109,7 @@
                                     <option value="12">12</option>
                                 </select>
                             </form>
-                        </div>
+                        </div> -->
                         <div class="product-catg-head-right d-flex gap-4 align-items-center">
                             <div class="search-box">
                                 <input type="text" placeholder="Search products..." (input)="onSearch($event)">
@@ -123,7 +123,8 @@
                         <div class="row">
                             @for(product of paginatedProducts; track product.id) {
                             <div class="col-md-6 col-lg-4">
-                                <app-product-card [product]="product" [isHomePage]="false" (addToCartClick)="openPopup($event)">
+                                <app-product-card [product]="product" [isHomePage]="false"
+                                    (addToCartClick)="openPopup($event)">
                                 </app-product-card>
                                 <!-- <div class="product-card">
                                     <div class="product-img-holder">
@@ -213,7 +214,14 @@
                     <h3 class="product-single-title mb-2">{{ singleProduct.productName }}</h3>
 
                     <h4 class="product-single-price">{{singleProduct.price}}</h4>
-                    <div class="badge text-bg-secondary mb-3">In Stock {{singleProduct.stockQuantity}}</div>
+                    <div class="badge mb-3"
+                        [ngClass]="singleProduct.stockQuantity > 0 ? 'text-bg-success' : 'text-bg-danger'">
+
+                        {{ singleProduct.stockQuantity > 0
+                        ? ('In Stock ' + singleProduct.stockQuantity)
+                        : 'Out of Stock' }}
+
+                    </div>
 
                     <div class="outer d-flex mt-4 gap-4 align-items-center">
                         <!-- <div class="quantity">
@@ -235,8 +243,12 @@
                             </div>
 
                         </div>
-                        <button href="" class="btn btn-primary " (click)="createCart()">Add To Cart<i
-                                class="ms-1 ri-arrow-right-long-line"></i></button>
+                        <button class="btn btn-primary" (click)="createCart()"
+                            [disabled]="singleProduct.stockQuantity <= 0">
+
+                            Add To Cart
+                            <i class="ms-1 ri-arrow-right-long-line"></i>
+                        </button>
                     </div>
 
                     <a [routerLink]="['/shop/shop-single', singleProduct.id]" class="btn-link mt-4 ">View Full Product<i
@@ -254,5 +266,11 @@
     <div class="popup-footer">
 
     </div>
+    <!-- Success Toast -->
+    <div class="popup-toast" *ngIf="showSuccessToast">
+        <i class="ri-checkbox-circle-fill"></i>
+        <span>Product added to cart successfully.</span>
+    </div>
+
 </div>
 <app-footer></app-footer>

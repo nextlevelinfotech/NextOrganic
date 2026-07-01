@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { CartEventService } from '../../common/service/cart-event.service';
 import { ShopCommonService } from '../../common/service/shop-common.service';
-
+import { forkJoin } from 'rxjs';
 declare var jQuery: any;
 declare var $: any; // 🌟 $ को एरर नआओस् भन्नका लागि
 
@@ -31,23 +31,23 @@ export class CartSidebarComponent implements AfterViewInit, OnInit, OnDestroy {
     private cartEventService: CartEventService
   ) { }
 
- // ... (तपाईंको माथिको कोड उस्तै) ...
+  // ... (तपाईंको माथिको कोड उस्तै) ...
   ngOnInit(): void {
     // 🌟 बाहिरको this.fetchCartList(); हटाइयो
 
     this.cartSubscription = this.cartEventService.cartUpdated$.subscribe((updated: any) => {
       if (updated !== null && updated !== undefined) {
-        
+
         if (this.isLocalUpdate) {
-          this.isLocalUpdate = false; 
+          this.isLocalUpdate = false;
           return;
         }
 
         if (Array.isArray(updated)) {
           this.cartList = updated;
-          this.calculateTotalFromList(); 
+          this.calculateTotalFromList();
         } else {
-          this.fetchCartList(); 
+          this.fetchCartList();
         }
       } else {
         // 🌟 पहिलो पटक एप्लिकेसन खुल्दा मात्र API कल गर्ने
@@ -137,6 +137,41 @@ export class CartSidebarComponent implements AfterViewInit, OnInit, OnDestroy {
     });
   }
 
+  removeAllItems() {
+    if (this.cartList.length === 0) {
+      this.toastr.warning('Cart is empty');
+      return;
+    }
+    this.isLoading = true;
+
+    const requests = this.cartList.map((item: any) => {
+      return this.service.deleteCart(item.cartDetailId);
+    });
+
+
+    forkJoin(requests).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.cartList = [];
+        this.cartTotalPrice = 0;
+        this.isLocalUpdate = true;
+        this.cartEventService.notifyCartUpdate([]);
+        this.toastr.success(
+          'All items removed from cart'
+        );
+
+      },
+
+      error: () => {
+        this.isLoading = false;
+        this.toastr.error(
+          'Something went wrong'
+        );
+      }
+
+    });
+
+  }
   ngOnDestroy(): void {
     if (this.cartSubscription) {
       this.cartSubscription.unsubscribe();

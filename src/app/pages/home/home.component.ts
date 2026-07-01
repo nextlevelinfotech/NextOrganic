@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   showPopup: boolean = false;
   products: any[] = [];
   isLoading: boolean = false;
-
+  showSuccessToast = false;
   singleProduct: any = '';
 
   //Add to cart
@@ -109,17 +109,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.isLoading = true;
     this.service.postCart(payload).subscribe({
-
       next: (res: any) => {
-        // --- यहाँ कल गर्नुहोस् ---
-        // SIDEBAR LAI UPDATE GARAUNA YO TRIGGGER THAPNE
 
         this.cartEventService.notifyCartUpdate(true);
 
         this.fetchProductList();
         this.isLoading = false;
-        this.toastr.success('Successfully item added to cart',);
-        this.closePopup();
+
+        // Success Toast
+        this.showSuccessToast = true;
+
+        setTimeout(() => {
+          this.showSuccessToast = false;
+          this.closePopup();   // 1 sec पछि popup पनि बन्द हुन्छ
+        }, 800);
+
       },
       error: (err: any) => {
         this.isLoading = false;

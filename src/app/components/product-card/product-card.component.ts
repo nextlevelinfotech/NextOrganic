@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './product-card.component.html'
 })
 export class ProductCardComponent {
+  
   @Input() product: any;
   @Output() addToCartClick = new EventEmitter<any>(); //हामी कार्ड भित्र एउटा घण्टी (EventEmitter) बनाउँछौँ, जसको नाम addToCartClick राखौँ। जसले बाहिर डाटा बोकेर जान्छ
 

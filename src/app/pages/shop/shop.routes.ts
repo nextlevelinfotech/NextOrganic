@@ -37,4 +37,9 @@ export const shopRoutes: Routes = [
     loadComponent: () =>
       import('./wishlist/wishlist.component').then((m) => m.WishlistComponent),
   },
+    {
+    path: 'confirmation',
+    loadComponent: () =>
+      import('./confirmation/confirmation.component').then((m) => m.ConfirmationComponent),
+  },
 ];

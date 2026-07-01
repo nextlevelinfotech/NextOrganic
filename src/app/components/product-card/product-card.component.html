@@ -9,7 +9,10 @@
 
     <div class="product-content">
         <div class="product-title">
-            {{ product.productName }}
+            <a [routerLink]="['/shop/shop-single', product.id]" >
+                {{ product.productName }}
+            </a>
+
         </div>
 
         <div class="product-price">

@@ -55,32 +55,71 @@
                         required. Thank you for your interest. We will
                         get back with you shortly.</div>
 
-                    <form class="contact-form">
+                    <form #contactForm="ngForm"  class="contact-form">
+
                         <div class="row">
+
                             <div class="form-group col-md-6">
-                                <input type="text" class="form-control" id="firstName" placeholder="First Name">
+
+                                <input type="text" class="form-control" placeholder="First Name" name="firstName"
+                                    [(ngModel)]="contactModel.firstName" required>
+
                             </div>
+
                             <div class="form-group col-md-6">
-                                <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+
+                                <input type="text" class="form-control" placeholder="Last Name" name="lastName"
+                                    [(ngModel)]="contactModel.lastName" required>
+
                             </div>
+
+
                         </div>
+
+
                         <div class="row">
+
                             <div class="form-group col-md-6">
-                                <input type="text" class="form-control" id="Email" placeholder="Email Address">
+
+                                <input type="email" class="form-control" placeholder="Email Address" name="email"
+                                    [(ngModel)]="contactModel.email" required email>
+
                             </div>
+
                             <div class="form-group col-md-6">
-                                <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number">
+
+                                <input type="text" class="form-control" placeholder="Phone Number" name="phoneNumber"
+                                    [(ngModel)]="contactModel.phoneNumber" required pattern="[0-9]{10}">
+
                             </div>
+
                         </div>
+
+
                         <div class="row">
+
                             <div class="form-group col-md-12">
-                                <label for="Message">Message</label>
-                                <textarea name="Message" id="Message" cols="30" rows="5"
-                                    class="form-control"></textarea>
+
+                                <textarea class="form-control" rows="5" placeholder="Message" name="message"
+                                    [(ngModel)]="contactModel.message" required>
+
+                                </textarea>
+
+
                             </div>
+
+
                         </div>
-                        <button type="submit" class="btn btn-primary
-                                w-100">Message</button>
+
+
+
+                        <button type="submit" class="btn btn-primary w-100" (click)="submitContact(contactForm)">
+
+                            Message
+
+                        </button>
+
+
                     </form>
 
                 </div>

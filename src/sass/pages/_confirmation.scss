@@ -1,0 +1,21 @@
+.success-page {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+}
+
+.success-content {
+    padding: 40px 20px;
+}
+
+.success-content i {
+    color: #28a745;
+}
+
+.success-content .card {
+    border-radius: 12px;
+}
+
+.success-content .btn {
+    min-width: 180px;
+}

@@ -2,7 +2,7 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RedZoomModule } from 'ngx-red-zoom';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import Splide from '@splidejs/splide';
 import { HeaderComponent } from '../../../header/header.component';
 import { FooterComponent } from '../../../footer/footer.component';
@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ShopCommonService } from '../../../common/service/shop-common.service';
 import { CartEventService } from '../../../common/service/cart-event.service';
+import { ProductCardComponent } from '../../../components/product-card/product-card.component';
 
 @Component({
   selector: 'app-shop-single',
@@ -21,6 +22,8 @@ import { CartEventService } from '../../../common/service/cart-event.service';
     RedZoomModule,
     HeaderComponent,
     FooterComponent,
+    ProductCardComponent,
+    RouterModule
   ],
   templateUrl: './shop-single.component.html',
 })
@@ -30,12 +33,49 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
   productId!: number;
   product: any;
 
+  showPopup: boolean = false;
+  products: any[] = [];
+  showSuccessToast = false;
+  singleProduct: any = '';
+
+
   //Add to cart
   quantity: number = 1;
   maxQty!: number;
 
   constructor(private route: ActivatedRoute, public service: ShopCommonService, private toastr: ToastrService,
     private cartEventService: CartEventService) { }
+
+  openPopup(packet: any) {
+    // packet भित्रबाट क्लिक इभेन्ट र प्रोडक्ट डाटा छुट्टाछुट्टै निकाल्ने
+    const event = packet.clickEvent;
+    const product = packet.productData;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.showPopup = true;
+    this.singleProduct = product;
+    this.productId = product.id;
+    this.maxQty = product.stockQuantity;
+  }
+  closePopup() {
+    this.showPopup = false;
+  }
+
+  fetchProductList() {
+    this.isLoading = true;
+    this.service.getProductsList().subscribe({
+      next: (res: any) => {
+        this.isLoading = false;
+        this.products = res;
+        console.log("product list", res)
+      },
+      error: (err: any) => { this.isLoading = false; },
+      complete: () => { this.isLoading = false; },
+    });
+  }
+
   images = [
     {
       id: 'img1',
@@ -60,6 +100,8 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
   ];
 
   ngOnInit(): void {
+    this.fetchProductList();
+
     this.route.paramMap.subscribe(params => {
       const id = Number(params.get('id'));
       this.productId = id;
@@ -109,17 +151,23 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
         this.isLoading = false;
         // SIDEBAR LAI UPDATE GARAUNA YO TRIGGGER THAPNE
         this.cartEventService.notifyCartUpdate();
-          this.toastr.success('Successfully item added to cart',);
-        },
-        error: (err: any) => {
-          this.isLoading = false;
-        },
-        complete: () => {
 
-          this.isLoading = false; //  unlock button after response
-        },
-      });
-    }
+        this.showSuccessToast = true;
+
+        setTimeout(() => {
+          this.showSuccessToast = false;
+          this.closePopup();   // 1 sec पछि popup पनि बन्द हुन्छ
+        }, 800);
+      },
+      error: (err: any) => {
+        this.isLoading = false;
+      },
+      complete: () => {
+
+        this.isLoading = false; //  unlock button after response
+      },
+    });
+  }
 
 
 }

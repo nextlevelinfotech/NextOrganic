@@ -19,6 +19,8 @@ declare var $: any;
 export class ShopCategoriesComponent implements AfterViewInit, OnInit {
   showPopup: boolean = false;
   isLoading: boolean = false;
+
+  showSuccessToast: boolean = false;
   categoryList: any[] = [];
 
   products: any[] = [];
@@ -268,8 +270,13 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
 
         this.fetchProductList();
         this.isLoading = false;
-        this.toastr.success('Successfully item added to cart',);
-        this.closePopup();
+        // Success Toast
+        this.showSuccessToast = true;
+
+        setTimeout(() => {
+          this.showSuccessToast = false;
+          this.closePopup();   // 1 sec पछि popup पनि बन्द हुन्छ
+        }, 800);
       },
       error: (err: any) => {
         this.isLoading = false;

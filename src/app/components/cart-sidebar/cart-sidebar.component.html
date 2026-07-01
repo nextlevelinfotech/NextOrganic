@@ -8,8 +8,9 @@
 
     <h2 class="heading-title text-uppercase">
         Cart Items - <span>{{ cartList.length }}</span>
-    </h2>
 
+    </h2>
+    <button class="btn btn-outline-primary mb-3 w-100"  *ngIf="cartList.length > 0" (click)="removeAllItems()">Remove All</button>
     <div *ngIf="cartList.length === 0" class="text-center p-4 text-muted">
         Your cart is empty
     </div>

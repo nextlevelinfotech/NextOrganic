@@ -40,18 +40,26 @@
 
                     </div> -->
                     <h4 class="product-single-price">{{product?.price}}</h4>
-                    <div class="badge text-bg-secondary mb-3">In Stock {{product?.stockQuantity}}</div>
+                    <div class="badge mb-3"
+                        [ngClass]="product.stockQuantity > 0 ? 'text-bg-success' : 'text-bg-danger'">
+
+                        {{ product.stockQuantity > 0
+                        ? ('In Stock ' + product.stockQuantity)
+                        : 'Out of Stock' }}
+
+                    </div>
                     <div class="product-single-text">
                         {{product?.description}}
                     </div>
                     <div class="outer d-flex mt-4 gap-4 align-items-center">
-                        <div class="quantity">
+                        <div class="quantity" [ngClass]="product.stockQuantity <= 0 ? 'disabled' : ''">
 
                             <div class="quantity-button minus" (click)="decrease()">
                                 -
                             </div>
 
-                            <input type="text" class="qtyText" [(ngModel)]="quantity" readonly>
+                            <input type="text" class="qtyText" [(ngModel)]="quantity" readonly
+                                [disabled]="product.stockQuantity <= 0">
 
                             <div class="quantity-button plus" (click)="increase()">
                                 +
@@ -73,10 +81,14 @@
 
 
                     <div class="btns-group m-t-24">
-                        <button href="" class="btn btn-primary " (click)="createCart()">
+                        <button class="btn btn-primary" (click)="createCart()"
+                            [disabled]="singleProduct.stockQuantity <= 0">
+
                             Add To Cart
-                            <i class="ms-1 ri-arrow-right-long-line"></i></button>
-                        <button href="" class="btn btn-outline-primary">Checkout<i
+                            <i class="ms-1 ri-arrow-right-long-line"></i>
+                        </button>
+                        <button class="btn btn-primary"
+                            [disabled]="product.stockQuantity <= 0">Checkout<i
                                 class="ms-1 ri-arrow-right-long-line"></i></button>
                     </div>
 
@@ -133,108 +145,93 @@
 
         <div class="related-products m-t-80">
             <h2>Related Products</h2>
-            <div class="row ">
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card">
-                        <div class="product-img-holder">
-                            <img src="../../../assets/img/products/product-img-1.jpg" alt="">
-                        </div>
-                        <div class="product-content">
-                            <div class="product-title">Aloe Vera Capsules</div>
-                            <div class="product-price">
-                                <div class="product-price-main">Rs. 550.00</div>
-                                <div class="product-price-strike">Rs. 850.00</div>
-                            </div>
-                        </div>
-                        <ul class="product-action">
-
-                            <li>
-                                <a href="#!"><i class="fa-solid fa-basket-shopping"></i></a>
-                            </li>
-                            <li>
-                                <a href="#!"><i class="fa-solid fa-heart"></i></a>
-                            </li>
-                        </ul>
-
-                    </div>
+            <div class="row">
+                @for(product of products; track product.id) {
+                <div class="col-md-4 col-lg-3">
+                    <app-product-card [product]="product" [isHomePage]="false" (addToCartClick)="openPopup($event)">
+                    </app-product-card>
 
                 </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card">
-                        <div class="product-img-holder">
-                            <img src="../../../assets/img/products/product-img-2.jpg" alt="">
-                        </div>
-                        <div class="product-content">
-                            <div class="product-title">Aloevera B</div>
-                            <div class="product-price">
-                                <div class="product-price-main">Rs. 750.00</div>
-                                <div class="product-price-strike">Rs. 850.00</div>
-                            </div>
-                        </div>
-                        <ul class="product-action">
-
-                            <li>
-                                <a href="#!"><i class="fa-solid fa-basket-shopping"></i></a>
-                            </li>
-                            <li>
-                                <a href="#!"><i class="fa-solid fa-heart"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card">
-                        <div class="product-img-holder">
-                            <img src="../../../assets/img/products/product-img-3.jpg" alt="">
-                        </div>
-                        <div class="product-content">
-                            <div class="product-title">Cordyceps Capsules</div>
-                            <div class="product-price">
-                                <div class="product-price-main">Rs. 2,650.00</div>
-                                <div class="product-price-strike">Rs. 2,750.00</div>
-                            </div>
-                        </div>
-                        <ul class="product-action">
-
-                            <li>
-                                <a href="#!"><i class="fa-solid fa-basket-shopping"></i></a>
-                            </li>
-                            <li>
-                                <a href="#!"><i class="fa-solid fa-heart"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card">
-                        <div class="product-img-holder">
-                            <img src="../../../assets/img/products/product-img-4.jpg" alt="">
-                        </div>
-                        <div class="product-content">
-                            <div class="product-title">Ganoderma Capsules</div>
-                            <div class="product-price">
-                                <div class="product-price-main">Rs. 1,600.00</div>
-                                <div class="product-price-strike">Rs. 1,800.00</div>
-                            </div>
-                        </div>
-                        <ul class="product-action">
-
-                            <li>
-                                <a href="#!"><i class="fa-solid fa-basket-shopping"></i></a>
-                            </li>
-                            <li>
-                                <a href="#!"><i class="fa-solid fa-heart"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-
+                }
             </div>
-
         </div>
     </div>
 </section>
 <app-footer></app-footer>
+<!-- Overlay -->
+<div class="popup-overlay" (click)="closePopup()" *ngIf="showPopup"></div>
+
+<!-- Popup -->
+<div class="popup-container w-520" *ngIf="showPopup">
+    <div class="popup-header">
+        <h4 class="mb-0 section-title"> Add To Cart</h4>
+        <span class="close-btn" (click)="closePopup()">×</span>
+    </div>
+
+    <div class="popup-body">
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="product-single-img-wrap">
+                    <div class="product-single-img text-center">
+                        <img [src]="singleProduct.productImageBase64" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="product-single-content">
+                    <h3 class="product-single-title mb-2">{{ singleProduct.productName }}</h3>
+
+                    <h4 class="product-single-price">{{singleProduct.price}}</h4>
+                    <div class="badge mb-3"
+                        [ngClass]="singleProduct.stockQuantity > 0 ? 'text-bg-success' : 'text-bg-danger'">
+
+                        {{ singleProduct.stockQuantity > 0
+                        ? ('In Stock ' + singleProduct.stockQuantity)
+                        : 'Out of Stock' }}
+
+                    </div>
+
+                    <div class="outer d-flex mt-4 gap-4 align-items-center">
+      
+                        <div class="quantity">
+
+                            <div class="quantity-button minus" (click)="decrease()">
+                                -
+                            </div>
+
+                            <input type="text" class="qtyText" [(ngModel)]="quantity" readonly>
+
+                            <div class="quantity-button plus" (click)="increase()">
+                                +
+                            </div>
+
+                        </div>
+                        <button class="btn btn-primary" (click)="createCart()"
+                            [disabled]="singleProduct.stockQuantity <= 0">
+
+                            Add To Cart
+                            <i class="ms-1 ri-arrow-right-long-line"></i>
+                        </button>
+                    </div>
+
+                 
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer Buttons -->
+    <div class="popup-footer">
+
+    </div>
+    <!-- Success Toast -->
+    <div class="popup-toast" *ngIf="showSuccessToast">
+        <i class="ri-checkbox-circle-fill"></i>
+        <span>Product added to cart successfully.</span>
+    </div>
+
+</div>

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, OnInit, OnDestroy } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 
@@ -8,6 +8,7 @@ import { HeaderComponent } from '../../../header/header.component';
 import { FooterComponent } from '../../../footer/footer.component';
 import { ShopCommonService } from '../../../common/service/shop-common.service';
 import { CartEventService } from '../../../common/service/cart-event.service';
+import { AuthService } from '../../../admin/core/Auth/authService/auth.service';
 
 @Component({
   selector: 'app-shop-cart',
@@ -27,6 +28,8 @@ export class ShopCartComponent implements OnInit, OnDestroy {
 
   constructor(
     public service: ShopCommonService,
+    public AuthService: AuthService,
+    private router: Router,
     private toastr: ToastrService,
     private cartEventService: CartEventService
   ) { }
@@ -143,6 +146,22 @@ export class ShopCartComponent implements OnInit, OnDestroy {
       },
       error: (err: any) => { this.isLoading = false; }
     });
+  }
+
+
+  proceedToCheckout() {
+    if (!this.AuthService.isLoggedIn()) {
+      this.toastr.warning('Please log in to proceed to checkout.');
+        this.router.navigate(['/login']);
+      return;
+    }
+   else if (this.cartList.length === 0) {
+      this.toastr.warning('Your cart is empty. Please add items before proceeding to checkout.');
+      return;
+    }
+    else{
+        this.router.navigate(['/shop/checkout']);
+    }
   }
 
   ngOnDestroy(): void {

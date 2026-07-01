@@ -3,7 +3,7 @@ import { HeaderComponent } from '../../../header/header.component';
 import { FooterComponent } from '../../../footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ShopCommonService } from '../../../common/service/shop-common.service';
 import { ToastrService } from 'ngx-toastr';
 import { CartEventService } from '../../../common/service/cart-event.service';
@@ -30,12 +30,13 @@ export class CheckOutComponent implements OnInit, AfterViewInit, OnDestroy {
   private cartSubscription!: Subscription;
 
   constructor(
-    public service: ShopCommonService, 
+    private router: Router,
+    public service: ShopCommonService,
     private toastr: ToastrService,
     private cartEventService: CartEventService
   ) { }
 
-// ... (तपाईंको माथिको कोड उस्तै) ...
+  // ... (तपाईंको माथिको कोड उस्तै) ...
   ngOnInit(): void {
     // 🌟 बाहिरको this.fetchCartList(); हटाइयो
 
@@ -43,19 +44,19 @@ export class CheckOutComponent implements OnInit, AfterViewInit, OnDestroy {
       if (updated !== null && updated !== undefined) {
 
         if (this.isLocalUpdate) {
-          this.isLocalUpdate = false; 
+          this.isLocalUpdate = false;
           return;
         }
 
         if (Array.isArray(updated)) {
           this.cartList = updated;
-          this.calculateTotalFromList(); 
+          this.calculateTotalFromList();
         } else {
-          this.fetchCartList(); 
+          this.fetchCartList();
         }
       } else {
-         // 🌟 पहिलो पटक खुल्दा मात्र API कल गर्ने
-         this.fetchCartList();
+        // 🌟 पहिलो पटक खुल्दा मात्र API कल गर्ने
+        this.fetchCartList();
       }
     });
   }
@@ -96,9 +97,41 @@ export class CheckOutComponent implements OnInit, AfterViewInit, OnDestroy {
     return (this.cartTotalPrice + this.shippingCharge);
   }
 
+
+  private validateCheckout(): boolean {
+
+    const m = this.service.checkoutModel;
+
+    if (!m.customerName?.trim()) {
+      this.toastr.warning('Customer name is required.');
+      return false;
+    }
+
+    if (!m.phoneNumber?.trim()) {
+      this.toastr.warning('Phone number is required.');
+      return false;
+    }
+
+    if (!/^9[678]\d{8}$/.test(m.phoneNumber)) {
+      this.toastr.warning('Invalid phone number.');
+      return false;
+    }
+
+    if (!m.address?.trim()) {
+      this.toastr.warning('Address is required.');
+      return false;
+    }
+
+    if (!m.paymentMethod) {
+      this.toastr.warning('Please select a payment method.');
+      return false;
+    }
+
+    return true;
+  }
+
   postCheckOut(form: any) {
-    if (!form || form.invalid) {
-      this.toastr.warning('कृपया मागिएका सबै विवरणहरू (*) सहीसँग भर्नुहोस्।', 'Validation Error');
+    if (!this.validateCheckout()) {
       return;
     }
     debugger
@@ -128,6 +161,16 @@ export class CheckOutComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // ३. सबै कम्पोनेन्टहरू (Sidebar, Shop-Cart, Header) लाई खाली गर्न अलार्म बजाउने
         this.cartEventService.notifyCartUpdate([]);
+
+        this.router.navigate(['shop/confirmation'], {
+          queryParams: {
+            orderId: res.orderId,
+            orderNo: res.orderNo,
+            deliveryCharge: res.deliveryCharge,
+            orderStatus: res.orderStatus,
+            totalAmount: res.totalAmount
+          }
+        });
 
         // ४. Form object लाई रिसेट गर्ने
         if (form) {
