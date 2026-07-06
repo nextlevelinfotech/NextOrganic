@@ -11,11 +11,7 @@ export class AuthService {
     private encrypt: EncryptionService,
   ) {}
 
-  //encript token
-  Token = localStorage.getItem('token');
-
-  //  Save encript token
-
+ // Save encrypted token
   setToken(token: string) {
     const encryptedToken = this.encrypt.encryptionAES(token);
     localStorage.setItem('token', encryptedToken);

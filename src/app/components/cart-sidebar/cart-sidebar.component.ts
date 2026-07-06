@@ -36,7 +36,7 @@ export class CartSidebarComponent implements AfterViewInit, OnInit, OnDestroy {
   // ... (तपाईंको माथिको कोड उस्तै) ...
   ngOnInit(): void {
     // 🌟 बाहिरको this.fetchCartList(); हटाइयो
-        // ❌ login नभए cart API नचलाउने
+
     if (!this.authService.isLoggedIn()) {
       return;
     }

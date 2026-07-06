@@ -10,8 +10,10 @@ import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { routes } from './app/app.routes';
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { tokenInterceptor } from './app/admin/core/Auth/encryptionservice/returntoken/token-interceptor.service';
 
+// दुवै छुट्टाछुट्टै इन्टरसेप्टरहरूलाई फरक नाम (Alias) दिएर इम्पोर्ट गरिएको:
+import { tokenInterceptor as adminInterceptor } from './app/admin/core/Auth/encryptionservice/returntoken/token-interceptor.service';
+import { tokenInterceptor as userAdminInterceptor } from  './app/user-admin/core/auth/encryptionservice/returntoken/token-interceptor.service'; ;
 bootstrapApplication(AppComponent, {
   providers: [
     provideAnimations(),
@@ -33,8 +35,12 @@ bootstrapApplication(AppComponent, {
       })
     ),
 
+    // यहाँ एउटै HTTP क्लाइन्टभित्र दुवै इन्टरसेप्टरहरू लिस्टमा राखिएका छन्
     provideHttpClient(
-      withInterceptors([tokenInterceptor])
+      withInterceptors([
+        adminInterceptor,
+        userAdminInterceptor
+      ])
     )
   ]
 }).catch(err => console.error(err));

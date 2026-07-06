@@ -1,9 +1,5 @@
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { tokenInterceptor } from './user-admin/core/auth/encryptionservice/returntoken/token-interceptor.service';
+import { ApplicationConfig } from '@angular/core';
 
-
-export const appConfig = {
-  providers: [
-    provideHttpClient(withInterceptors([tokenInterceptor]))
-  ]
+export const appConfig: ApplicationConfig = {
+  providers: []
 };

@@ -49,15 +49,13 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
       this.getUserNameById(this.userId);
     }
 
+    if (!this.authService.isLoggedIn()) {
+      return;
+    }
 
 
     this.cartSubscription = this.cartEventService.cartUpdated$.subscribe((updated: any) => {
       // 🌟 सुरक्षा: यदि युजर लगइन छैन भने कार्ट एपीआई कल गर्नै नदिने
-
-      if (!this.authService.isLoggedIn()) {
-        this.cartCount = 0;
-        return;
-      }
 
       if (updated !== null && updated !== undefined) {
         if (Array.isArray(updated)) {
@@ -79,7 +77,6 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
 
 
   loadCartCount() {
-    if (!this.authService.isLoggedIn()) return;
     this.service.getCartList().subscribe({
       next: (res: any) => {
         const list = res || [];

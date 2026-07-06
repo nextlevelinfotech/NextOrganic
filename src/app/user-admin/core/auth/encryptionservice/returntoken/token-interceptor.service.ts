@@ -17,7 +17,6 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   };
 
   // Add token if exists
-  // token-interceptor.service.ts
   if (token && token !== 'null' && token !== 'undefined') {
     headers['Authorization'] = `Bearer ${token}`;
   }
