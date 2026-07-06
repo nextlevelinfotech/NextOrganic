@@ -26,20 +26,6 @@ export class LoginComponent implements AfterViewInit {
   ngAfterViewInit(): void { }
 
 
-
-  // if (
-  //   this.payload.userName == 'admin' &&
-  //   this.payload.password == 'password'
-  // ) {
-  //   localStorage.setItem('token', 'true'); // ✅ same key everywhere
-  //   this.router.navigate(['/home']);
-  //   console.log('Login Success');
-  // } else {
-  //   console.log('Invalid Credentials');
-  // }
-
-
-
   // ---------------- LOGIN ----------------
   loginSubmit() {
     this.isLoginLoading = true;
@@ -72,11 +58,10 @@ export class LoginComponent implements AfterViewInit {
 
     this.service.loginUser(payload).subscribe({
 
-
       next: (response: any) => {
 
         // Customer बाहेक अरूलाई login नदिने
-        if (response.role?.toLowerCase() !== 'customer') {
+        if (response.role !== 'Customer') {
           this.toastr.error('Only Customer can login.');
           this.isLoginLoading = false;
           return;
