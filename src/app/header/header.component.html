@@ -75,18 +75,18 @@
 
                             <button class="btn btn-login btn-primary d-flex align-items-center gap-1" ngbDropdownToggle>
                                 <i class="ri-user-line"></i>
-                                {{ userList?.username }}
+                                {{ userData?.username }}
                             </button>
 
                             <div ngbDropdownMenu>
 
-                                <button ngbDropdownItem routerLink="/account">
+                                <!-- <button ngbDropdownItem routerLink="/account">
                                     <i class="ri-user-line me-2"></i>
                                     My Account
-                                </button>
+                                </button> -->
 
                                 
-                                <button ngbDropdownItem routerLink="/profile">
+                                <button ngbDropdownItem routerLink="/myProfile">
                                     <i class="ri-user-line me-2"></i>
                                     My Profile
                                 </button>
@@ -96,7 +96,7 @@
                                     <i class="ri-shopping-bag-line me-2"></i>
                                     My Orders
                                 </button>
-
+<!-- 
                                 <button ngbDropdownItem routerLink="/wishlist">
                                     <i class="ri-heart-line me-2"></i>
                                     My Wishlist
@@ -110,7 +110,7 @@
                                 <button ngbDropdownItem routerLink="/returns">
                                     <i class="ri-arrow-go-back-line me-2"></i>
                                     Returns & Cancellations
-                                </button>
+                                </button> -->
 
                                 <hr class="dropdown-divider">
 

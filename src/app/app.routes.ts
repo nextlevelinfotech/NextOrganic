@@ -83,15 +83,15 @@ export const routes: Routes = [
         path: '',
         component: LayoutComponent,
         children: [
-          {
-            path: 'profile',
-            loadComponent: () =>
-              import('./admin/core/company-profile/company-profile.component').then(
-                (m) => m.CompanyProfileComponent,
+          // {
+          //   path: 'profile',
+          //   loadComponent: () =>
+          //     import('./admin/core/company-profile/company-profile.component').then(
+          //       (m) => m.CompanyProfileComponent,
 
-              ),
-            canActivate: [authGuard],
-          },
+          //     ),
+          //   canActivate: [authGuard],
+          // },
           {
             path: 'products',
             loadComponent: () =>
@@ -132,7 +132,7 @@ export const routes: Routes = [
               import('./user-admin/core/pages/account/accout.component').then(
                 (m) => m.AccoutComponent,
               ),
-            // canActivate: [authGuard],
+            //  canActivate: [authGuard],
           },
           {
             path: 'orders',
@@ -143,12 +143,12 @@ export const routes: Routes = [
             // canActivate: [authGuard],
           },
           {
-            path: 'profile',
+            path: 'myProfile',
             loadComponent: () =>
               import('./user-admin/core/pages/profile/profile.component').then(
                 (m) => m.ProfileComponent,
               ),
-            // canActivate: [authGuard],
+            //  canActivate: [authGuard],
           },
 
         ],

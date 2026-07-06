@@ -1,62 +1,54 @@
-<main class="account-content">
-    <header class="content-header">
-        <h2>Edit Profile</h2>
-        <p>Update your personal information and how we can reach you.</p>
-    </header>
-
-    <div class="dashboard-card card-full-width">
-        <form action="#" method="POST" class="profile-form">
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <input class="form-control" type="text" id="firstName" name="firstName" value="John" required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input class="form-control" type="text" id="lastName" name="lastName" value="Doe" required>
-                    </div>
-                </div>
-
-
-
+<div class="dashboard">
+    <!-- <div class="dashboard__profile card profile-card">
+        <div class="card-body profile-card__body">
+            <div class="profile-card__avatar">
+                <img src="dist/images/avatar-3.jpg" alt="" />
             </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="emailAddress">Email Address</label>
-                        <input class="form-control" type="text" id="emailAddress" name="emailAddress" required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="phoneNumber">Phone Number</label>
-                        <input class="form-control" type="text" id="phoneNumber" name="phoneNumber">
-                    </div>
-                </div>
-
-
-
+            <div class="profile-card__name"> {{ userData?.username }}</div>
+            <div class="profile-card__email">
+                <a href="mailto:dhanakkhatiwada@gmail.com">
+                    {{ userData?.email }}
+                </a>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="phoneNumber">Shipping Address</label>
-                        <input class="form-control" type="text" id="phoneNumber" name="phoneNumber">
-                    </div>
+            <div class="profile-card__edit">
+                 <a class="btn btn-secondary btn-sm" href="">Edit Profile</a> 
+            </div>
+        </div>
+    </div> -->
+    <div class="dashboard__address card address-card address-card--featured">
+        <!-- <div class="address-card__badge"><strong>Address</strong> </div> -->
+        <div class="address-card__body">
+            <!-- <div class="address-card__row mb-3">
+                <div class="address-card__row-title"><strong>Address</strong> </div>
+                <div class="address-card__row-content">
+                    Mid Baneshwor , Kathmandu, Nepal
+                </div>
+            </div> -->
+
+            <div class="address-card__row mb-3">
+                <div class="address-card__row-title"><strong>Name</strong> </div>
+                <div class="address-card__row-content">
+                    {{ userData?.username }}
                 </div>
             </div>
-
-
-            <div class="form-actions">
-                <button type="button" class="btn btn-secondary ">Cancel</button>
-                <button type="submit" class="btn btn-primary ms-3">Save Changes</button>
+            <div class="address-card__row mb-3">
+                <div class="address-card__row-title"><strong>Phone Number</strong> </div>
+                <div class="address-card__row-content">
+                    {{ userData?.phone }}
+                </div>
             </div>
-
-        </form>
+            <div class="address-card__row mb-3">
+                <div class="address-card__row-title"><strong>Email Address</strong> </div>
+                <div class="address-card__row-content">
+                    <a href="mailto:dhanakkhatiwada@gmail.com">
+                        {{ userData?.email }}
+                    </a>
+                </div>
+            </div>
+            <!-- <div class="address-card__footer m-t-20">
+                <a href="" class="btnLink">Edit Address</a>
+            </div> -->
+        </div>
     </div>
-</main>
+    
+</div>

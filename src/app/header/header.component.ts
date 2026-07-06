@@ -30,7 +30,7 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
   userId: number | null = null;
   private cartSubscription!: Subscription;
 
-  userList: any;
+  userData: any;
 
 
   constructor(
@@ -261,7 +261,7 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
 
     this.loginService.getuserbyId(userId).subscribe({
       next: (res: any) => {
-        this.userList = res;
+        this.userData = res;
       },
       error: (err: any) => {
         console.log(err);
