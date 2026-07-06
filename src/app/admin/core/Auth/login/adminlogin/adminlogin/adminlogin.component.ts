@@ -118,6 +118,14 @@ export class AdminloginComponent implements AfterViewInit {
 
     this.service.loginUser(payload).subscribe({
       next: (response: any) => {
+
+        // Admin बाहेक अरूलाई login नदिने
+        if (response.role !== 'Admin') {
+          this.toastr.error('Only Admin can login.');
+          this.isLoginLoading = false;
+          return;
+        }
+
         if (response?.token) {
           this.isLoginLoading = false;
 

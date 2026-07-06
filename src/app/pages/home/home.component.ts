@@ -9,7 +9,8 @@ import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { FormsModule } from '@angular/forms';
 import { CartEventService } from '../../common/service/cart-event.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../user-admin/core/auth/authService/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -42,6 +43,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public service: ShopCommonService,
     private el: ElementRef,
     private toastr: ToastrService,
+    private router: Router,
+    private authService: AuthService,
     private cartEventService: CartEventService) { }
 
   ngAfterViewInit(): void {
@@ -102,6 +105,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
 
   createCart() {
+
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      this.toastr.error('Please login to add products to cart');
+      this.isLoading = false;
+      this.closePopup();
+      return;
+    }
+
     let payload = {
       productId: this.productId,
       quantity: this.quantity

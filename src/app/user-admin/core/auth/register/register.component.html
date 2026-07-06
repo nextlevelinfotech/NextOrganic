@@ -2,55 +2,48 @@
 
 <section class="register col-10 col-xl-5 mx-auto p-t-32 module">
     <h2 class="m-b-40">Register</h2>
-    <form action="">
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="">First name</label>
-                <input type="text" id="" class="form-control">
-            </div>
-            <div class="col-md-6 mb-3">
-                <label for=""> Last name </label>
-                <input type="text" id="" class="form-control">
-            </div>
+    <form #registerForm="ngForm">
+
+        <!-- Username -->
+        <div class="mb-3">
+            <label>Username</label>
+            <input type="text" class="form-control" name="username" [(ngModel)]="service.registerModel.username"
+                required>
         </div>
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="">Phone</label>
-                <input type="text" id="" class="form-control">
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="">Shipping Address</label>
-                <input type="text" id="" class="form-control">
-            </div>
-        </div>
-
-        <div class="row">
-
-            <div class="col-md-12 mb-3">
-                <label for="">Email</label>
-                <input type="text" id="" class="form-control">
-            </div>
+        <!-- Password -->
+        <div class="mb-3">
+            <label>Password</label>
+            <input type="password" class="form-control" name="password" [(ngModel)]="service.registerModel.password"
+                required>
 
         </div>
 
+        <!-- Email -->
+        <div class="mb-3">
+            <label>Email</label>
+            <input type="email" class="form-control" name="email" [(ngModel)]="service.registerModel.email" required>
 
+        </div>
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="">Password</label>
-                <input type="password" id="" class="form-control">
-            </div>
-            <div class="col-md-6 mb-3">
-                <label for="">Confirm Password</label>
-                <input type="password" id="" class="form-control">
-            </div>
+        <!-- Full Name -->
+        <div class="mb-3">
+            <label>Full Name</label>
+            <input type="text" class="form-control" name="fullName" [(ngModel)]="service.registerModel.fullName"
+                required>
+        </div>
+
+        <!-- Phone -->
+        <div class="mb-3">
+            <label>Phone</label>
+            <input type="text" class="form-control" name="phone" [(ngModel)]="service.registerModel.phone" required>
         </div>
 
 
-        <button type="submit" class="btn btn-secondary w-100 m-t-8">Register Now</button>
+        <button type="submit" class="btn btn-primary" (click)="postRegister()">
+            Register
+        </button>
 
-        <p class="m-t-12 text-center"> Already have an account? <a routerLink="/login" class="btnLink"> Sign In</a></p>
     </form>
+
 </section>

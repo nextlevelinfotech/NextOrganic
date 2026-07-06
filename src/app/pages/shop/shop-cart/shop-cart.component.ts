@@ -8,7 +8,8 @@ import { HeaderComponent } from '../../../header/header.component';
 import { FooterComponent } from '../../../footer/footer.component';
 import { ShopCommonService } from '../../../common/service/shop-common.service';
 import { CartEventService } from '../../../common/service/cart-event.service';
-import { AuthService } from '../../../admin/core/Auth/authService/auth.service';
+import { AuthService } from '../../../user-admin/core/auth/authService/auth.service';
+
 
 @Component({
   selector: 'app-shop-cart',
@@ -19,7 +20,7 @@ import { AuthService } from '../../../admin/core/Auth/authService/auth.service';
 export class ShopCartComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   isLocalUpdate: boolean = false;
-  isQuantityUpdating: boolean = false; 
+  isQuantityUpdating: boolean = false;
   cartList: any[] = [];
   cartTotalPrice: number = 0;
 
@@ -39,11 +40,11 @@ export class ShopCartComponent implements OnInit, OnDestroy {
 
     // जब अरू कुनै पेज (जस्तै Checkout Page) बाट कार्ट खाली `[]` गरेको अलार्म आउँछ, यसले समात्छ
     this.cartSubscription = this.cartEventService.cartUpdated$.subscribe((updated: any) => {
-      if (updated !== undefined && updated !== null) {  
-        
+      if (updated !== undefined && updated !== null) {
+
         // यदि यो आफ्नै पेजले क्वान्टिटी बढाउँदा वा डिलिट गर्दा बजाएको अलार्म हो भने रोक्ने
         if (this.isLocalUpdate) {
-          this.isLocalUpdate = false; 
+          this.isLocalUpdate = false;
           return;
         }
 
@@ -51,7 +52,7 @@ export class ShopCartComponent implements OnInit, OnDestroy {
         if (Array.isArray(updated)) {
           this.cartList = updated;
           this.calculateTotal(); // यदि [] आयो भने यसले आफैँ टोटल जिरो बनाउँछ
-          
+
           // 🌟 मुख्य फिक्स: यदि चेकआउट सक्सेस भएर खाली एरे `[]` आएको हो भने ब्याकेन्ड कल (fetch) हुनबाट रोक्ने
           if (updated.length === 0) {
             this.isLoading = false;
@@ -92,7 +93,6 @@ export class ShopCartComponent implements OnInit, OnDestroy {
   }
 
   updateQuantity(event: Event, item: any, change: number) {
-    debugger;
     event.preventDefault();
     event.stopImmediatePropagation();
 
@@ -116,7 +116,7 @@ export class ShopCartComponent implements OnInit, OnDestroy {
     this.service.postCart(payload).subscribe({
       next: (res: any) => {
         this.isQuantityUpdating = false;
-        this.isLocalUpdate = true; 
+        this.isLocalUpdate = true;
 
         // साइडबार र हेडरलाई अपडेटेड डाटा पठाउने
         this.cartEventService.notifyCartUpdate(this.cartList);
@@ -136,7 +136,7 @@ export class ShopCartComponent implements OnInit, OnDestroy {
       next: (res: any) => {
         this.isLoading = false;
         this.toastr.success('Item removed from cart');
-        this.isLocalUpdate = true; 
+        this.isLocalUpdate = true;
 
         this.cartList = this.cartList.filter(item => item.cartDetailId !== ID);
         this.calculateTotal();
@@ -152,15 +152,15 @@ export class ShopCartComponent implements OnInit, OnDestroy {
   proceedToCheckout() {
     if (!this.AuthService.isLoggedIn()) {
       this.toastr.warning('Please log in to proceed to checkout.');
-        this.router.navigate(['/login']);
+      this.router.navigate(['/login']);
       return;
     }
-   else if (this.cartList.length === 0) {
+    else if (this.cartList.length === 0) {
       this.toastr.warning('Your cart is empty. Please add items before proceeding to checkout.');
       return;
     }
-    else{
-        this.router.navigate(['/shop/checkout']);
+    else {
+      this.router.navigate(['/shop/checkout']);
     }
   }
 
