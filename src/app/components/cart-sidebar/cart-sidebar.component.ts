@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { CartEventService } from '../../common/service/cart-event.service';
 import { ShopCommonService } from '../../common/service/shop-common.service';
 import { forkJoin } from 'rxjs';
+import { AuthService } from '../../user-admin/core/auth/authService/auth.service';
 declare var jQuery: any;
 declare var $: any; // 🌟 $ को एरर नआओस् भन्नका लागि
 
@@ -27,6 +28,7 @@ export class CartSidebarComponent implements AfterViewInit, OnInit, OnDestroy {
   constructor(
     public service: ShopCommonService,
     private toastr: ToastrService,
+        private authService: AuthService,
     private el: ElementRef,
     private cartEventService: CartEventService
   ) { }
@@ -34,6 +36,10 @@ export class CartSidebarComponent implements AfterViewInit, OnInit, OnDestroy {
   // ... (तपाईंको माथिको कोड उस्तै) ...
   ngOnInit(): void {
     // 🌟 बाहिरको this.fetchCartList(); हटाइयो
+        // ❌ login नभए cart API नचलाउने
+    if (!this.authService.isLoggedIn()) {
+      return;
+    }
 
     this.cartSubscription = this.cartEventService.cartUpdated$.subscribe((updated: any) => {
       if (updated !== null && updated !== undefined) {

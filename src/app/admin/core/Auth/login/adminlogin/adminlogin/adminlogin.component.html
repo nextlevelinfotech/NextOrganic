@@ -1,142 +1,210 @@
-
 <div class="admin-login">
     <div class="login">
-    <div class="login-left">
-        <div class="login-img">
-            <img src="assets/img/login-img.png" alt="Login Image" width="320">
+        <div class="login-left">
+            <div class="login-img">
+                <img src="assets/img/login-img.png" alt="Login Image" width="320">
 
+            </div>
+            <h2 class="login-title">Your Trusted Partner in Natural Wellness</h2>
+            <p class="login-text">Access a wide range of natural healthcare services, wellness programs, and
+                personalized support designed to help you lead a healthier and happier life.</p>
         </div>
-        <h2 class="login-title">Your Trusted Partner in Natural Wellness</h2>
-        <p class="login-text">Access a wide range of natural healthcare services, wellness programs, and personalized support designed to help you lead a healthier and happier life.</p>
-    </div>
-    <div class="login-right">
-        <form class="login-form mx-auto col-lg-7"  [formGroup]="loginForm" >
+        <div class="login-right">
+            <form class="login-form mx-auto col-lg-7" [formGroup]="loginForm">
 
-            <div class="login-logo m-b-40">
-                <img src="assets/img/mobile-logo.png" alt="">
-            </div>
-            <h2 class="text-center m-b-8 sign-in-title">Welcome Back</h2>
-            <p class="text-center m-b-40 login-subtitle">Sign in to access your account, manage your services, and stay connected with your natural health and wellness solutions.</p>
+                <div class="login-logo m-b-40">
+                    <img src="assets/img/mobile-logo.png" alt="">
+                </div>
+                <h2 class="text-center m-b-8 sign-in-title">Welcome Back</h2>
+                <p class="text-center m-b-40 login-subtitle">Sign in to access your account, manage your services, and
+                    stay connected with your natural health and wellness solutions.</p>
 
-            <div class="form-group mb-4">
-                <input autocomplete="off" type="text" class="form-control" id="userName" placeholder="User Name"  formControlName="username" #input1
-                    (keyup)="event($event, input1, input2)" >
-                <i class="fa fa-user field-icon"></i>
-            </div>
-            <div class="form-group mb-4 ">
-                <input autocomplete="off" [type]="isPasswordVisible ? 'text' : 'password'" class="form-control"   formControlName="password"
-                    id="password" placeholder="Password" #input2 (keyup)="event($event, input2, input3)"
-                    #password="" />
+                <div class="form-group mb-4">
+                    <input autocomplete="off" type="text" class="form-control" id="userName" placeholder="User Name"
+                        formControlName="username" #input1 (keyup)="event($event, input1, input2)">
+                    <i class="fa fa-user field-icon"></i>
+                </div>
+                <div class="form-group mb-4 ">
+                    <input autocomplete="off" [type]="isPasswordVisible ? 'text' : 'password'" class="form-control"
+                        formControlName="password" id="password" placeholder="Password" #input2
+                        (keyup)="event($event, input2, input3)" #password="" />
 
-                <i class="fa fa-fw field-icon toggle-password"
-                    [ngClass]="{'fa-eye': !isPasswordVisible, 'fa-eye-slash': isPasswordVisible}"
-                    (click)="togglePasswordVisibility()" aria-hidden="true"></i>
-            </div>
-            <div class="Lflex">
-                <!-- <div class="small custom-checkbox">
+                    <i class="fa fa-fw field-icon toggle-password"
+                        [ngClass]="{'fa-eye': !isPasswordVisible, 'fa-eye-slash': isPasswordVisible}"
+                        (click)="togglePasswordVisibility()" aria-hidden="true"></i>
+                </div>
+                <div class="Lflex">
+                    <!-- <div class="small custom-checkbox">
                     <input class="checkboxsize" type="checkbox" id="RememberMe">
 
                     <small class="remember-me"> Remember me</small>
                 </div> -->
-                <div>
-                    <span class="forgot-link" (click)="openPopup()" >Forgot Password ?</span>
+                    <div>
+                        <span class="forgot-link" (click)="openPopup()">Forgot Password ?</span>
+                    </div>
                 </div>
-            </div>
-            <button (click)="loginsubmit()" type="button" #input3 autocomplete="off" value ="Login" class=" btn btn-secondary mt-4 w-100 btn-shadow h-40"
-              [disabled]="isLoginLoading" >  {{ isLoginLoading ? 'Processing...' : 'LOGIN' }}
-            </button>
+                <button (click)="loginsubmit()" type="button" #input3 autocomplete="off" value="Login"
+                    class=" btn btn-secondary mt-4 w-100 btn-shadow h-40" [disabled]="isLoginLoading"> {{ isLoginLoading
+                    ? 'Processing...' : 'LOGIN' }}
+                </button>
 
-            <!-- <div class="signUp mt-3 text-center">
-                <p>Don’t have an account? <a href="">Register</a></p>
-            </div> -->
+                <div class="signUp mt-3 text-center">
+                    <p>
+                        Don’t have an account?
+                        <a href="javascript:void(0)" (click)="openRegisterPopup()">Register</a>
+                    </p>
+                </div>
 
-        </form>
+            </form>
 
+        </div>
     </div>
-</div>
 
 </div>
 
 <!-- Overlay -->
 <div class="popup-overlay" *ngIf="showPopup"></div>
 <div class="popup-overlay" *ngIf="showChangePswPopup"></div>
+<div class="popup-overlay" *ngIf="showRegisterPopup"></div>
+
 
 <!-- Popup -->
 <div class="popup-container w-520" *ngIf="showPopup">
-  <div class="popup-header">
-    <p class="mb-0 section-title">Send OTP To Your Email Address</p>
-    <span class="close-btn" (click)="closePopup()">×</span>
-  </div>
+    <div class="popup-header">
+        <p class="mb-0 section-title">Send OTP To Your Email Address</p>
+        <span class="close-btn" (click)="closePopup()">×</span>
+    </div>
 
-  <div class="popup-body">
-    <form #forgotForm="ngForm">
-        <div class="form-group mb-2 ">
-            <label>Email</label>
-            <input autocomplete="off" class="form-control mb-2" type="text" name="email"  [(ngModel)]="model.email" required />
+    <div class="popup-body">
+        <form #forgotForm="ngForm">
+            <div class="form-group mb-2 ">
+                <label>Email</label>
+                <input autocomplete="off" class="form-control mb-2" type="text" name="email" [(ngModel)]="model.email"
+                    required />
 
-            <!-- Response message -->
-            <p *ngIf="status === 'success'" class="success">
-                <i class="fa-regular fa-circle-check me-1"></i> {{ message }}
-            </p>
+                <!-- Response message -->
+                <p *ngIf="status === 'success'" class="success">
+                    <i class="fa-regular fa-circle-check me-1"></i> {{ message }}
+                </p>
 
-            <p *ngIf="status === 'error'" class="error">
-                <i class="fa-regular fa-circle-xmark me-1"></i> {{ message }}
-            </p>
+                <p *ngIf="status === 'error'" class="error">
+                    <i class="fa-regular fa-circle-xmark me-1"></i> {{ message }}
+                </p>
 
-            <p *ngIf="status === 'empty'" class="empty">
-                <i class="fa-regular fa-circle-xmark me-1"></i> {{ message }}
-            </p>
-        </div>
-
-
-        <button class="btn btn-secondary" type="button" (click)="forgotPassword()" [disabled]="isLoading">
-            {{ isLoading ? 'Processing...' : ' Send Reset Link' }}
-        </button>
-
-    </form>
+                <p *ngIf="status === 'empty'" class="empty">
+                    <i class="fa-regular fa-circle-xmark me-1"></i> {{ message }}
+                </p>
+            </div>
 
 
-  </div>
+            <button class="btn btn-secondary" type="button" (click)="forgotPassword()" [disabled]="isLoading">
+                {{ isLoading ? 'Processing...' : ' Send Reset Link' }}
+            </button>
+
+        </form>
+
+
+    </div>
 
 
 </div>
 
 <div class="popup-container w-520" *ngIf="showChangePswPopup">
-  <div class="popup-header">
-    <p class="mb-0 section-title">Change Password</p>
-    <span class="close-btn" (click)="closeChangePswPopup()">×</span>
-  </div>
+    <div class="popup-header">
+        <p class="mb-0 section-title">Change Password</p>
+        <span class="close-btn" (click)="closeChangePswPopup()">×</span>
+    </div>
 
-  <div class="popup-body">
-    <form #changePswForm="ngForm">
-        <div class="form-group mb-2 ">
-            <label>OTP</label>
-            <input autocomplete="off" class="form-control mb-2" type="text"  name="otp"  [(ngModel)]="this.service.changePswModel.otp" required />
+    <div class="popup-body">
+        <form #changePswForm="ngForm">
+            <div class="form-group mb-2 ">
+                <label>OTP</label>
+                <input autocomplete="off" class="form-control mb-2" type="text" name="otp"
+                    [(ngModel)]="this.service.changePswModel.otp" required />
 
-        </div>
-        <div class="form-group mb-2 ">
-            <label>Email</label>
-            <input autocomplete="off" class="form-control mb-2" type="text"  name="email"  [(ngModel)]="this.service.changePswModel.email" required />
+            </div>
+            <div class="form-group mb-2 ">
+                <label>Email</label>
+                <input autocomplete="off" class="form-control mb-2" type="text" name="email"
+                    [(ngModel)]="this.service.changePswModel.email" required />
 
-        </div>
+            </div>
 
-        <div class="form-group mb-2 relative">
-            <label>New Password</label>
-            <input autocomplete="off" class="form-control  mb-2" [type]="isPasswordVisible ? 'text' : 'password'"  name="password"  [(ngModel)]="this.service.changePswModel.newPassword" required />
-            <i class="fa fa-fw field-icon toggle-password changePassword-eye-icon"  [ngClass]="{'fa-eye': !isPasswordVisible, 'fa-eye-slash': isPasswordVisible}"
-                    (click)="togglePasswordVisibility()" ></i>
-        </div>
-
-
-        <button class="btn btn-secondary" type="button" (click)="changePassword()"  [disabled]="isLoading">
-             {{ isLoading ? 'Processing...' : 'Change Password' }}
-        </button>
-
-    </form>
+            <div class="form-group mb-2 relative">
+                <label>New Password</label>
+                <input autocomplete="off" class="form-control  mb-2" [type]="isPasswordVisible ? 'text' : 'password'"
+                    name="password" [(ngModel)]="this.service.changePswModel.newPassword" required />
+                <i class="fa fa-fw field-icon toggle-password changePassword-eye-icon"
+                    [ngClass]="{'fa-eye': !isPasswordVisible, 'fa-eye-slash': isPasswordVisible}"
+                    (click)="togglePasswordVisibility()"></i>
+            </div>
 
 
-  </div>
+            <button class="btn btn-secondary" type="button" (click)="changePassword()" [disabled]="isLoading">
+                {{ isLoading ? 'Processing...' : 'Change Password' }}
+            </button>
+
+        </form>
+
+
+    </div>
 
 
 </div>
 
+<div class="popup-container w-35" *ngIf="showRegisterPopup">
+    <div class="popup-header">
+        <p class="mb-0 section-title">Register</p>
+        <span class="close-btn" (click)="closeRegisterPopup()">×</span>
+    </div>
+
+    <div class="popup-body">
+        <form #registerForm="ngForm">
+
+            <!-- Username -->
+            <div class="mb-3">
+                <label>Username</label>
+                <input type="text" class="form-control" name="username" [(ngModel)]="service.registerModel.username"
+                    required>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label>Password</label>
+                <input type="password" class="form-control" name="password" [(ngModel)]="service.registerModel.password"
+                    required>
+
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" class="form-control" name="email" [(ngModel)]="service.registerModel.email"
+                    required>
+
+            </div>
+
+            <!-- Full Name -->
+            <div class="mb-3">
+                <label>Full Name</label>
+                <input type="text" class="form-control" name="fullName" [(ngModel)]="service.registerModel.fullName"
+                    required>
+            </div>
+
+            <!-- Phone -->
+            <div class="mb-3">
+                <label>Phone</label>
+                <input type="text" class="form-control" name="phone" [(ngModel)]="service.registerModel.phone" required>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary" (click)="postRegister()">
+                Register
+            </button>
+
+        </form>
+
+    </div>
+
+
+</div>

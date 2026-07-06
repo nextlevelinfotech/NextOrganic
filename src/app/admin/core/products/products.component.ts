@@ -96,6 +96,12 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       return false;
     }
 
+    
+    if (!this.service.productsModel.shortDescription?.trim()) {
+      this.toastr.error('Short Description is required');
+      return false;
+    }
+
 
     if (!this.service.productsModel.Price || this.service.productsModel.Price <= 0) {
       this.toastr.error('Price must be greater than 0');
@@ -144,6 +150,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
     formData.append('productName', this.service.productsModel.ProductName.trim());
     formData.append('description', this.service.productsModel.Description.trim());
+    formData.append('shortDescription', this.service.productsModel.shortDescription.trim());
     formData.append('price', String(this.service.productsModel.Price));
     formData.append('stockQuantity', String(this.service.productsModel.StockQuantity));
     formData.append('categoryId', String(categoryId));
@@ -203,7 +210,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       
       next: (res: any) => {
 
-
+        
         this.service.productsModel = {
           Id: res.id ?? 0,
           ProductName: res.productName ?? '',
@@ -214,7 +221,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
           ProductImage: res.productImage ?? '',
           ProductImages: [],
           DiscountPrice: res.discountPrice ?? 0,
-          IsActive: res.isActive ?? true
+          IsActive: res.isActive ?? true,
+          shortDescription: res.ShortDescription
 
         };
         this.imagePreview = res.productImageUrl || res.ProductImageUrl;
@@ -264,7 +272,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       ProductImage: '',
       ProductImages: [],
       DiscountPrice: 0,
-      IsActive: false
+      IsActive: false,
+      shortDescription: ''
     };
 
     this.imagePreview = null;

@@ -11,21 +11,17 @@ export class AuthService {
     private encrypt: EncryptionService,
   ) {}
 
-  //encript token
-  Token = localStorage.getItem('userToken');
-
-  //  Save encript token
-
+  // Save encrypted token
   setToken(token: string) {
     const encryptedToken = this.encrypt.encryptionAES(token);
     localStorage.setItem('userToken', encryptedToken);
   }
 
-  // access original token
+  // Access original token (सधैं ताजा टोकन localStorage बाट तान्छ)
   gettoken() {
-    const storedToken = localStorage.getItem('userToken'); // ✅ always fresh
+    const storedToken = localStorage.getItem('userToken'); 
 
-    if (!storedToken) return null; // ✅ prevent crash
+    if (!storedToken) return null; 
 
     try {
       return this.encrypt.decryptionAES(storedToken);
@@ -34,14 +30,33 @@ export class AuthService {
       return null;
     }
   }
-  //  Check login
+
+  // Check login (टोकन डिक्रिप्ट गरेर हेर्छ)
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('userToken');
+    const token = this.gettoken(); 
+    return !!token; 
   }
 
-  //  Logout
+  // Logout
   logout() {
     localStorage.clear();
     this.router.navigate(['/home']);
+  }
+
+  // Set userId
+  setUserId(userId: number) {
+    localStorage.setItem('userId', userId.toString());
+  }
+
+  // Get userId (सधैं ताजा userId localStorage बाट तान्छ)
+  getUserId(): number | null {
+    const userId = localStorage.getItem('userId');
+
+    if (!userId) {
+      return null;
+    }
+
+    const id = Number(userId);
+    return isNaN(id) ? null : id;
   }
 }

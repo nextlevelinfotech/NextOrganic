@@ -13,8 +13,8 @@ declare var $: any;
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements AfterViewInit {
-  isLoginLoading:boolean = false
-  selectedUserId!:number;
+  isLoginLoading: boolean = false
+  selectedUserId!: number;
   constructor(
     private toastr: ToastrService,
     private router: Router,
@@ -22,8 +22,8 @@ export class LoginComponent implements AfterViewInit {
     public service: loginService,
     private el: ElementRef,
     private authService: AuthService,
-  ) {}
-  ngAfterViewInit(): void {}
+  ) { }
+  ngAfterViewInit(): void { }
 
 
 
@@ -63,30 +63,33 @@ export class LoginComponent implements AfterViewInit {
     const payload = {
       userId: 0,
       username: this.service.loginModel.username,
-      password:  this.service.loginModel.password,
-      role: 'customer',
-      
+      password: this.service.loginModel.password,
+      role: this.service.loginModel.role,
+
     };
 
     console.log(payload);
+
     this.service.loginUser(payload).subscribe({
-   
-   
+
+
       next: (response: any) => {
-        if (response?.token) {
+
+        // Customer बाहेक अरूलाई login नदिने
+        if (response.role?.toLowerCase() !== 'customer') {
+          this.toastr.error('Only Customer can login.');
           this.isLoginLoading = false;
-          this.selectedUserId = response.userId;
-
-        this.authService.setToken(response?.token); // store token
-
-          // console.log('Stored token:', localStorage.getItem('token'));
-          // console.log('Decrypted token:', this.authService.gettoken());
-          this.toastr.success('Login successful');
-          this.router.navigate(['/home']);
-        } else {
-          this.toastr.error('Invalid login');
+          return;
         }
+        
+    
+        this.authService.setToken(response?.token);
+        this.authService.setUserId(response.userId);
+        this.toastr.success('Login successful');
+        this.router.navigate(['/home']);
       },
+
+
 
       error: (err: any) => {
         if (err.status === 401 || err.status === 400) {
@@ -102,7 +105,7 @@ export class LoginComponent implements AfterViewInit {
     });
   }
 
-  
+
 
 
 }

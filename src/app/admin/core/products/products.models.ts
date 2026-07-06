@@ -13,7 +13,7 @@ export class productsModel {
 
     DiscountPrice: number = 0;
     IsActive!: boolean;
-
+    shortDescription: string = '';
 
 
     // ahile backend bata hataeko xa

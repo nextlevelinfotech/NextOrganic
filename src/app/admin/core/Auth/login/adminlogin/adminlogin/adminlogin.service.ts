@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../../../environments/environment.development';
 import { Endpoint } from './adminloginUrl';
-import { changePswModel } from './adminlogin.model';
+import { changePswModel, registerModel } from './adminlogin.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,12 +15,14 @@ export class AdminloginService {
   baseurl = environment.apiBaseUrl;
 
   changePswModel: changePswModel = new changePswModel();
+  registerModel: registerModel = new registerModel();
+  
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private endPoint: Endpoint,
-  ) {}
+  ) { }
 
 
   loginUser(finalData: { username: string; password: string }) {
@@ -50,4 +52,12 @@ export class AdminloginService {
       { params, responseType: 'text' }, // 👈 important if backend returns plain text
     );
   }
+
+
+
+  postRegister(data: any) {
+    return this.http.post(`${this.baseurl}${this.endPoint.register}`, data);
+  }
+
+
 }

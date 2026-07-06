@@ -3,8 +3,8 @@
         <div class="row">
             <div class="card-body">
                 <div class="card-table">
-                    <div class="table-responsive-sm">
-                        <table>
+                    <div class="table__wrapper table__wrapper-70">
+                        <table class="">
                             <thead>
                                 <tr>
                                     <th>Serial no.</th>
@@ -102,9 +102,10 @@
                 <option value="completed">Completed</option>
                 <option value="Cancelled">Cancelled</option>
             </select>
-            
+
             <div class="mt-3">
-                <button type="button" class="btn btn-sm btn-secondary me-1" [disabled]="isLoading" (click)="submitStatus(selectedItem.orderId)">
+                <button type="button" class="btn btn-sm btn-secondary me-1" [disabled]="isLoading"
+                    (click)="submitStatus(selectedItem.orderId)">
                     {{ isLoading ? 'Submitting...' : 'Submit' }}
                 </button>
             </div>

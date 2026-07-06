@@ -32,7 +32,7 @@ export class loginService {
   }
 
   getuserbyId(id: number) {
-    return this.http.get(`${this.baseurl}${this.endPoint.getuserbyId}/${id}`);
+    return this.http.get(`${this.baseurl}${this.endPoint.getuserbyId}${id}`);
   }
 
   getallusers() {

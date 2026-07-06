@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, HostListener, OnInit, OnDestroy } from '@angular/core'; 
+import { AfterViewInit, Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 declare var jQuery: any;
 import * as jquery from 'jquery';
 import { RouterModule } from '@angular/router';
@@ -9,7 +9,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../user-admin/core/auth/authService/auth.service';
 import { ShopCommonService } from '../common/service/shop-common.service';
 import { CartEventService } from '../common/service/cart-event.service';
-import { Subscription } from 'rxjs'; 
+import { Subscription } from 'rxjs';
 import { loginService } from '../user-admin/core/auth/login/login.service';
 
 @Component({
@@ -24,12 +24,13 @@ import { loginService } from '../user-admin/core/auth/login/login.service';
   ],
   templateUrl: './header.component.html',
 })
-export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy { 
+export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
   isLogin: boolean = false;
-  cartCount: number = 0; 
-  private cartSubscription!: Subscription; 
+  cartCount: number = 0;
+  userId: number | null = null;
+  private cartSubscription!: Subscription;
 
-  userList: any[] = [];
+  userList: any;
 
 
   constructor(
@@ -41,20 +42,30 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
     this.isLogin = this.authService.isLoggedIn();
   }
 
-// ... (तपाईंको माथिको कोड उस्तै) ...
   ngOnInit(): void {
+    this.userId = this.authService.getUserId();
 
-    this.fetchallusers();
-    // 🌟 बाहिरको this.loadCartCount(); हटाइयो
-    
+    if (this.userId !== null) {
+      this.getUserNameById(this.userId);
+    }
+
+
+
     this.cartSubscription = this.cartEventService.cartUpdated$.subscribe((updated: any) => {
+      // 🌟 सुरक्षा: यदि युजर लगइन छैन भने कार्ट एपीआई कल गर्नै नदिने
+
+      if (!this.authService.isLoggedIn()) {
+        this.cartCount = 0;
+        return;
+      }
+
       if (updated !== null && updated !== undefined) {
         if (Array.isArray(updated)) {
           // पेमेन्ट पछि [] आउँदा सिधै जिरो बनाउने
           this.calculateCountFromList(updated);
         } else {
           // साधारण ट्रिगर (true) आउँदा मात्र API कल गर्ने
-          this.loadCartCount(); 
+          this.loadCartCount();
         }
       } else {
         // 🌟 पहिलो पटक एप्लिकेसन खुल्दा (null आउँदा) मात्र API कल गर्ने
@@ -62,12 +73,13 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
       }
     });
   }
-  // ... (तपाईंको तलको कोड उस्तै) ...
   ngAfterViewInit(): void {
     this.initMobileMenu();
   }
-  
+
+
   loadCartCount() {
+    if (!this.authService.isLoggedIn()) return;
     this.service.getCartList().subscribe({
       next: (res: any) => {
         const list = res || [];
@@ -79,7 +91,6 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
     });
   }
 
-  // एरे लिस्टबाट काउन्ट निकाल्ने सहयोगी फङ्सन
   calculateCountFromList(list: any[]) {
     if (list && list.length > 0) {
       // यदि टोटल सामानको संख्या (Quantity) जोड्ने हो भने:
@@ -176,7 +187,7 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
 
       // Initialize the plugin on menu
       $('.th-menu-wrapper').thmobilemenu();
-    })(jQuery); 
+    })(jQuery);
   }
 
   isSticky: boolean = false;
@@ -230,19 +241,34 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
 
-  // get user info
-  fetchallusers(){
-    this.loginService.getallusers().subscribe({
+  // // get user info
+  // fetchallusers() {
+  //   this.loginService.getallusers().subscribe({
+  //     next: (res: any) => {
+  //       this.userList
+  //       console.log(res, 'fetchallusers')
+  //     },
+  //     error: (err: any) => {
+  //       console.log(err)
+  //     },
+  //     complete: () => {
+
+  //     }
+  //   })
+  // }
+
+
+  getUserNameById(userId: number | null) {
+
+    if (!userId) return;
+
+    this.loginService.getuserbyId(userId).subscribe({
       next: (res: any) => {
-        this.userList
-        console.log(res, 'fetchallusers')
+        this.userList = res;
       },
       error: (err: any) => {
-        console.log(err)
-      },
-      complete: () => {
-        
+        console.log(err);
       }
-    })
+    });
   }
 }

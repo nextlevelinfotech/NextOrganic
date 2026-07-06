@@ -17,10 +17,10 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   };
 
   // Add token if exists
-  if (token) {
+  // token-interceptor.service.ts
+  if (token && token !== 'null' && token !== 'undefined') {
     headers['Authorization'] = `Bearer ${token}`;
   }
-
   const authReq = req.clone({
     setHeaders: headers
   });
