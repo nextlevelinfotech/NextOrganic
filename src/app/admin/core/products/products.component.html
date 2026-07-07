@@ -2,7 +2,7 @@
     <div class="row">
 
         <!-- Product List -->
-        <div class="col-lg-9 mb-4">
+        <div class="col-lg-7 mb-4">
             <div class="card shadow-sm">
                 <div class="card-header d-flex justify-content-between align-items-center pt-0 pe-0">
                     <h3 class="mb-0">Product List</h3>
@@ -14,7 +14,7 @@
                         <div class="col-md-12" *ngFor="let item of productList; let i = index">
                             <div class="product-card-outer">
                                 <!-- <div class="badge">{{item.categoryId}}</div> -->
-                                <div class="product-card">
+                                <div class="product-card pro-admin">
                                     <img [src]="item.productImageUrl" class="product-image" alt="Product">
                                     <div class="product-content d-flex justify-content-between align-items-center">
                                         <div class="product-content-left">
@@ -23,12 +23,13 @@
                                             <p> Price: <strong>Rs {{item.price}}</strong> </p>
                                             <!-- <p class="price">RS {{item.price | number:'1.2-2'}} </p> -->
                                             <p>Stock: <strong>{{item.stockQuantity}}</strong> </p>
-                                            <p class="mb-1 text-muted">
-                                                <span>Description :</span> {{item.description}}
-                                            </p>
-                                            <p class="mb-1 text-muted">
+                                            <div class="mb-1 text-muted">
+                                                <span>Description :</span>
+                                                  <span [innerHTML]="item.description"></span>
+                                            </div>
+                                            <div class="mb-1 text-muted">
                                                 <span>Short Description :</span> {{item.shortDescription}}
-                                            </p>
+                                            </div>
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center">
@@ -51,7 +52,7 @@
         </div>
 
         <!-- Product Form -->
-        <div class="col-lg-3">
+        <div class="col-lg-5">
             <div class="card shadow-sm pt-0">
                 <div class="card-header">
                     <h5 class="mb-0">Add / Edit Product</h5>
@@ -113,13 +114,13 @@
 
                         </div>
 
-                        <!-- <div class="mb-3">
+                        <div class="mb-3">
                             <label class="form-label">Short Description</label>
                             <textarea rows="3" class="form-control"
                                 [(ngModel)]="this.service.productsModel.shortDescription" name="short-description"
                                 placeholder="Enter full details" required></textarea>
-                        </div> -->
-
+                        </div>
+<!-- 
                         <div class="mb-3">
 
                             <label class="form-label">
@@ -130,7 +131,7 @@
                                 [(ngModel)]="service.productsModel.shortDescription" name="shortDescription">
                             </ckeditor>
 
-                        </div>
+                        </div> -->
 
 
                         <!-- 8. Product Image -->

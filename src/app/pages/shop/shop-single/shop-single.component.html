@@ -49,7 +49,7 @@
 
                     </div>
                     <div class="product-single-text">
-                       <div [innerHTML]="product.shortDescription"></div>
+                        <div [innerHTML]="product.shortDescription"></div>
                     </div>
                     <div class="outer d-flex mt-4 gap-4 align-items-center">
                         <div class="quantity" [ngClass]="product.stockQuantity <= 0 ? 'disabled' : ''">
@@ -87,8 +87,7 @@
                             Add To Cart
                             <i class="ms-1 ri-arrow-right-long-line"></i>
                         </button>
-                        <button class="btn btn-primary"
-                            [disabled]="product.stockQuantity <= 0">Checkout<i
+                        <button class="btn btn-primary" [disabled]="product.stockQuantity <= 0">Checkout<i
                                 class="ms-1 ri-arrow-right-long-line"></i></button>
                     </div>
 
@@ -100,38 +99,15 @@
             <mat-tab label="Description">
                 <div class="m-t-24">
                     <section class="nutrition-section">
-                     <div [innerHTML]="product.description"></div>
-                        <div class="column">
-                            <h3>Nutritional Elements</h3>
-
-                            <ul>
-                                <li>Mangosteen</li>
-                                <li>Iron</li>
-                                <li>Vitamin B-6</li>
-                                <li>Fiber</li>
-                                <li>Potassium</li>
-                                <li>Curcumin</li>
-                                <li>2–6% (OWG 95%)</li>
-                                <li>Antioxidant</li>
-                            </ul>
+                        <div [innerHTML]="product.description"></div>
+     
+                        <div class="large-banner"><img src="../../../assets/img/natural-img.jpg" alt="banner">
+                            <div class="banner-text">
+                                <h2 class="mb-10">100% Natural Ingredients</h2>
+                                <p> May help increase energy and stamina. Can support exercise performance and
+                                    endurance. </p>
+                            </div>
                         </div>
-
-                        <div class="column">
-                            <h3>Benefits</h3>
-
-                            <ul>
-                                <li>Helps in preventing free radical damage.</li>
-                                <li>Helps reduce joint pain.</li>
-                                <li>Helps improve blood circulation and supports the heart.</li>
-                                <li>Antioxidants help keep the skin healthy.</li>
-                                <li>
-                                    Helps in the formation of healthy intestinal cells and may help
-                                    in relieving IBS (Irritable Bowel Syndrome).
-                                </li>
-                                <li>Helps support liver protection and healthy metabolism.</li>
-                            </ul>
-                        </div>
-
                     </section>
                 </div>
             </mat-tab>
@@ -194,7 +170,7 @@
                     </div>
 
                     <div class="outer d-flex mt-4 gap-4 align-items-center">
-      
+
                         <div class="quantity">
 
                             <div class="quantity-button minus" (click)="decrease()">
@@ -216,7 +192,7 @@
                         </button>
                     </div>
 
-                 
+
 
                 </div>
             </div>

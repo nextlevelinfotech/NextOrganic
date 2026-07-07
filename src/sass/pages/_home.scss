@@ -15,6 +15,7 @@
 }
 
 @media (max-width: 768px) {
+
   .top-flex,
   .nav-wrapper,
   .footer-bottom-wrapper {
@@ -26,4 +27,8 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+}
+
+.hero .splide__slide {
+  border:  none;
 }

@@ -28,35 +28,37 @@ import 'select2';
 export class ProductsComponent implements OnInit, AfterViewInit {
   public Editor = ClassicEditor;
 
-  public config = {
-    plugins: [
-      Essentials,
-      Bold,
-      Italic,
-      Paragraph,
-      Heading,
-      List,
-      Link,
-      Table,
-      TableToolbar
-    ],
-    toolbar: [
-      'heading',
-      '|',
-      'bold',
-      'italic',
-      '|',
-      'bulletedList',
-      'numberedList',
-      '|',
-      'link',
-      'insertTable',
-      '|',
-      'undo',
-      'redo'
-    ]
-  };
+ public config = {
+  licenseKey: 'GPL',
 
+  plugins: [
+    Essentials,
+    Bold,
+    Italic,
+    Paragraph,
+    Heading,
+    List,
+    Link,
+    Table,
+    TableToolbar
+  ],
+
+  toolbar: [
+    'heading',
+    '|',
+    'bold',
+    'italic',
+    '|',
+    'bulletedList',
+    'numberedList',
+    '|',
+    'link',
+    'insertTable',
+    '|',
+    'undo',
+    'redo'
+  ]
+};
   productList: any[] = [];
   isLoading: boolean = false;
   categoryList: any[] = [];
@@ -266,7 +268,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
           ProductImages: [],
           DiscountPrice: res.discountPrice ?? 0,
           IsActive: res.isActive ?? true,
-          shortDescription: res.ShortDescription
+          shortDescription: res.shortDescription ?? ''
 
         };
         this.imagePreview = res.productImageUrl || res.ProductImageUrl;

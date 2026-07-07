@@ -12,6 +12,8 @@ import { CartEventService } from '../../common/service/cart-event.service';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../user-admin/core/auth/authService/auth.service';
 
+import Splide from '@splidejs/splide';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -51,6 +53,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
   ngOnInit(): void {
     this.fetchProductList();
+    new Splide('#benefit-slider', {
+      type: 'loop',
+      perPage: 1,
+      gap: '30px',
+      autoplay: true,
+      interval: 3000,
+      arrows: true,
+      pagination: true,
+
+      breakpoints: {
+        992: {
+          perPage: 1,
+        },
+
+        576: {
+          perPage: 1,
+        }
+      }
+
+    }).mount();
   }
 
 

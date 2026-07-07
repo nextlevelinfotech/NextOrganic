@@ -12,6 +12,7 @@
 
 .large-banner {
   position: relative;
+  height: 648px;
 }
 
 .large-banner img {
@@ -36,8 +37,8 @@
 }
 
 .small-banner {
-  max-height: 332px;
-  height: 332px;
+  max-height: 309px;
+  height: 309px;
   display: flex;
   align-items: center;
   border-radius: 10px;
@@ -69,7 +70,8 @@
   .banner-grid {
     grid-template-columns: 1fr;
   }
-   .small-banner {
+
+  .small-banner {
     img {
       width: auto;
       height: auto;
@@ -92,6 +94,7 @@
   .small-banner img {
     width: 100%;
   }
+
   .small-banner h3 {
     font-size: 28px;
     order: 2;
