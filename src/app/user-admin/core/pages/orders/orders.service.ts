@@ -21,4 +21,11 @@ export class OrdersService {
     return this.http.get(`${this.baseurl}${Endpoint.myorders}`);
   }
 
+  getProductListById(id: number) {
+    return this.http.get(`${this.baseurl}${Endpoint.productList}/${id}`);
+  }
+
+
+
+
 }

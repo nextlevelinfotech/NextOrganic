@@ -59,7 +59,6 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     this.service.getCategories().subscribe({
       next: (res: any) => {
         this.categoryList = res;
-        console.log(res, 'categoryList');
         this.isLoading = false;
       },
       error: (err: any) => {

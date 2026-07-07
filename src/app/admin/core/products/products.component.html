@@ -26,7 +26,7 @@
                                             <p class="mb-1 text-muted">
                                                 <span>Description :</span> {{item.description}}
                                             </p>
-                                             <p class="mb-1 text-muted">
+                                            <p class="mb-1 text-muted">
                                                 <span>Short Description :</span> {{item.shortDescription}}
                                             </p>
                                         </div>
@@ -95,17 +95,41 @@
 
 
                         <!-- 7. Full Description -->
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label class="form-label">Detailed Description</label>
                             <textarea rows="3" class="form-control" [(ngModel)]="this.service.productsModel.Description"
                                 name="Description" placeholder="Enter full details" required></textarea>
-                        </div>
+                        </div> -->
 
                         <div class="mb-3">
+
+                            <label class="form-label">
+                                Detailed Description
+                            </label>
+
+                            <ckeditor [editor]="Editor" [config]="config"
+                                [(ngModel)]="service.productsModel.Description" name="Description">
+                            </ckeditor>
+
+                        </div>
+
+                        <!-- <div class="mb-3">
                             <label class="form-label">Short Description</label>
                             <textarea rows="3" class="form-control"
                                 [(ngModel)]="this.service.productsModel.shortDescription" name="short-description"
                                 placeholder="Enter full details" required></textarea>
+                        </div> -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Short Description
+                            </label>
+
+                            <ckeditor [editor]="Editor" [config]="config"
+                                [(ngModel)]="service.productsModel.shortDescription" name="shortDescription">
+                            </ckeditor>
+
                         </div>
 
 

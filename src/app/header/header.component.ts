@@ -83,7 +83,7 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
         this.calculateCountFromList(list);
       },
       error: (err) => {
-        console.error('Cart count लोड हुन सकेन:', err);
+        console.error('Cart count :', err);
       }
     });
   }

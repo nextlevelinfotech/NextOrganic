@@ -1,40 +1,81 @@
 <div class="dashboard__orders card">
-        <div class="card-header">
-            <h3>Recent Orders</h3>
-        </div>
-        <div class="card-divider"></div>
-        <div class="card-table">
-            <div class="table-responsive-sm">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Order</th>
-                            <th>Place On</th>
-                            <th>Items</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><a href="">#8132</a></td>
-                            <td>02 April, 2019</td>
-                            <td>Pending</td>
-                            <td>$2,719.00 for 5 item(s)</td>
-                        </tr>
-                        <tr>
-                            <td><a href="">#7592</a></td>
-                            <td>28 March, 2019</td>
-                            <td>Pending</td>
-                            <td>$374.00 for 3 item(s)</td>
-                        </tr>
-                        <tr>
-                            <td><a href="">#7192</a></td>
-                            <td>15 March, 2019</td>
-                            <td>Shipped</td>
-                            <td>$791.00 for 4 item(s)</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="card-header">
+        <h3>Recent Orders</h3>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-table">
+        <div class="table__wrapper table__wrapper-70">
+            <table class="">
+                <thead>
+                    <tr>
+                        <th>S.N.</th>
+                        <th>OrderNo</th>
+                        <th>Order Id</th>
+                        <th>DeliveryCharge</th>
+                        <th>Order Status</th>
+                        <th>Total Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of orderList; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ item.orderNo }}</td>
+                        <td>#{{ item.orderId }}</td>
+                        <td>Rs. {{ item.deliveryCharge }}</td>
+                        <td>
+                            <span class="badge" [ngClass]="{
+                                        'bg-warning text-dark': item.orderStatus === 'Pending',
+                                        'bg-success': item.orderStatus?.toLowerCase() === 'delivered' || item.orderStatus?.toLowerCase() === 'completed',
+                                        'bg-danger': item.orderStatus?.toLowerCase() === 'cancelled',
+                                        'bg-info text-dark': item.orderStatus?.toLowerCase() === 'shipped'
+                                        }">
+                                {{ item.orderStatus }}
+                            </span>
+                        </td>
+                        <td>Rs. {{ item.totalAmount }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary me-1" (click)="openPopup(item.orderId)">
+                                <i class="fa fa-eye"></i> View
+                            </button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
+
+<div class="popup-overlay" (click)="closePopup()" *ngIf="showPopup"></div>
+<div class="popup-container w-520" *ngIf="showPopup">
+    <div class="popup-header">
+        <h3 class="mb-0 section-title">Order Product List</h3>
+        <span class="close-btn" (click)="closePopup()">×</span>
+    </div>
+    <div class="popup-body">
+        <div class="table-responsive-sm">
+            <table style="width: 100%;" class="table-1">
+                <thead>
+                    <tr>
+                        <th style="width: 120px;">Serial No.</th>
+                        <th>Product Name </th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th style="width: 140px;">Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of productList; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ item.productName }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price | number:'1.2-2' }}</td>
+                        <td>{{ item.totalAmount | number:'1.2-2' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="popup-footer"></div>
+</div>

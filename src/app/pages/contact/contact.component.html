@@ -55,7 +55,7 @@
                         required. Thank you for your interest. We will
                         get back with you shortly.</div>
 
-                    <form #contactForm="ngForm"  class="contact-form">
+                    <form #contactForm="ngForm" class="contact-form">
 
                         <div class="row">
 
@@ -87,9 +87,13 @@
                             </div>
 
                             <div class="form-group col-md-6">
+                                <div class="flex justify-content-center">
+                                    <span style="width: 30px; height: 38px; display: flex; align-items: center; justify-content: center;">+977</span>
+                                    <input type="text" class="form-control" placeholder="Phone Number"
+                                        name="phoneNumber" [(ngModel)]="contactModel.phoneNumber" required
+                                        pattern="[0-9]{10}">
+                                </div>
 
-                                <input type="text" class="form-control" placeholder="Phone Number" name="phoneNumber"
-                                    [(ngModel)]="contactModel.phoneNumber" required pattern="[0-9]{10}">
 
                             </div>
 

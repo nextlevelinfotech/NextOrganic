@@ -1,15 +1,24 @@
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { OrdersService } from './orders.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-orders',
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './orders.component.html'
 })
 export class OrdersComponent implements OnInit, AfterViewInit {
   orderList: any[] = [];
   isLoading: boolean = false;
+
+  showPopup: boolean = false;
+  showPopupStatus: boolean = false;
+  productList: any[] = [];
+  selectedItem: any;
+  selectedStatus: string = ''; // ३. छानिएको स्टेटस राख्न यसलाई प्रयोग गर्ने
+
 
   constructor(
     public service: OrdersService,
@@ -17,8 +26,34 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     private el: ElementRef
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.fetchMyOrders();
+  }
   ngAfterViewInit(): void { }
+
+
+  viewOrderDetails(ID: number) {
+    this.isLoading = true;
+    this.service.getProductListById(ID).subscribe({
+      next: (res: any) => {
+        this.productList = res;
+
+        this.isLoading = false;
+      },
+      error: (err: any) => {
+        console.error(err);
+        this.isLoading = false;
+      }
+    });
+  }
+  openPopup(ID: number) {
+    this.showPopup = true;
+    this.viewOrderDetails(ID);
+  }
+
+  closePopup() {
+    this.showPopup = false;
+  }
 
   // Fetch Product List
   fetchMyOrders() {
@@ -26,7 +61,6 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     this.service.getMyorders().subscribe({
       next: (res: any) => {
         this.orderList = res;
-        console.log(this.orderList);
         this.isLoading = false;
       },
       error: (err: any) => {

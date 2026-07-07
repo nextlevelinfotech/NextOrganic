@@ -85,7 +85,6 @@ export class CartSidebarComponent implements AfterViewInit, OnInit, OnDestroy {
       next: (res: any) => {
         this.isLoading = false;
         this.cartList = res || [];
-        console.log(this.cartList, "product list");
 
         if (this.cartList.length > 0) {
           this.cartTotalPrice = this.cartList.reduce((total: number, item: any) => {

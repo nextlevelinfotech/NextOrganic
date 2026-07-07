@@ -49,7 +49,7 @@
 
                     </div>
                     <div class="product-single-text">
-                        {{product?.description}}
+                       <div [innerHTML]="product.shortDescription"></div>
                     </div>
                     <div class="outer d-flex mt-4 gap-4 align-items-center">
                         <div class="quantity" [ngClass]="product.stockQuantity <= 0 ? 'disabled' : ''">
@@ -100,7 +100,7 @@
             <mat-tab label="Description">
                 <div class="m-t-24">
                     <section class="nutrition-section">
-
+                     <div [innerHTML]="product.description"></div>
                         <div class="column">
                             <h3>Nutritional Elements</h3>
 
@@ -135,12 +135,12 @@
                     </section>
                 </div>
             </mat-tab>
-            <mat-tab label="Review">
+            <!-- <mat-tab label="Review">
                 <div class="m-t-24">Dell 27 Curved Gaming Monitor – S2721HGF ; Diagonal Size. 27" ; Resolution / Refresh
                     Rate. Full HD
                     (1080p) 1920 x 1080 at 144 Hz ;
                     Adaptive Sync. NVIDIA</div>
-            </mat-tab>
+            </mat-tab> -->
         </mat-tab-group>
 
         <div class="related-products m-t-80">

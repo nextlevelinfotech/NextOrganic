@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../../header/header.component';
 import { FooterComponent } from '../../../footer/footer.component';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ShopCommonService } from '../../../common/service/shop-common.service';
 import { CartEventService } from '../../../common/service/cart-event.service';
 import { ProductCardComponent } from '../../../components/product-card/product-card.component';
-
+import { AuthService } from '../../../user-admin/core/auth/authService/auth.service';
 declare var $: any;
 @Component({
   selector: 'app-shop-categories',
@@ -50,8 +50,13 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
   minPrice!: HTMLElement;
   maxPrice!: HTMLElement;
 
-  constructor(public service: ShopCommonService, private toastr: ToastrService,
-    private cartEventService: CartEventService 
+  constructor(
+    public service: ShopCommonService,
+    private toastr: ToastrService,
+    private cartEventService: CartEventService,
+
+    private router: Router,
+    private authService: AuthService,
   ) { }
 
 
@@ -100,7 +105,6 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
       next: (res: any) => {
         this.isLoading = false;
         this.products = res;
-        console.log("product list", res)
         this.applyFilters(); // API बाट डाटा आएपछि फिल्टरहरू चल्छन्
       },
       error: (err: any) => { this.isLoading = false; },
@@ -254,6 +258,16 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
 
 
   createCart() {
+
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      this.toastr.error('Please login to add products to cart');
+      this.isLoading = false;
+      this.closePopup();
+      return;
+    }
+
+
     let payload = {
       productId: this.productId,
       quantity: this.quantity

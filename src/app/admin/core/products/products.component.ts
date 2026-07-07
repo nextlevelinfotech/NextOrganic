@@ -3,19 +3,64 @@ import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { ProductsService } from './products.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import {
+  ClassicEditor,
+  Essentials,
+  Bold,
+  Italic,
+  Paragraph,
+  Heading,
+  List,
+  Link,
+  Table,
+  TableToolbar
+} from 'ckeditor5';
 
 declare var $: any;
 import 'select2';
 
 @Component({
   selector: 'app-products',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CKEditorModule],
   templateUrl: './products.component.html'
 })
 export class ProductsComponent implements OnInit, AfterViewInit {
+  public Editor = ClassicEditor;
+
+  public config = {
+    plugins: [
+      Essentials,
+      Bold,
+      Italic,
+      Paragraph,
+      Heading,
+      List,
+      Link,
+      Table,
+      TableToolbar
+    ],
+    toolbar: [
+      'heading',
+      '|',
+      'bold',
+      'italic',
+      '|',
+      'bulletedList',
+      'numberedList',
+      '|',
+      'link',
+      'insertTable',
+      '|',
+      'undo',
+      'redo'
+    ]
+  };
+
   productList: any[] = [];
   isLoading: boolean = false;
   categoryList: any[] = [];
+
 
   // Image Upload Variables
   selectedFile: File | null = null;
@@ -45,7 +90,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.service.getProductsList().subscribe({
       next: (res: any) => {
         this.productList = res;
-        console.log(this.productList);
         this.isLoading = false;
       },
       error: (err: any) => {
@@ -96,7 +140,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       return false;
     }
 
-    
+
     if (!this.service.productsModel.shortDescription?.trim()) {
       this.toastr.error('Short Description is required');
       return false;
@@ -207,10 +251,10 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.selectedProductId = ID;
 
     this.service.getProductById(ID).subscribe({
-      
+
       next: (res: any) => {
 
-        
+
         this.service.productsModel = {
           Id: res.id ?? 0,
           ProductName: res.productName ?? '',

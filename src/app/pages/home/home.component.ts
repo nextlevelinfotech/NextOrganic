@@ -61,7 +61,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       next: (res: any) => {
         this.isLoading = false;
         this.products = res;
-        console.log("product list", res)
       },
       error: (err: any) => { this.isLoading = false; },
       complete: () => { this.isLoading = false; },

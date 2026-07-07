@@ -29,38 +29,50 @@ export class ContactComponent {
 
   constructor(
     private toastr: ToastrService
-  ) {}
+  ) { }
 
 
-  submitContact(form:any){
+  submitContact(form: any) {
 
-    if(form.invalid){
+    if (form.invalid) {
 
-      if(!this.contactModel.firstName){
-        this.toastr.warning('Please enter first name');
+      if (!this.contactModel.firstName) {
+        this.toastr.error('Please enter first name');
         return;
       }
 
-      if(!this.contactModel.lastName){
-        this.toastr.warning('Please enter last name');
+      if (!this.contactModel.lastName) {
+        this.toastr.error('Please enter last name');
+        return;
+      }
+
+      if (!this.contactModel.email) {
+        this.toastr.error('Please enter email');
+        return;
+      }
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailPattern.test(this.contactModel.email)) {
+        this.toastr.error('Please enter a valid email address');
         return;
       }
 
 
-      if(!this.contactModel.email){
-        this.toastr.warning('Please enter email');
+      if (!this.contactModel.phoneNumber) {
+        this.toastr.error('Please enter phone number');
         return;
       }
 
+      const phonePattern = /^[0-9]{10}$/;
 
-      if(!this.contactModel.phoneNumber){
-        this.toastr.warning('Please enter phone number');
+      if (!phonePattern.test(this.contactModel.phoneNumber)) {
+        this.toastr.error('Please enter a valid 10-digit phone number');
         return;
       }
 
-
-      if(!this.contactModel.message){
-        this.toastr.warning('Please enter message');
+      if (!this.contactModel.message) {
+        this.toastr.error('Please enter message');
         return;
       }
 
