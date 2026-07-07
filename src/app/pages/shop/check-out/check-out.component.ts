@@ -22,7 +22,7 @@ export class CheckOutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isLoading: boolean = false;
   isLocalUpdate: boolean = false;
-  shippingCharge: number = 100;
+  shippingCharge: number = 0;
   cartTotalPrice: number = 0;
   totalSum: number = 0;
   totalPrice: number = 0;

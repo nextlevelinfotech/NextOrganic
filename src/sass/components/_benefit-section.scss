@@ -27,12 +27,12 @@
   padding-left: 20px;
 }
 
-// .benefit-content ul li::marker {
-//   content: "•";
-//   position: absolute;
-//   left: 0;
-//   color: #198c3a;
-// }
+.benefit-content ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #198c3a;
+}
 
 @media (max-width: 768px) {
   .benefit {

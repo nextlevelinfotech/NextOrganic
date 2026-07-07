@@ -124,8 +124,8 @@ svg.ck {
     text-decoration: underline;
 }
 
-ol li,
-ul li{
+.admin ol li,
+.admin ul li{
     list-style: disc inside;
 }
 
@@ -147,4 +147,8 @@ label.ck-voice-label{
 .nutrition-section h3,
 .nutrition-section ul{
     margin-top: 20px;
+}
+
+.nutrition-section li{
+    list-style: disc inside;
 }
