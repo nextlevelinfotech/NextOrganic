@@ -17,7 +17,7 @@ export class AdminloginService {
 
   changePswModel: changePswModel = new changePswModel();
   registerModel: registerModel = new registerModel();
-  
+
 
   constructor(
     private http: HttpClient,
@@ -58,6 +58,10 @@ export class AdminloginService {
 
   postRegister(data: any) {
     return this.http.post(`${this.baseurl}${this.endPoint.register}`, data);
+  }
+  
+  getuserbyId(id: number) {
+    return this.http.get(`${this.baseurl}${this.endPoint.getuserbyId}${id}`);
   }
 
 

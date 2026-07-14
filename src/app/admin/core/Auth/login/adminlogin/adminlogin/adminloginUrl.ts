@@ -11,6 +11,8 @@ export class Endpoint {
   changePassword = '/api/Auth/reset-password';
 
   register = '/api/Auth/register';
+  
+  getuserbyId = '/api/Auth/getuserbyId?userId='
 
 }
 

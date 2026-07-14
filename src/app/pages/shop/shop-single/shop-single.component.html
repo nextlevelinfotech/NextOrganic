@@ -7,7 +7,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item"><a href="#">Product</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Product Single</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{product.productName}}</li>
                 </ol>
             </nav>
         </div>
@@ -22,8 +22,11 @@
 
                 <div class="product-single-img-wrap">
                     <div class="product-single-img text-center">
-                        <img *ngIf="product?.productImageBase64"
-                            [src]="'data:image/png;base64,' + product.productImageBase64" [alt]="product?.productName">
+                        <!-- <img *ngIf="product?.productImageBase64"
+                            [src]="'data:image/png;base64,' + product.productImageBase64" [alt]="product?.productName"> -->
+
+                        <img [src]="product.productImageUrl" [alt]="product.title"
+                            style="border-radius: 5px; object-fit: cover;" />
                     </div>
                 </div>
             </div>
@@ -87,8 +90,13 @@
                             Add To Cart
                             <i class="ms-1 ri-arrow-right-long-line"></i>
                         </button>
-                        <button class="btn btn-primary" [disabled]="product.stockQuantity <= 0">Checkout<i
-                                class="ms-1 ri-arrow-right-long-line"></i></button>
+
+                        <!-- <a [routerLink]="['/shop/checkout']" class="btn btn-outline-primary  me-4">
+                              Proceed to Checkout
+                            <i class="ms-1 ri-arrow-right-long-line"></i>
+                        </a> -->
+
+                  
                     </div>
 
                 </div>
@@ -100,8 +108,9 @@
                 <div class="m-t-24">
                     <section class="nutrition-section">
                         <div [innerHTML]="product.description"></div>
-     
-                        <div class="large-banner large-banner--shop"><img src="../../../assets/img/natural-img.jpg" alt="banner">
+
+                        <div class="large-banner large-banner--shop"><img src="../../../assets/img/natural-img.jpg"
+                                alt="banner">
                             <div class="banner-text">
                                 <h2 class="mb-10">100% Natural Ingredients</h2>
                                 <p> May help increase energy and stamina. Can support exercise performance and
@@ -135,10 +144,10 @@
 </section>
 <app-footer></app-footer>
 <!-- Overlay -->
-<div class="popup-overlay" (click)="closePopup()" *ngIf="showPopup"></div>
+<!-- <div class="popup-overlay" (click)="closePopup()" *ngIf="showPopup"></div> -->
 
 <!-- Popup -->
-<div class="popup-container w-520" *ngIf="showPopup">
+<!-- <div class="popup-container w-520" *ngIf="showPopup">
     <div class="popup-header">
         <h4 class="mb-0 section-title"> Add To Cart</h4>
         <span class="close-btn" (click)="closePopup()">×</span>
@@ -200,14 +209,14 @@
 
     </div>
 
-    <!-- Footer Buttons -->
+
     <div class="popup-footer">
 
     </div>
-    <!-- Success Toast -->
+   
     <div class="popup-toast" *ngIf="showSuccessToast">
         <i class="ri-checkbox-circle-fill"></i>
         <span>Product added to cart successfully.</span>
     </div>
 
-</div>
+</div> -->

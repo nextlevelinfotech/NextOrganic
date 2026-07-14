@@ -185,6 +185,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
   // --- UI Interactions ---
 
   openPopup(packet: any) {
+    debugger
     // packet भित्रबाट क्लिक इभेन्ट र प्रोडक्ट डाटा छुट्टाछुट्टै निकाल्ने
     const event = packet.clickEvent;
     const product = packet.productData;

@@ -12,14 +12,14 @@
     <div class="header-right">
       <div ngbDropdown class="d-inline-block user toggle-dropdown">
         <button type="button" class="btn btn-user" id="dropdown-user" ngbDropdownToggle>
-          <img src="../../../../../assets/img/thumb.png" alt="" width="40" />
-          <span class="ms-1">Lisa Farsay</span>
+          <img src="../../../../../assets/img/user-thumb.jpg" alt="" width="40" />
+         <span class="ms-1">{{userData?.username}}</span>
         </button>
         <div ngbDropdownMenu aria-labelledby="dropdown-user dropend">
-          <button ngbDropdownItem>
+          <!-- <button ngbDropdownItem>
             <i class="fa-solid fa-key me-2"></i>
             Reset Password
-          </button>
+          </button> -->
           <button ngbDropdownItem (click)="logout()">
             <i class="fa-solid fa-arrow-right-from-bracket"></i>
             Logout

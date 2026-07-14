@@ -9,9 +9,9 @@ export class AuthService {
   constructor(
     private router: Router,
     private encrypt: EncryptionService,
-  ) {}
+  ) { }
 
- // Save encrypted token
+  // Save encrypted token
   setToken(token: string) {
     const encryptedToken = this.encrypt.encryptionAES(token);
     localStorage.setItem('token', encryptedToken);
@@ -40,4 +40,24 @@ export class AuthService {
     localStorage.clear();
     this.router.navigate(['/admin-login']);
   }
+
+  // Set userId
+  setUserId(userId: number) {
+    localStorage.setItem('userId', userId.toString());
+  }
+
+  // Get userId (सधैं ताजा userId localStorage बाट तान्छ)
+  getUserId(): number | null {
+    const userId = localStorage.getItem('userId');
+
+    if (!userId) {
+      return null;
+    }
+
+    const id = Number(userId);
+    return isNaN(id) ? null : id;
+  }
+
+
+
 }

@@ -130,7 +130,7 @@ export class AdminloginComponent implements AfterViewInit {
           this.isLoginLoading = false;
 
           this.authService.setToken(response?.token); // store token
-
+           this.authService.setUserId(response.userId);
           // console.log('Stored token:', localStorage.getItem('token'));
           // console.log('Decrypted token:', this.authService.gettoken());
           this.toastr.success('Login successful');

@@ -2,7 +2,7 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RedZoomModule } from 'ngx-red-zoom';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import Splide from '@splidejs/splide';
 import { HeaderComponent } from '../../../header/header.component';
 import { FooterComponent } from '../../../footer/footer.component';
@@ -11,6 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ShopCommonService } from '../../../common/service/shop-common.service';
 import { CartEventService } from '../../../common/service/cart-event.service';
 import { ProductCardComponent } from '../../../components/product-card/product-card.component';
+import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../user-admin/core/auth/authService/auth.service';
 
 @Component({
   selector: 'app-shop-single',
@@ -43,8 +45,16 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
   quantity: number = 1;
   maxQty!: number;
 
-  constructor(private route: ActivatedRoute, public service: ShopCommonService, private toastr: ToastrService,
-    private cartEventService: CartEventService) { }
+  public baseurl = environment.apiBaseUrl;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    public service: ShopCommonService,
+    private toastr: ToastrService,
+    private authService: AuthService,
+    private cartEventService: CartEventService
+  ) { }
 
   openPopup(packet: any) {
     // packet भित्रबाट क्लिक इभेन्ट र प्रोडक्ट डाटा छुट्टाछुट्टै निकाल्ने
@@ -137,6 +147,16 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
 
 
   createCart() {
+
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      this.toastr.error('Please login to add products to cart');
+      this.isLoading = false;
+      this.closePopup();
+      return;
+    }
+
+
     let payload = {
       productId: this.productId,
       quantity: this.quantity
