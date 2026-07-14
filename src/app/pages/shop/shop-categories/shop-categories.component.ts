@@ -31,7 +31,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
   searchTerm: string = '';
 
   // Pagination variables
-  productsPerPage = 5;
+  productsPerPage = 9;
   currentPage = 1;
 
   singleProduct: any = '';
