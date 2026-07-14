@@ -8,6 +8,7 @@ import { CartEventService } from '../../common/service/cart-event.service';
 import { ShopCommonService } from '../../common/service/shop-common.service';
 import { forkJoin } from 'rxjs';
 import { AuthService } from '../../user-admin/core/auth/authService/auth.service';
+import { environment } from '../../../environments/environment';
 declare var jQuery: any;
 declare var $: any; // 🌟 $ को एरर नआओस् भन्नका लागि
 
@@ -25,10 +26,11 @@ export class CartSidebarComponent implements AfterViewInit, OnInit, OnDestroy {
   shippingCharge: number = 100;
   private cartSubscription!: Subscription;
 
+  public baseurl = environment.apiBaseUrl;
   constructor(
     public service: ShopCommonService,
     private toastr: ToastrService,
-        private authService: AuthService,
+    private authService: AuthService,
     private el: ElementRef,
     private cartEventService: CartEventService
   ) { }

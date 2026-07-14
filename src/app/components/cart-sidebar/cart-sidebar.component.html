@@ -18,7 +18,9 @@
         <div class="cart-items-list">
             <div class="cart-item" *ngFor="let item of cartList">
                 <div class="item-image">
-                    <img [src]="item.productImageBase64 || item.productImage" alt="image_not_found">
+                    <!-- <img [src]="item.productImageBase64 || item.productImage" alt="image_not_found"> -->
+                       <img [src]="baseurl + '/uploads/products/' + item.productImage" [alt]="item.title" width="60"
+                                        height="70" style="border-radius: 5px; object-fit: cover;" />
                 </div>
 
                 <div class="item-content">

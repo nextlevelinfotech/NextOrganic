@@ -9,6 +9,7 @@ import { FooterComponent } from '../../../footer/footer.component';
 import { ShopCommonService } from '../../../common/service/shop-common.service';
 import { CartEventService } from '../../../common/service/cart-event.service';
 import { AuthService } from '../../../user-admin/core/auth/authService/auth.service';
+import { environment } from '../../../../environments/environment';
 
 
 @Component({
@@ -26,6 +27,8 @@ export class ShopCartComponent implements OnInit, OnDestroy {
 
   shippingCharge: number = 100;
   private cartSubscription!: Subscription;
+
+    public baseurl = environment.apiBaseUrl;
 
   constructor(
     public service: ShopCommonService,
@@ -74,6 +77,7 @@ export class ShopCartComponent implements OnInit, OnDestroy {
       next: (res: any) => {
         this.isLoading = false;
         this.cartList = res || [];
+        console.log(res, 'cartlist')
         this.calculateTotal();
       },
       error: (err: any) => { this.isLoading = false; }
