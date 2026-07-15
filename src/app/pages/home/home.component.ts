@@ -30,6 +30,7 @@ import Splide from '@splidejs/splide';
 export class HomeComponent implements OnInit, AfterViewInit {
   showPopup: boolean = false;
   products: any[] = [];
+  featuredProducts: any[] = []; // Yedi featured product chuttai dekhauni ho bhane
   isLoading: boolean = false;
   showSuccessToast = false;
   singleProduct: any = '';
@@ -75,14 +76,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }).mount();
   }
 
-
-
   fetchProductList() {
     this.isLoading = true;
     this.service.getProductsList().subscribe({
       next: (res: any) => {
         this.isLoading = false;
-        this.products = res;
+
+        // 1. Matrai Active bhayeka products dekhauna:
+        this.products = res.filter((product: any) => product.isActive === true);
+
+        // 2. Yedi active pani bhayeko ra isFeatured pani true bhayeko chuttai chainxa bhane:
+        // this.featuredProducts = res.filter((product: any) => product.isActive && product.isFeatured);
+
+        console.log(this.products, 'Filtered Active Products');
       },
       error: (err: any) => { this.isLoading = false; },
       complete: () => { this.isLoading = false; },

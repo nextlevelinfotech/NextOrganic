@@ -28,37 +28,37 @@ import 'select2';
 export class ProductsComponent implements OnInit, AfterViewInit {
   public Editor = ClassicEditor;
 
- public config = {
-  licenseKey: 'GPL',
+  public config = {
+    licenseKey: 'GPL',
 
-  plugins: [
-    Essentials,
-    Bold,
-    Italic,
-    Paragraph,
-    Heading,
-    List,
-    Link,
-    Table,
-    TableToolbar
-  ],
+    plugins: [
+      Essentials,
+      Bold,
+      Italic,
+      Paragraph,
+      Heading,
+      List,
+      Link,
+      Table,
+      TableToolbar
+    ],
 
-  toolbar: [
-    'heading',
-    '|',
-    'bold',
-    'italic',
-    '|',
-    'bulletedList',
-    'numberedList',
-    '|',
-    'link',
-    'insertTable',
-    '|',
-    'undo',
-    'redo'
-  ]
-};
+    toolbar: [
+      'heading',
+      '|',
+      'bold',
+      'italic',
+      '|',
+      'bulletedList',
+      'numberedList',
+      '|',
+      'link',
+      'insertTable',
+      '|',
+      'undo',
+      'redo'
+    ]
+  };
   productList: any[] = [];
   isLoading: boolean = false;
   categoryList: any[] = [];
@@ -93,6 +93,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       next: (res: any) => {
         this.productList = res;
         this.isLoading = false;
+        console.log(res, 'productList')
       },
       error: (err: any) => {
         console.error(err);
@@ -106,6 +107,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.service.getCategoryList().subscribe({
       next: (res: any) => {
         this.categoryList = res;
+
       },
       error: (err: any) => {
         console.error(err);
@@ -203,9 +205,9 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
     // ३. बुलिएन भ्यालुहरू - केवल सानो अक्षरमा एउटा मात्र पठाउने ('true' वा 'false')
     // यसले गर्दा भ्यालु डबल (true,true) पनि हुँदैन र ब्याकइन्डले सजिलै बुझ्छ
-    const isActiveValue = this.service.productsModel.IsActive ? 'true' : 'false';
+    // const isActiveValue = this.service.productsModel.IsActive ? 'true' : 'false';
 
-    formData.append('isActive', isActiveValue);
+    formData.append('isActive', $("#IsActive").val());
     formData.append('discountPrice', String(this.service.productsModel.DiscountPrice || 0));
 
     if (this.selectedFile) {
@@ -256,7 +258,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
       next: (res: any) => {
 
-
+        debugger
         this.service.productsModel = {
           Id: res.id ?? 0,
           ProductName: res.productName ?? '',
@@ -277,6 +279,13 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
           const catId = res.categoryId || res.CategoryId;
           $('#product-category').val(catId).trigger('change');
+        }, 0);
+
+        setTimeout(() => {
+        
+          const IsActiveValue = String(res.isActive ?? res.IsActive); // Yesle true lai "true" ra false lai "false" banaucha
+
+          $('#IsActive').val(IsActiveValue).trigger('change');
         }, 0);
 
         this.isLoading = false;
@@ -327,6 +336,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.selectedProductId = null;
 
     $('input[type="file"]').val('');
-    $('#product-category').val('').trigger('change');
+    $('#product-category').val(' ').trigger('change');
+       $('#IsActive').val(' ').trigger('change');
   }
 }
