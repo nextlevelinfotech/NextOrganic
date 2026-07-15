@@ -93,7 +93,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       next: (res: any) => {
         this.productList = res;
         this.isLoading = false;
-        console.log(res, 'productList')
+
       },
       error: (err: any) => {
         console.error(err);
@@ -131,48 +131,67 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   // ==========================================
   // १. Form Validation
   // ==========================================
+  // ==========================================
+  // १. Form Validation (Improved & Fixed)
+  // ==========================================
   validateProduct(): boolean {
-    const categoryId = Number($("#product-category").val());
+    // Select2 element arrays directly capture
+    const categoryRaw = $("#product-category").val();
+    const categoryId = categoryRaw ? Number(categoryRaw) : 0;
 
+    const isActiveRaw = $("#IsActive").val();
+
+    //  Product Name Validation
     if (!this.service.productsModel.ProductName?.trim()) {
       this.toastr.error('Product Name is required');
       return false;
     }
 
-    if (!this.service.productsModel.Description?.trim()) {
-      this.toastr.error('Description is required');
+    // Select2 Category Check
+    if (!categoryId || categoryId === 0) {
+      this.toastr.error('Please select a valid Category');
+      return false;
+    }
+
+    // Price Logic Validation
+    if (!this.service.productsModel.Price || this.service.productsModel.Price == 0) {
+      this.toastr.error('Price must be greater than 0');
+      return false;
+    }
+
+    // Stock Quantity Validation
+    if (
+      this.service.productsModel.StockQuantity === null ||
+      this.service.productsModel.StockQuantity === undefined ||
+      this.service.productsModel.StockQuantity == 0 ||
+      isNaN(Number(this.service.productsModel.StockQuantity))
+    ) {
+      this.toastr.error('Valid Stock Quantity is required ');
       return false;
     }
 
 
+    // 8. Select2 IsActive Check (Null/Empty string tracking)
+    if (!isActiveRaw || isActiveRaw.toString().trim() === '') {
+      this.toastr.error('Please select status field (Is Active)');
+      return false;
+    }
+
+
+    //  Description (CKEditor content) Validation
+    if (!this.service.productsModel.Description?.trim() || this.service.productsModel.Description === '<p>&nbsp;</p>') {
+      this.toastr.error('Description is required');
+      return false;
+    }
+
+    // Short Description Validation
     if (!this.service.productsModel.shortDescription?.trim()) {
       this.toastr.error('Short Description is required');
       return false;
     }
 
-
-    if (!this.service.productsModel.Price || this.service.productsModel.Price <= 0) {
-      this.toastr.error('Price must be greater than 0');
-      return false;
-    }
-
-    if (
-      this.service.productsModel.StockQuantity === null ||
-      this.service.productsModel.StockQuantity === undefined ||
-      this.service.productsModel.StockQuantity < 0
-    ) {
-      this.toastr.error('Valid Stock Quantity is required');
-      return false;
-    }
-
-    if (!categoryId) {
-      this.toastr.error('Category is required');
-      return false;
-    }
-
     return true;
   }
-
 
   // ==========================================
   // २. Save / Update Product
@@ -258,7 +277,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
       next: (res: any) => {
 
-        debugger
+
         this.service.productsModel = {
           Id: res.id ?? 0,
           ProductName: res.productName ?? '',
@@ -282,7 +301,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         }, 0);
 
         setTimeout(() => {
-        
+
           const IsActiveValue = String(res.isActive ?? res.IsActive); // Yesle true lai "true" ra false lai "false" banaucha
 
           $('#IsActive').val(IsActiveValue).trigger('change');
@@ -337,6 +356,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
     $('input[type="file"]').val('');
     $('#product-category').val(' ').trigger('change');
-       $('#IsActive').val(' ').trigger('change');
+    $('#IsActive').val(' ').trigger('change');
   }
 }

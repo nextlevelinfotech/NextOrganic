@@ -43,14 +43,14 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     selectEl.select2();
 
     // Select2 मा भ्यालु चेन्ज हुँदा Angular Model अपडेट गर्ने
-    selectEl.on('change', (e: any) => {
-      const val = $(e.target).val();
+    // selectEl.on('change', (e: any) => {
+    //   const val = $(e.target).val();
    
 
-      if (val === 'true') this.service.categoryModel.isActive = true;
-      else if (val === 'false') this.service.categoryModel.isActive = false;
-      else this.service.categoryModel.isActive = null as any;
-    });
+    //   if (val === 'true') this.service.categoryModel.isActive = true;
+    //   else if (val === 'false') this.service.categoryModel.isActive = false;
+    //   else this.service.categoryModel.isActive = null as any;
+    // });
   }
 
   // Fetch category List
@@ -80,14 +80,14 @@ export class CategoryComponent implements OnInit, AfterViewInit {
           categoryId: res.categoryId ?? 0,
           categoryName: res.categoryName ?? '',
           description: res.description ?? '',
-          isActive: res.isActive ?? true,
+          isActive: res.isActive, 
           createdDate: res.createdDate ? res.createdDate.split('T')[0] : ''
         };
 
         // Select2 लाई String भ्यालु दिएर UI अपडेट गर्ने
         setTimeout(() => {
           const activeStatus = String(res.isActive); // 'true' or 'false'
-          $('#isActive').val(activeStatus).trigger('change.select2');
+          $('#isActive').val(activeStatus).trigger('change');
         }, 50);
 
         this.isLoading = false;
@@ -111,7 +111,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       this.toastr.error('Description is required.');
       return false;
     }
-    if (model.isActive === null || model.isActive === undefined || (model.isActive as any) === '') {
+    if ( $('#isActive').val() === null ||  $('#isActive').val() === undefined || ( $('#isActive').val() as any) === '') {
       this.toastr.error('Please select if the category is active.');
       return false;
     }
@@ -129,7 +129,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       id: this.service.categoryModel.id,
       categoryName: this.service.categoryModel.categoryName,
       description: this.service.categoryModel.description,
-      isActive: this.service.categoryModel.isActive,
+      isActive: $('#isActive').val() === 'true' ? true : false,
       createdDate:new Date().toISOString()
     };
 
@@ -193,7 +193,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     };
     // Reset गरेपछि Select2 UI लाई पनि 'true' (Default) मा फर्काउने
     setTimeout(() => {
-      $('#isActive').val('').trigger('change.select2');
+      $('#isActive').val(' ').trigger('change.select2');
     }, 50);
   }
 }
