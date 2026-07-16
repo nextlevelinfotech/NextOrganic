@@ -21,9 +21,9 @@
   font-weight: 600;
   min-width: 40px;
   text-align: center;
-  margin-right: 0.6rem;
   border-radius: 4px;
   padding: 3px 0;
+  height: 32px;
 }
 
 .pagination .page-item.active .page-link,
@@ -34,6 +34,7 @@
 
 .pagination {
   display: inline-flex;
+  gap:8px;
 }
 
 //Product pagination
@@ -41,12 +42,10 @@
   margin-top: 40px;
 }
 
-.pagination {
-  gap: 8px;
-}
 
 .pagination .page-item {
   list-style: none;
+  border: 1px solid vars.$border;
 }
 
 .pagination .page-link {

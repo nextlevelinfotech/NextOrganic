@@ -150,6 +150,10 @@
   align-items: center;
   cursor: pointer;
   z-index: 999;
+
+  &:hover{
+    background: vars.$secondary-600;
+  }
 }
 
 .social-icons {

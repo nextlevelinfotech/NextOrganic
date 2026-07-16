@@ -508,8 +508,12 @@
                     <div class="badge mb-3"
                         [ngClass]="singleProduct.stockQuantity > 0 ? 'text-bg-success' : 'text-bg-danger'">
 
-                        {{ singleProduct.stockQuantity > 0
+                        <!-- {{ singleProduct.stockQuantity > 0
                         ? ('In Stock ' + singleProduct.stockQuantity)
+                        : 'Out of Stock' }} -->
+
+                              {{ singleProduct.stockQuantity > 0
+                        ? ('In Stock ' )
                         : 'Out of Stock' }}
 
                     </div>
