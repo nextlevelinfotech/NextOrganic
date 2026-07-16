@@ -9,6 +9,7 @@ import { ShopCommonService } from '../../../common/service/shop-common.service';
 import { CartEventService } from '../../../common/service/cart-event.service';
 import { ProductCardComponent } from '../../../components/product-card/product-card.component';
 import { AuthService } from '../../../user-admin/core/auth/authService/auth.service';
+import { environment } from '../../../../environments/environment';
 
 declare var $: any;
 
@@ -51,6 +52,9 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
   maxInput!: HTMLInputElement;
   minPrice!: HTMLElement;
   maxPrice!: HTMLElement;
+
+  public baseUrl= environment.apiBaseUrl
+
 
   constructor(
     public service: ShopCommonService,
