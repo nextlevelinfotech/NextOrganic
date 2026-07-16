@@ -13,10 +13,25 @@
         <div>
             <h3>Useful Links</h3>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About us</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
+                <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <a routerLink="">Home</a>
+                </li>
+
+                <li routerLinkActive="active">
+                    <a routerLink="/about">About Us</a>
+                </li>
+
+            
+
+                <li routerLinkActive="active">
+                    <a routerLink="/blog">Blog</a>
+                </li>
+
+
+
+                <li routerLinkActive="active">
+                    <a routerLink="/contact">Contact</a>
+                </li>
             </ul>
         </div>
 

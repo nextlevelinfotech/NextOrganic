@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router'; // १. यहाँ ActivatedRoute थपियो
 import { HeaderComponent } from '../../../header/header.component';
 import { FooterComponent } from '../../../footer/footer.component';
 import { FormsModule } from '@angular/forms';
@@ -9,7 +9,9 @@ import { ShopCommonService } from '../../../common/service/shop-common.service';
 import { CartEventService } from '../../../common/service/cart-event.service';
 import { ProductCardComponent } from '../../../components/product-card/product-card.component';
 import { AuthService } from '../../../user-admin/core/auth/authService/auth.service';
+
 declare var $: any;
+
 @Component({
   selector: 'app-shop-categories',
   standalone: true,
@@ -54,15 +56,24 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
     public service: ShopCommonService,
     private toastr: ToastrService,
     private cartEventService: CartEventService,
-
     private router: Router,
     private authService: AuthService,
+    private route: ActivatedRoute // २. कन्स्ट्रक्टरमा route इन्जेक्ट गरियो (तपाईंको अरू केही नचलाई)
   ) { }
 
 
   ngOnInit(): void {
     this.getCategoryList();
     this.fetchProductList();
+
+    // ३. मुख्य थपिएको भाग: हेडरको मेनुबाट आउने क्याटगोरी ID ट्र्याक गर्ने लजिक
+    // यसले गर्दा जब युजरले हेडरको क्याटगोरीमा क्लिक गर्छ, यो कम्पोनेन्टले तुरुन्तै प्रडक्ट फिल्टर गर्छ।
+    this.route.queryParams.subscribe(params => {
+      if (params['id']) {
+        this.selectedCategoryId = Number(params['id']);
+        this.applyFilters(); // आइडी चेन्ज हुनासाथ फिल्टर एप्लाई गर्ने
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -236,7 +247,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
     this.maxPrice.innerText = maxVal.toLocaleString();
   }
 
-  // यसको साटो अब रियल-टाइम फिल्टर काम गर्छ, तर बटन राख्नुभएको छ भने यो प्रयोग गर्न सक्नुहुन्छ
+  // यसको साटो अब रियल-टाइम फिल्टर काम गर्छ, तर बटन राच्छुहाल्नुभएको छ भने यो प्रयोग गर्न सक्नुहुन्छ
   filterPrice(): void {
     this.applyFilters();
   }
@@ -298,117 +309,8 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
       },
       complete: () => {
 
-        this.isLoading = false; //  unlock button after response
+        this.isLoading = false; //   unlock button after response
       },
     });
   }
-
-
-
-
-
 }
-
-// products = [
-//   {
-//     name: 'Aloe Vera Capsules',
-//     price: 550,
-//     image: '../../../assets/img/products/product-img-1.jpg',
-//     category: 'detox',
-//   },
-//   {
-//     name: 'Aloevera B',
-//     price: 750,
-//     image: '../../../assets/img/products/product-img-2.jpg',
-//     category: 'detox',
-//   },
-//   {
-//     name: 'Cordyceps Capsules',
-//     price: 2650,
-//     image: '../../../assets/img/products/product-img-3.jpg',
-//     category: 'supplements',
-//   },
-//   {
-//     name: 'Gano Black Coffee',
-//     price: 800,
-//     image: '../../../assets/img/products/tea/Gango.jpg',
-//     category: 'tea & coffee',
-//   },
-//   {
-//     name: 'Ganoderma Green Tea',
-//     price: 500,
-//     image: '../../../assets/img/products/tea/Ganoderma.jpg',
-//     category: 'tea & coffee',
-//   },
-//   {
-//     name: 'Ginseng Black Coffee',
-//     price: 850,
-//     image: '../../../assets/img/products/tea/Ginseng.jpg',
-//     category: 'tea & coffee',
-//   },
-//   {
-//     name: 'Ginseng Green Tea',
-//     price: 550,
-//     image: '../../../assets/img/products/tea/Ginseng-Green-Tea.jpg',
-//     category: 'tea & coffee',
-//   },
-//   {
-//     name: 'Pearl Green Tea',
-//     price: 500,
-//     image: '../../../assets/img/products/tea/Pearl.jpg',
-//     category: 'tea & coffee',
-//   },
-//   {
-//     name: 'Gingano Pleasure',
-//     price: 150,
-//     image: '../../../assets/img/products/soap/soap-1.png',
-//     category: 'hair',
-//   },
-//   {
-//     name: 'ANTL Soap',
-//     price: 75,
-//     image: '../../../assets/img/products/soap/soap-1.png',
-//     category: 'hair',
-//   },
-//   {
-//     name: 'Gingano Daily Shampo',
-//     price: 450,
-//     image: '../../../assets/img/products/soap/soap-1.png',
-//     category: 'hair',
-//   },
-
-//   {
-//     name: 'Gingano Face Wash',
-//     price: 300,
-//     image: '../../../assets/img/products/soap/soap-1.png',
-//     category: 'facial',
-//   },
-
-//   {
-//     name: 'Gingano Bliss Toothpaste',
-//     price: 195,
-//     image: '../../../assets/img/products/soap/soap-1.png',
-//     category: 'oral',
-//   },
-
-//   {
-//     name: 'Gingano Brush',
-//     price: 65,
-//     image: '../../../assets/img/products/soap/soap-1.png',
-//     category: 'oral',
-//   },
-
-//   {
-//     name: 'Gingano Sunscreen Cream',
-//     price: 450,
-//     image: '../../../assets/img/products/soap/soap-1.png',
-//     category: 'facial',
-//   },
-
-//   {
-//     name: 'Pure Nature Massage oil',
-//     price: 580,
-//     image: '../../../assets/img/products/soap/soap-1.png',
-//     category: 'oil',
-//   },
-// ];

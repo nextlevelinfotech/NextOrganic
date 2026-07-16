@@ -11,6 +11,7 @@ import { ShopCommonService } from '../common/service/shop-common.service';
 import { CartEventService } from '../common/service/cart-event.service';
 import { Subscription } from 'rxjs';
 import { loginService } from '../user-admin/core/auth/login/login.service';
+import { HeaderService } from './header.service';
 
 @Component({
   selector: 'app-header',
@@ -25,6 +26,8 @@ import { loginService } from '../user-admin/core/auth/login/login.service';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
+  isLoading:boolean = false;
+  categoryList: any[] = [];
   isLogin: boolean = false;
   cartCount: number = 0;
   userId: number | null = null;
@@ -36,6 +39,7 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private service: ShopCommonService,
+    private categoryService: HeaderService,
     private loginService: loginService,
     private cartEventService: CartEventService
   ) {
@@ -73,8 +77,25 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
   }
   ngAfterViewInit(): void {
     this.initMobileMenu();
+    this.fetchcategoryList();
   }
 
+
+    // Fetch category List
+  fetchcategoryList() {
+    this.isLoading = true;
+    this.categoryService.getCategories().subscribe({
+      next: (res: any) => {
+        this.categoryList = res;
+        console.log(res, 'categoryList')
+        this.isLoading = false;
+      },
+      error: (err: any) => {
+        console.error(err);
+        this.isLoading = false;
+      }
+    });
+  }
 
   loadCartCount() {
     this.service.getCartList().subscribe({
