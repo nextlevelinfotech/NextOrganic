@@ -4,27 +4,28 @@
         {{ product.discountPercent }}% OFF
     </div>
     <div class="product-img-holder">
-        <img [src]="product.productImageUrl" [alt]="product.name">
+        <a [routerLink]="['/shop/shop-single', product.id]">
+
+            <img [src]="product.productImageUrl" [alt]="product.name">
+        </a>
     </div>
 
     <div class="product-content">
-        <div class="product-title">
-            <a [routerLink]="['/shop/shop-single', product.id]" >
+        <a [routerLink]="['/shop/shop-single', product.id]">
+            <div class="product-title">
                 {{ product.productName }}
-            </a>
+            </div>
 
-        </div>
-
-        <div class="product-price">
-            Rs. {{ product.price }}
-        </div>
-        <!-- २. सर्ट डिस्क्रिप्सन: यो पनि होम पेजमा मात्र थप्नु पर्यो रे -->
-        <p *ngIf="isHomePage" class="short-desc">
-            {{ product.description | slice:0:50 }}...
-        </p>
-
+            <div class="product-price">
+                Rs. {{ product.price }}
+            </div>
+            <!-- २. सर्ट डिस्क्रिप्सन: यो पनि होम पेजमा मात्र थप्नु पर्यो रे -->
+            <p *ngIf="isHomePage" class="short-desc">
+                {{ product.description | slice:0:50 }}...
+            </p>
+        </a>
     </div>
-    <ul class="product-action">
+    <ul class="product-action" *ngIf="baseketIcon">
         <li (click)="onBasketClick($event)">
             <a href="#"><i class="fa-solid fa-basket-shopping"></i></a>
         </li>

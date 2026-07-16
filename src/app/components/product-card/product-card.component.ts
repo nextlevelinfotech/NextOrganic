@@ -26,6 +26,7 @@ onBasketClick(event: Event) {
 }
   //  होम पेज हो कि होइन चिन्नको लागि नयाँ इनपुट (Default मा false हुन्छ)
   @Input() isHomePage: boolean = false; 
+  @Input() baseketIcon: boolean = false; 
 }
 
 // १. चाइल्डमा (Emit गर्ने):  this.घण्टीको_नाम.emit(जे_पठाउने_हो);
