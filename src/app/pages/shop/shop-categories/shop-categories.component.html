@@ -7,7 +7,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item"><a href="#">Product</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Categories</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{selectedCategoryName}}</li>
                 </ol>
             </nav>
         </div>
@@ -25,9 +25,6 @@
                         <h2 class="widget-title">
                             <span>Category</span>
                         </h2>
-                        <!-- <option *ngFor="let item of categoryList" [value]="item.id">
-                                    {{ item.categoryName }}
-                                </option> -->
                         <ul class="widget-category">
                             <li>
                                 <a href="javascript:void(0)" (click)="filterCategory(0)">All Products</a>
@@ -79,11 +76,7 @@
                                 Rs<span id="maxPrice">1,220</span>
                             </div>
 
-                            <!-- <button class="filter-btn" (click)="filterPrice()">
-                                FILTER
-                            </button> -->
-
-                        </div>
+                            </div>
 
                     </div>
 
@@ -93,30 +86,10 @@
             <div class="col-md-9">
                 <div class="product-catg-content">
                     <div class="product-catg-head d-flex justify-content-end">
-                        <!-- <div class="product-catg-head-left">
-                            <form action="" class="prduct-catg-sort">
-                                <label class="me-2 def">Sort by</label>
-                                <select class="me-3 sort-select">
-                                    <option value="Default" selected=""> Default</option>
-                                    <option value="Name"> Name</option>
-                                    <option value="Price">Price</option>
-                                    <option value="Date">Date</option>
-                                </select>
-                                <label class="me-2">Show</label>
-                                <select class="show-select">
-                                    <option value="6" selected="">6</option>
-                                    <option value="9">9</option>
-                                    <option value="12">12</option>
-                                </select>
-                            </form>
-                        </div> -->
                         <div class="product-catg-head-right d-flex gap-4 align-items-center">
                             <div class="search-box">
                                 <input type="text" placeholder="Search products..." (input)="onSearch($event)">
-                                <!-- <button>
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </button> -->
-                            </div>
+                                </div>
                         </div>
                     </div>
                     <div class="product-catg-body m-t-32">
@@ -126,32 +99,7 @@
                                 <app-product-card [product]="product" [isHomePage]="false"
                                     (addToCartClick)="openPopup($event)">
                                 </app-product-card>
-                                <!-- <div class="product-card">
-                                    <div class="product-img-holder">
-                                        <img [src]="product.productImageBase64" [alt]="product.name">
-                                    </div>
-
-                                    <div class="product-content">
-                                        <div class="product-title">
-                                            {{ product.productName }}
-                                        </div>
-
-                                        <div class="product-price">
-                                            Rs. {{ product.price }}
-                                        </div>
-                                    </div>
-                                    <ul class="product-action">
-
-                                        <li (click)="openPopup($event, product)">
-                                            <a href="#"><i class="fa-solid fa-basket-shopping"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="#!"><i class="fa-solid fa-heart"></i></a>
-                                        </li>
-                                    </ul>
-
-                                </div> -->
-                            </div>
+                                </div>
                             }
                         </div>
                     </div>
@@ -188,10 +136,8 @@
     </div>
 </div>
 
-<!-- Overlay -->
 <div class="popup-overlay" (click)="closePopup()" *ngIf="showPopup"></div>
 
-<!-- Popup -->
 <div class="popup-container w-520" *ngIf="showPopup">
     <div class="popup-header">
         <h4 class="mb-0 section-title"> Add To Cart</h4>
@@ -224,12 +170,6 @@
                     </div>
 
                     <div class="outer d-flex mt-4 gap-4 align-items-center">
-                        <!-- <div class="quantity">
-                            <div class="quantity-button minus"> - </div>
-                            <input type="text" id="quantityInput" class="qtyText" name="quantityInput" min="1" max="84"
-                                autocomplete="off">
-                            <div class="quantity-button plus"> + </div>
-                        </div> -->
                         <div class="quantity">
 
                             <div class="quantity-button minus" (click)="decrease()">
@@ -262,11 +202,9 @@
 
     </div>
 
-    <!-- Footer Buttons -->
     <div class="popup-footer">
 
     </div>
-    <!-- Success Toast -->
     <div class="popup-toast" *ngIf="showSuccessToast">
         <i class="ri-checkbox-circle-fill"></i>
         <span>Product added to cart successfully.</span>

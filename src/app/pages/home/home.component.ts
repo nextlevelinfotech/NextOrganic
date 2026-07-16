@@ -13,6 +13,7 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../user-admin/core/auth/authService/auth.service';
 
 import Splide from '@splidejs/splide';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -40,7 +41,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   maxQty!: number;
   productId!: number;
 
-
+  public baseUrl = environment.apiBaseUrl
   constructor(
     public HomeService: HomeService,
     public service: ShopCommonService,
@@ -106,6 +107,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.showPopup = true;
     this.singleProduct = product;
+    debugger
     this.productId = product.id;
     this.maxQty = product.stockQuantity;
   }

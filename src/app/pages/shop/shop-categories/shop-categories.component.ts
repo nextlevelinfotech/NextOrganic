@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Router, RouterModule, ActivatedRoute } from '@angular/router'; // १. यहाँ ActivatedRoute थपियो
+import { Router, RouterModule, ActivatedRoute } from '@angular/router'; 
 import { HeaderComponent } from '../../../header/header.component';
 import { FooterComponent } from '../../../footer/footer.component';
 import { FormsModule } from '@angular/forms';
@@ -58,7 +58,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
     private cartEventService: CartEventService,
     private router: Router,
     private authService: AuthService,
-    private route: ActivatedRoute // २. कन्स्ट्रक्टरमा route इन्जेक्ट गरियो (तपाईंको अरू केही नचलाई)
+    private route: ActivatedRoute 
   ) { }
 
 
@@ -66,12 +66,10 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
     this.getCategoryList();
     this.fetchProductList();
 
-    // ३. मुख्य थपिएको भाग: हेडरको मेनुबाट आउने क्याटगोरी ID ट्र्याक गर्ने लजिक
-    // यसले गर्दा जब युजरले हेडरको क्याटगोरीमा क्लिक गर्छ, यो कम्पोनेन्टले तुरुन्तै प्रडक्ट फिल्टर गर्छ।
     this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.selectedCategoryId = Number(params['id']);
-        this.applyFilters(); // आइडी चेन्ज हुनासाथ फिल्टर एप्लाई गर्ने
+        this.applyFilters(); 
       }
     });
   }
@@ -85,11 +83,11 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
     this.minPrice = document.getElementById('minPrice') as HTMLElement;
     this.maxPrice = document.getElementById('maxPrice') as HTMLElement;
 
-    // Slider Events - थपिएको: updatePrice पछि applyFilters() चल्छ
+    // Slider Events 
     this.minRange.addEventListener('input', () => { this.updatePrice(); this.applyFilters(); });
     this.maxRange.addEventListener('input', () => { this.updatePrice(); this.applyFilters(); });
 
-    // Input Events - थपिएको: updateInputs पछि applyFilters() चल्छ
+    // Input Events 
     this.minInput.addEventListener('input', () => { this.updateInputs(); this.applyFilters(); });
     this.maxInput.addEventListener('input', () => { this.updateInputs(); this.applyFilters(); });
 
@@ -116,7 +114,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
       next: (res: any) => {
         this.isLoading = false;
         this.products = res;
-        this.applyFilters(); // API बाट डाटा आएपछि फिल्टरहरू चल्छन्
+        this.applyFilters(); 
       },
       error: (err: any) => { this.isLoading = false; },
       complete: () => { this.isLoading = false; },
@@ -136,7 +134,6 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
   }
 
   applyFilters() {
-    // १. यदि प्रोडक्ट्स खाली छ भने सूची खाली गर्ने
     if (!this.products || this.products.length === 0) {
       this.filteredProducts = [];
       return;
@@ -144,22 +141,21 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
 
     let tempProducts = [...this.products];
 
-    // २. Apply Category Filter
+    // Apply Category Filter
     if (this.selectedCategoryId !== 0) {
       tempProducts = tempProducts.filter(
         (product) => product.categoryId === this.selectedCategoryId
       );
     }
 
-    // ३. Apply Search Text Filter
+    // Apply Search Text Filter
     if (this.searchTerm !== '') {
       tempProducts = tempProducts.filter((product) =>
         product.productName?.toLowerCase().includes(this.searchTerm)
       );
     }
 
-    // ४. NEW: Apply Price Filter (मिलाइएको ठाउँ)
-    // यदि DOM elements उपलब्ध छन् भने मात्र मूल्य फिल्टर गर्ने
+    // Apply Price Filter 
     if (this.minRange && this.maxRange) {
       const minSelectedPrice = parseInt(this.minRange.value) || 0;
       const maxSelectedPrice = parseInt(this.maxRange.value) || Infinity;
@@ -170,7 +166,6 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
       });
     }
 
-    // ५. Update display array and reset pagination
     this.filteredProducts = tempProducts;
     this.currentPage = 1;
   }
@@ -197,7 +192,6 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
 
   openPopup(packet: any) {
     debugger
-    // packet भित्रबाट क्लिक इभेन्ट र प्रोडक्ट डाटा छुट्टाछुट्टै निकाल्ने
     const event = packet.clickEvent;
     const product = packet.productData;
 
@@ -247,13 +241,9 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
     this.maxPrice.innerText = maxVal.toLocaleString();
   }
 
-  // यसको साटो अब रियल-टाइम फिल्टर काम गर्छ, तर बटन राच्छुहाल्नुभएको छ भने यो प्रयोग गर्न सक्नुहुन्छ
   filterPrice(): void {
     this.applyFilters();
   }
-
-
-  // Add to cart
 
   decrease() {
     if (this.quantity > 1) {
@@ -262,15 +252,12 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
   }
 
   increase() {
-
     if (this.quantity < this.maxQty) {
       this.quantity++;
     }
   }
 
-
   createCart() {
-
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
       this.toastr.error('Please login to add products to cart');
@@ -279,7 +266,6 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
       return;
     }
 
-
     let payload = {
       productId: this.productId,
       quantity: this.quantity
@@ -287,30 +273,33 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
 
     this.isLoading = true;
     this.service.postCart(payload).subscribe({
-
       next: (res: any) => {
-        // --- यहाँ कल गर्नुहोस् ---
-        // SIDEBAR LAI UPDATE GARAUNA YO TRIGGGER THAPNE
-
         this.cartEventService.notifyCartUpdate(true);
-
         this.fetchProductList();
         this.isLoading = false;
-        // Success Toast
         this.showSuccessToast = true;
 
         setTimeout(() => {
           this.showSuccessToast = false;
-          this.closePopup();   // 1 sec पछि popup पनि बन्द हुन्छ
+          this.closePopup();   
         }, 800);
       },
-      error: (err: any) => {
-        this.isLoading = false;
-      },
-      complete: () => {
-
-        this.isLoading = false; //   unlock button after response
-      },
+      error: (err: any) => { this.isLoading = false; },
+      complete: () => { this.isLoading = false; },
     });
+  }
+
+  // ==========================================
+  // थपिएको भाग: Breadcrumb Dynamic बनाउने Getter फङ्सन
+  // ==========================================
+  get selectedCategoryName(): string {
+    if (this.selectedCategoryId === 0) {
+      return 'All Products';
+    }
+    // categoryList भित्र selectedCategoryId सँग म्याच हुने अबजेक्ट खोज्छ
+    const foundCategory = this.categoryList.find(cat => cat.id === this.selectedCategoryId);
+    
+    // यदि फेला पर्यो भने नाम फर्काउँछ, नत्र 'Loading...' देखाउँछ
+    return foundCategory ? foundCategory.categoryName : 'Loading...';
   }
 }
