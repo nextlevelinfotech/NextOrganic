@@ -107,7 +107,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.service.getCategoryList().subscribe({
       next: (res: any) => {
         this.categoryList = res;
-
+        this.categoryList = this.categoryList.filter((item: any) => item.isActive === true);
       },
       error: (err: any) => {
         console.error(err);
