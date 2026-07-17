@@ -93,7 +93,7 @@ export class PageSidebarComponent implements AfterViewInit {
     },
     {
       menuId: 3,
-      menuName: 'Category',
+      menuName: 'Products Categories',
       Menuicon: 'ri-price-tag-3-line',
       path: '/category',
       shortCutKey: '',

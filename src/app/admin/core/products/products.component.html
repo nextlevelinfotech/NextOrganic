@@ -11,53 +11,55 @@
                 <div class="card-body px-0">
                     <div class="row">
                         <!-- Product Card -->
-                        <div class="col-12 text-center" *ngIf="isLoading">
-                            <h3><span  class="spinner-border spinner-border-sm me-1"></span> Loading...</h3>
-                        </div>
-           
-                        <div class="col-md-12" *ngFor="let item of productList; let i = index">
-                            <div class="product-card-outer">
-                                <!-- <div class="badge">{{item.categoryId}}</div> -->
-                                <div class="product-card pro-admin">
-                                    <img [src]="item.productImageUrl" class="product-image" alt="Product">
-                                    <div class="product-content mt-0 d-flex justify-content-between">
-                                        <div class="product-content-left">
-                                            <h2 class="badge m-0 mb-2 py-2">{{item.categoryName}}</h2>
-                                            <h5 class="mb-2">{{item.productName}}</h5>
+                        <!-- <div class="loading" *ngIf="isLoading">
+                            <h3><span class="spinner-border spinner-border-sm me-1"></span> Loading...</h3>
+                        </div> -->
+                        <div>
+                            <div class="col-md-12" *ngFor="let item of productList; let i = index">
+                                <div class="product-card-outer">
+                                    <!-- <div class="badge">{{item.categoryId}}</div> -->
+                                    <div class="product-card pro-admin">
+                                        <img [src]="item.productImageUrl" class="product-image" alt="Product">
+                                        <div class="product-content mt-0 d-flex justify-content-between">
+                                            <div class="product-content-left">
+                                                <h2 class="badge m-0 mb-2 py-2">{{item.categoryName}}</h2>
+                                                <h5 class="mb-2">{{item.productName}}</h5>
 
-                                            <p> Price: <strong>Rs {{item.price}}</strong> </p>
-                                            <!-- <p class="price">RS {{item.price | number:'1.2-2'}} </p> -->
-                                            <p>Stock: <strong>{{item.stockQuantity}}</strong> </p>
-                                            <div class="mb-1 text-muted">
-                                                <span>Description :</span>
-                                                <span [innerHTML]="item.description"></span>
-                                            </div>
-                                            <div class="mb-1 text-muted">
-                                                <span>Short Description :</span> {{item.shortDescription}}
-                                            </div>
-                                        </div>
+                                                <p> Price: <strong>Rs {{item.price}}</strong> </p>
+                                                <!-- <p class="price">RS {{item.price | number:'1.2-2'}} </p> -->
+                                                <p>Stock: <strong>{{item.stockQuantity}}</strong> </p>
+                                                <div class="mb-1 text-muted">
+                                                    <span>Short Description :</span> {{item.shortDescription}}
+                                                </div>
+                                                <div class="mb-1 text-muted">
+                                                    <span>Description :</span>
+                                                    <span [innerHTML]="item.description"></span>
+                                                </div>
 
-                                        <div class="d-flex flex-column justify-content-between align-items-end">
-                                            <span style="font-size: 14px;"
-                                                [class]="item.isActive ? 'text-success' : 'text-danger'">
-                                                {{item.isActive ? 'Show' : 'Hide'}}</span>
-                                            <div>
-                                                <button class="btn btn-sm btn-primary me-2"
-                                                    (click)="getProductId(item.id)">
-                                                    Edit
-                                                </button>
-                                                <button class="btn btn-sm btn-danger" (click)="deleteProduct(item.id)">
-                                                    Delete
-                                                </button>
                                             </div>
 
+                                            <div class="d-flex flex-column justify-content-between align-items-end">
+                                                <span style="font-size: 14px;"
+                                                    [class]="item.isActive ? 'text-success' : 'text-danger'">
+                                                    {{item.isActive ? 'Show' : 'Hide'}}</span>
+                                                <div>
+                                                    <button class="btn btn-sm btn-primary me-2"
+                                                        (click)="getProductId(item.id)">
+                                                        Edit
+                                                    </button>
+                                                    <button class="btn btn-sm btn-danger"
+                                                        (click)="deleteProduct(item.id)">
+                                                        Delete
+                                                    </button>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -101,13 +103,13 @@
 
                         <!-- 5. Product QTY -->
                         <div class="mb-3">
-                            <label class="form-label">Product QTY</label>
+                            <label class="form-label">Product Quantity</label>
                             <input type="text" [(ngModel)]="this.service.productsModel.StockQuantity"
                                 name="StockQuantity" class="form-control" placeholder="Enter product qty">
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">show / hide ( Is Active )</label>
+                            <label class="form-label">Status</label>
                             <select data-placeholder="--Select--" class="form-select" id="IsActive">
                                 <option></option>
                                 <option value="true">Show</option>
@@ -123,6 +125,12 @@
                         </div> -->
 
                         <div class="mb-3">
+                            <label class="form-label">Short Description</label>
+                            <textarea rows="3" class="form-control"
+                                [(ngModel)]="this.service.productsModel.shortDescription" name="short-description"
+                                placeholder="Enter full details" required></textarea>
+                        </div>
+                        <div class="mb-3">
 
                             <label class="form-label">
                                 Detailed Description
@@ -134,12 +142,6 @@
 
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Short Description</label>
-                            <textarea rows="3" class="form-control"
-                                [(ngModel)]="this.service.productsModel.shortDescription" name="short-description"
-                                placeholder="Enter full details" required></textarea>
-                        </div>
                         <!-- 
                         <div class="mb-3">
 
