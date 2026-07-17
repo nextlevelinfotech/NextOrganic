@@ -37,9 +37,9 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
 
   showPopup: boolean = false;
   products: any[] = [];
+  relatedProducts: any[] = []; //  थपिएको: रिलेटेड प्रडक्टहरू मात्र राख्नका लागि
   showSuccessToast = false;
   singleProduct: any = '';
-
 
   //Add to cart
   quantity: number = 1;
@@ -57,7 +57,6 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
   ) { }
 
   openPopup(packet: any) {
-    // packet भित्रबाट क्लिक इभेन्ट र प्रोडक्ट डाटा छुट्टाछुट्टै निकाल्ने
     const event = packet.clickEvent;
     const product = packet.productData;
 
@@ -69,6 +68,7 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
     this.productId = product.id;
     this.maxQty = product.stockQuantity;
   }
+  
   closePopup() {
     this.showPopup = false;
   }
@@ -79,18 +79,25 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
       next: (res: any) => {
         this.isLoading = false;
         this.products = res;
-        console.log("product list", res)
+        this.applyRelatedProductsFilter(); //  प्रडक्ट लिस्ट आएपछि फिल्टर चलाउने
       },
       error: (err: any) => { this.isLoading = false; },
       complete: () => { this.isLoading = false; },
     });
   }
 
+  //  थपिएको मुख्य फिल्टर लजिक
+  applyRelatedProductsFilter() {
+    if (this.products.length > 0 && this.product) {
+      this.relatedProducts = this.products.filter(
+        (p: any) => p.categoryId === this.product.categoryId && p.id !== this.product.id
+      );
+    }
+  }
+
   images = [
     {
       id: 'img1',
-      // thumb: 'assets/img/products/product-img-big.png',
-      // full: 'assets/img/products/product-img-big.png',
       thumb: 'https://scompiler.github.io/red-zoom-angular/assets/image-1.jpg',
       full: 'https://wittlock.github.io/ngx-image-zoom/assets/fullres.jpg',
       alt: 'Front',
@@ -119,19 +126,16 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
       this.service.getProductById(id).subscribe({
         next: (res: any) => {
           this.product = res;
-          this.maxQty = res.stockQuantity; // 🔥 FIX
+          this.maxQty = res.stockQuantity;
+          this.applyRelatedProductsFilter(); // 🔥 सिंगल प्रडक्टको डाटा आएपछि पनि फिल्टर चलाउने
         }
       });
     });
   }
-  ngAfterViewInit(): void {
-
-  }
-
-
+  
+  ngAfterViewInit(): void { }
 
   // Add to cart
-
   decrease() {
     if (this.quantity > 1) {
       this.quantity--;
@@ -139,15 +143,12 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
   }
 
   increase() {
-
     if (this.quantity < this.maxQty) {
       this.quantity++;
     }
   }
 
-
   createCart() {
-
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
       this.toastr.error('Please login to add products to cart');
@@ -156,38 +157,25 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
       return;
     }
 
-
     let payload = {
       productId: this.productId,
       quantity: this.quantity
     }
 
-
     this.isLoading = true;
     this.service.postCart(payload).subscribe({
-
       next: (res: any) => {
-
         this.isLoading = false;
-        // SIDEBAR LAI UPDATE GARAUNA YO TRIGGGER THAPNE
         this.cartEventService.notifyCartUpdate();
-
         this.showSuccessToast = true;
 
         setTimeout(() => {
           this.showSuccessToast = false;
-          this.closePopup();   // 1 sec पछि popup पनि बन्द हुन्छ
+          this.closePopup();   
         }, 800);
       },
-      error: (err: any) => {
-        this.isLoading = false;
-      },
-      complete: () => {
-
-        this.isLoading = false; //  unlock button after response
-      },
+      error: (err: any) => { this.isLoading = false; },
+      complete: () => { this.isLoading = false; },
     });
   }
-
-
 }

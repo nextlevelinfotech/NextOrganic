@@ -52,10 +52,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private cartEventService: CartEventService) { }
 
   ngAfterViewInit(): void {
+
+    setTimeout(() => {
+      this.initializedSlider();
+    }, 100);
+
+    setTimeout(() => {
+      this.initializedImgSlider();
+    }, 300);
+
   }
   ngOnInit(): void {
     this.fetchProductList();
-    new Splide('#benefit-slider', {
+  }
+
+
+  initializedSlider() {
+    new Splide('#imgSlider', {
       type: 'loop',
       perPage: 1,
       gap: '30px',
@@ -76,6 +89,31 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     }).mount();
   }
+
+
+  initializedImgSlider() {
+    new Splide('#benefit-slider', {
+      type: 'loop',
+      perPage: 1,
+      gap: '30px',
+      autoplay: true,
+      interval: 3000,
+      arrows: true,
+      pagination: true,
+      autoWidth: false,     // यसले जबरजस्ती विड्थ लिने समस्या हटाउँछ
+      autoHeight: true,     // इमेजको हाइट अनुसार एडजस्ट गर्छ
+      observeMutations: true, // DOM चेन्ज हुँदा स्लाइडर रिफ्रेस गर्छ
+      breakpoints: {
+        992: {
+          perPage: 1,
+        },
+        576: {
+          perPage: 1,
+        }
+      }
+    }).mount();
+  }
+
 
   fetchProductList() {
     this.isLoading = true;

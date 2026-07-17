@@ -279,7 +279,6 @@
 
 
 
-
 <!-- Features Strip -->
 <section class="feature-strip">
     <div class="container strip-wrapper">
@@ -452,27 +451,72 @@
     <div class="container benefit-grid">
 
         <div class="benefit-content">
-            <span class="tag">Best Seller</span>
+            <span class="tag">Why OWG Products ? </span>
 
-            <h2>Health Benefits of Cordyceps</h2>
+            <h2>Natural Wellness for Every Lifestyle</h2>
+            <p>Discover the perfect blend of nature and wellness with OWG's premium range of herbal products,
+                thoughtfully crafted to support your everyday health and well-being.</p>
 
             <ul>
-                <li>May help increase energy and stamina</li>
-                <li>Can support exercise performance and endurance</li>
-                <li>May reduce tiredness and fatigue</li>
-                <li>Supports oxygen use in the body during workouts</li>
-                <li>Contains antioxidants that may help fight cell damage</li>
-                <li>May support immune system function</li>
-                <li>Can help reduce inflammation in the body</li>
-                <li>May support heart health and healthy cholesterol levels</li>
-                <li>Could help maintain healthy blood sugar levels</li>
+                <li>Premium Herbal Food Supplements to support daily nutrition and vitality.</li>
+                <li>Natural Personal Care Products for healthy skin, hair, and complete body care.</li>
+                <li>Refreshing Tea & Coffee Collection made from carefully selected natural ingredients.</li>
+                <li>Quality You Can Trust, manufactured with a commitment to purity, safety, and excellence.</li>
+                <li>Inspired by Nature, designed to help you and your family live a healthier lifestyle every day.</li>
+
             </ul>
+            <p>Experience the goodness of nature in every product and make wellness a part of your daily routine with
+                OWG.</p>
         </div>
 
-        <div class="benefit-image">
+        <!-- <div class="benefit-image">
             <img src="../../../assets/img/medicine2.jpg" alt="">
-        </div>
+        </div> -->
 
+        <div id="imgSlider" class="splide">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <!-- Slide 1 -->
+                    <li class="splide__slide">
+                        <img src="../../../assets/img/slider/p-1.jpg" alt="product">
+                        <div class="splide-caption">
+                            <div class="splide-caption-inner">
+                                <h2>Personal Products</h2>
+                                <p>Glow Like Never Before.</p>
+                                <a href="" class="btn btn-primary">Shop Now</a>
+                            </div>
+
+
+                        </div>
+
+                    </li>
+                    <!-- Slide 2 -->
+                    <li class="splide__slide">
+                        <img src="../../../assets/img/slider/p-2.jpg" alt="product">
+                        <div class="splide-caption">
+                            <div class=" splide-caption-inner">
+                                <h2>Tea & Coffee</h2>
+                                <p>Every Sip Inspires.</p>
+                                <a href="" class="btn btn-primary">Shop Now</a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Slide  -->
+                    <li class="splide__slide">
+                        <img src="../../../assets/img/slider/p-3.jpg" alt="product">
+                        <div class=" splide-caption-inner">
+                            <div class="splide-caption">
+                                <h2>Supplements</h2>
+                                <p>Wellness You Can Trust</p>
+                                <a href="" class="btn btn-primary">Shop Now</a>
+                            </div>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </section>
 <app-footer></app-footer>
@@ -512,7 +556,7 @@
                         ? ('In Stock ' + singleProduct.stockQuantity)
                         : 'Out of Stock' }} -->
 
-                              {{ singleProduct.stockQuantity > 0
+                        {{ singleProduct.stockQuantity > 0
                         ? ('In Stock ' )
                         : 'Out of Stock' }}
 
