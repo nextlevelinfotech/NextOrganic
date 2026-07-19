@@ -152,10 +152,17 @@
             </div>
             }
         </div>
-        
+
     </div>
 </section>
 <app-footer></app-footer>
+
+
+<div class="popup-toast" style="top:50%"  *ngIf="showSuccessToast">
+    <i class="ri-checkbox-circle-fill"></i>
+    <span>Product added to cart successfully.</span>
+</div>
+
 <!-- Overlay -->
 <!-- <div class="popup-overlay" (click)="closePopup()" *ngIf="showPopup"></div> -->
 
@@ -227,9 +234,6 @@
 
     </div>
    
-    <div class="popup-toast" *ngIf="showSuccessToast">
-        <i class="ri-checkbox-circle-fill"></i>
-        <span>Product added to cart successfully.</span>
-    </div>
+ 
 
 </div> -->

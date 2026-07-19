@@ -145,7 +145,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.showPopup = true;
     this.singleProduct = product;
-    debugger
+
     this.productId = product.id;
     this.maxQty = product.stockQuantity;
   }

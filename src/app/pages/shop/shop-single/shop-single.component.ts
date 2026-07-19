@@ -165,6 +165,7 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
     this.isLoading = true;
     this.service.postCart(payload).subscribe({
       next: (res: any) => {
+        
         this.isLoading = false;
         this.cartEventService.notifyCartUpdate();
         this.showSuccessToast = true;

@@ -195,7 +195,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
   // --- UI Interactions ---
 
   openPopup(packet: any) {
-    debugger
+ 
     const event = packet.clickEvent;
     const product = packet.productData;
 
@@ -278,6 +278,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
     this.isLoading = true;
     this.service.postCart(payload).subscribe({
       next: (res: any) => {
+
         this.cartEventService.notifyCartUpdate(true);
         this.fetchProductList();
         this.isLoading = false;
