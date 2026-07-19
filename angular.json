@@ -23,7 +23,8 @@
             "allowedCommonJsDependencies": [
               "select2",
               "fuzzysort",
-              "extend"
+              "extend",
+              "sweetalert2"
             ],
             "polyfills": [
               "zone.js",
