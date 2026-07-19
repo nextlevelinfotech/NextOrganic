@@ -4,6 +4,7 @@ import { ProductsService } from './products.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import Swal from 'sweetalert2';
 import {
   ClassicEditor,
   Essentials,
@@ -27,10 +28,17 @@ import 'select2';
 })
 export class ProductsComponent implements OnInit, AfterViewInit {
   public Editor = ClassicEditor;
+  text: string = 'Add / Update Product '
+
+  // Filter tracking variables
+  searchTerm: string = '';
+
+  // Pagination variables
+  productsPerPage = 4;
+  currentPage = 1;
 
   public config = {
     licenseKey: 'GPL',
-
     plugins: [
       Essentials,
       Bold,
@@ -42,7 +50,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       Table,
       TableToolbar
     ],
-
     toolbar: [
       'heading',
       '|',
@@ -59,10 +66,16 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       'redo'
     ]
   };
-  productList: any[] = [];
+
+  // ==========================================
+  // LIST VARIABLES
+  // ==========================================
+  allProducts: any[] = [];       // API bata aeko full list
+  filteredProducts: any[] = [];  // search pachhiko list
+  paginatedProducts: any[] = []; // current page ko list (template ma yo use huncha)
+
   isLoading: boolean = false;
   categoryList: any[] = [];
-
 
   // Image Upload Variables
   selectedFile: File | null = null;
@@ -86,14 +99,16 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     $(this.el.nativeElement).find('select').select2();
   }
 
-  // Fetch Product List
+  // ==========================================
+  // FETCH PRODUCT LIST
+  // ==========================================
   fetchProductList() {
     this.isLoading = true;
     this.service.getProductsList().subscribe({
       next: (res: any) => {
-        this.productList = res;
+        this.allProducts = res;
         this.isLoading = false;
-
+        this.applyFilters(); // search + pagination lagaune
       },
       error: (err: any) => {
         console.error(err);
@@ -102,7 +117,64 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // Get Category List
+  // ==========================================
+  // SEARCH FUNCTION
+  // ==========================================
+  onSearch(event: any): void {
+    this.searchTerm = event.target.value?.trim().toLowerCase() || '';
+    this.currentPage = 1; // search garda page 1 ma jane
+    this.applyFilters();
+  }
+
+  // ==========================================
+  // FILTER + PAGINATION APPLY
+  // ==========================================
+  applyFilters(): void {
+    // 1. Search filter
+    if (this.searchTerm) {
+      this.filteredProducts = this.allProducts.filter(item =>
+        item.productName?.toLowerCase().includes(this.searchTerm) ||
+        item.categoryName?.toLowerCase().includes(this.searchTerm) ||
+        item.shortDescription?.toLowerCase().includes(this.searchTerm)
+      );
+    } else {
+      this.filteredProducts = [...this.allProducts];
+    }
+
+    // 2. Pagination apply
+    this.updatePaginatedProducts();
+  }
+
+  updatePaginatedProducts(): void {
+    const startIndex = (this.currentPage - 1) * this.productsPerPage;
+    const endIndex = startIndex + this.productsPerPage;
+    this.paginatedProducts = this.filteredProducts.slice(startIndex, endIndex);
+  }
+
+  // ==========================================
+  // PAGINATION HELPERS
+  // ==========================================
+  get totalPages(): number {
+    return Math.ceil(this.filteredProducts.length / this.productsPerPage);
+  }
+
+  getPagesArray(): number[] {
+    const pages: number[] = [];
+    for (let i = 1; i <= this.totalPages; i++) {
+      pages.push(i);
+    }
+    return pages;
+  }
+
+  changePage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.updatePaginatedProducts();
+  }
+
+  // ==========================================
+  // GET CATEGORY LIST
+  // ==========================================
   getCategoryList() {
     this.service.getCategoryList().subscribe({
       next: (res: any) => {
@@ -129,37 +201,28 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   // ==========================================
-  // १. Form Validation
-  // ==========================================
-  // ==========================================
-  // १. Form Validation (Improved & Fixed)
+  // FORM VALIDATION
   // ==========================================
   validateProduct(): boolean {
-    // Select2 element arrays directly capture
     const categoryRaw = $("#product-category").val();
     const categoryId = categoryRaw ? Number(categoryRaw) : 0;
-
     const isActiveRaw = $("#IsActive").val();
 
-    //  Product Name Validation
     if (!this.service.productsModel.ProductName?.trim()) {
       this.toastr.error('Product Name is required');
       return false;
     }
 
-    // Select2 Category Check
     if (!categoryId || categoryId === 0) {
       this.toastr.error('Please select a valid Category');
       return false;
     }
 
-    // Price Logic Validation
     if (!this.service.productsModel.Price || this.service.productsModel.Price == 0) {
       this.toastr.error('Price must be greater than 0');
       return false;
     }
 
-    // Stock Quantity Validation
     if (
       this.service.productsModel.StockQuantity === null ||
       this.service.productsModel.StockQuantity === undefined ||
@@ -170,21 +233,16 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       return false;
     }
 
-
-    // 8. Select2 IsActive Check (Null/Empty string tracking)
     if (!isActiveRaw || isActiveRaw.toString().trim() === '') {
       this.toastr.error('Please select status field (Is Active)');
       return false;
     }
 
-
-    //  Description (CKEditor content) Validation
     if (!this.service.productsModel.Description?.trim() || this.service.productsModel.Description === '<p>&nbsp;</p>') {
       this.toastr.error('Description is required');
       return false;
     }
 
-    // Short Description Validation
     if (!this.service.productsModel.shortDescription?.trim()) {
       this.toastr.error('Short Description is required');
       return false;
@@ -194,7 +252,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   // ==========================================
-  // २. Save / Update Product
+  // SAVE / UPDATE PRODUCT
   // ==========================================
   saveProduct() {
     if (!this.validateProduct()) {
@@ -206,14 +264,13 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       return;
     }
 
+
     const categoryId = Number($("#product-category").val());
     const formData = new FormData();
 
-    // १. अपडेट मोड हो भने सानो अक्षरमा मात्र 'id' पठाउने
     if (this.selectedProductId) {
       formData.append('id', String(this.selectedProductId));
     }
-
 
     formData.append('productName', this.service.productsModel.ProductName.trim());
     formData.append('description', this.service.productsModel.Description.trim());
@@ -221,11 +278,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     formData.append('price', String(this.service.productsModel.Price));
     formData.append('stockQuantity', String(this.service.productsModel.StockQuantity));
     formData.append('categoryId', String(categoryId));
-
-    // ३. बुलिएन भ्यालुहरू - केवल सानो अक्षरमा एउटा मात्र पठाउने ('true' वा 'false')
-    // यसले गर्दा भ्यालु डबल (true,true) पनि हुँदैन र ब्याकइन्डले सजिलै बुझ्छ
-    // const isActiveValue = this.service.productsModel.IsActive ? 'true' : 'false';
-
     formData.append('isActive', $("#IsActive").val());
     formData.append('discountPrice', String(this.service.productsModel.DiscountPrice || 0));
 
@@ -236,21 +288,23 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
 
     if (this.selectedProductId) {
-      // अपडेट गर्ने प्रकृया
       this.service.updateProduct(this.selectedProductId, formData).subscribe({
         next: () => {
           this.toastr.success('Product updated successfully');
           this.fetchProductList();
           this.reset();
           this.isLoading = false;
+          this.text = 'Add  Product'
+
         },
         error: (err) => {
           console.error(err);
           this.isLoading = false;
+
+          this.text = 'Add Product'
         }
       });
     } else {
-      // नयाँ थप्ने प्रकृया
       this.service.postProduct(formData).subscribe({
         next: (res: any) => {
           this.toastr.success('Product added successfully');
@@ -266,18 +320,18 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     }
   }
 
+
+
+
   // ==========================================
-  // ३. Edit मोडमा फारम भर्ने फङ्सन
+  // EDIT MODE
   // ==========================================
   getProductId(ID: number) {
     this.isLoading = true;
     this.selectedProductId = ID;
-
+    this.text = 'Update Product'
     this.service.getProductById(ID).subscribe({
-
       next: (res: any) => {
-
-
         this.service.productsModel = {
           Id: res.id ?? 0,
           ProductName: res.productName ?? '',
@@ -290,7 +344,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
           DiscountPrice: res.discountPrice ?? 0,
           IsActive: res.isActive ?? true,
           shortDescription: res.shortDescription ?? ''
-
         };
         this.imagePreview = res.productImageUrl || res.ProductImageUrl;
         this.selectedFile = null;
@@ -301,9 +354,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         }, 0);
 
         setTimeout(() => {
-
-          const IsActiveValue = String(res.isActive ?? res.IsActive); // Yesle true lai "true" ra false lai "false" banaucha
-
+          const IsActiveValue = String(res.isActive ?? res.IsActive);
           $('#IsActive').val(IsActiveValue).trigger('change');
         }, 0);
 
@@ -316,25 +367,67 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // Delete product
-  deleteProduct(ID: number) {
-    if (!confirm('Are you sure you want to delete this product?')) return;
+  // ==========================================
+  // DELETE PRODUCT
+  // ==========================================
+  // deleteProduct(ID: number) {
+  //   if (!confirm('Are you sure you want to delete this product?')) return;
 
-    this.isLoading = true;
-    this.service.deleteProduct(ID).subscribe({
-      next: (res: any) => {
-        this.toastr.success('Item removed from Product');
-        this.fetchProductList();
-        this.isLoading = false;
-      },
-      error: (err: any) => {
-        console.error(err);
-        this.isLoading = false;
-      }
-    });
-  }
+  //   this.isLoading = true;
+  //   this.service.deleteProduct(ID).subscribe({
+  //     next: (res: any) => {
+  //       this.toastr.success('Item removed from Product');
+  //       this.fetchProductList();
+  //       this.isLoading = false;
+  //     },
+  //     error: (err: any) => {
+  //       console.error(err);
+  //       this.isLoading = false;
+  //     }
+  //   });
+  // }
+// ==========================================
+// DELETE PRODUCT
+// ==========================================
+deleteProduct(ID: number) {
+  Swal.fire({
+    title: 'Delete Product?',
+    text: 'Are you sure you want to delete this product?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, Delete',
+    cancelButtonText: 'Cancel',
+    reverseButtons: true,
+    confirmButtonColor: '#dc3545',
+    cancelButtonColor: '#6c757d'
+  }).then((result) => {
 
-  // Reset Form
+    if (result.isConfirmed) {
+      this.isLoading = true;
+
+      this.service.deleteProduct(ID).subscribe({
+        next: (res: any) => {
+          this.toastr.success('Item removed from Product');
+          this.fetchProductList();
+          this.isLoading = false;
+        },
+        error: (err: any) => {
+          console.error(err);
+          this.toastr.error('Failed to delete product');
+          this.isLoading = false;
+        }
+      });
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      this.toastr.error('Delete cancelled');
+    }
+
+  });
+}
+
+
+  // ==========================================
+  // RESET FORM
+  // ==========================================
   reset() {
     this.service.productsModel = {
       Id: 0,
