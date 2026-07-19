@@ -28,7 +28,7 @@ import 'select2';
 })
 export class ProductsComponent implements OnInit, AfterViewInit {
   public Editor = ClassicEditor;
-  text: string = 'Add / Update Product '
+  text: string = 'Add Product'
 
   // Filter tracking variables
   searchTerm: string = '';
