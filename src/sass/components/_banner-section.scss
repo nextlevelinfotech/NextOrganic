@@ -12,15 +12,15 @@
 
 .large-banner {
   position: relative;
-  height: 648px;
+  height: 591px;
 }
 
-.large-banner--shop{
+.large-banner--shop {
   height: 420px;
 }
 
 .large-banner img {
-  height: 71%;
+  height: 77.5%;
   width: 100%;
   object-fit: cover;
 }
@@ -103,5 +103,16 @@
     font-size: 28px;
     order: 2;
     padding-left: 20px;
+  }
+}
+
+
+@media (max-width: 767px) {
+  .small-banner-wrapper {
+    height: 550px;
+  }
+
+  .large-banner img {
+    height: 100%;
   }
 }
