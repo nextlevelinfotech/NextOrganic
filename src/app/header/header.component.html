@@ -17,9 +17,11 @@
                 <li class="th-item-has-children" routerLinkActive="active">
                     <a>Products</a>
                     <ul class="sub-menu">
-                        <li routerLinkActive="active"><a routerLink="/shop/categories">Product Categories</a></li>
-
-
+                        <li *ngFor="let item of categoryList;" routerLinkActive="active">
+                            <a routerLink="/shop/categories" [queryParams]="{ id: item.id }">
+                                {{ item.categoryName }}
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
