@@ -71,7 +71,7 @@
                                     <tr *ngFor="let item of cartList">
 
                                         <td style="width: 80px;">
-                                            <img [src]="item.productImageBase64 || item.productImage">
+                                            <img [src]="baseUrl + '/uploads/products/' + item.productImage" alt="">
                                         </td>
 
                                         <td>

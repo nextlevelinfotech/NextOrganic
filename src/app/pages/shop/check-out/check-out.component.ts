@@ -8,6 +8,7 @@ import { ShopCommonService } from '../../../common/service/shop-common.service';
 import { ToastrService } from 'ngx-toastr';
 import { CartEventService } from '../../../common/service/cart-event.service';
 import { Subscription } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 declare var jQuery: any;
 declare var $: any; // $ लाई पनि एप्लिकेसनले चिन्न सजीलो होस् भनेर थपिएको
@@ -35,6 +36,9 @@ export class CheckOutComponent implements OnInit, AfterViewInit, OnDestroy {
     private toastr: ToastrService,
     private cartEventService: CartEventService
   ) { }
+
+
+  public baseUrl= environment.apiBaseUrl
 
   // ... (तपाईंको माथिको कोड उस्तै) ...
   ngOnInit(): void {
