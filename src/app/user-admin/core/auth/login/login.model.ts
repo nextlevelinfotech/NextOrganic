@@ -5,3 +5,8 @@ export class loginModel {
   role: string = '';
 }
 
+export class changePswModel {
+  email: string = '';
+  otp: string = '';
+  newPassword: string = '';
+}

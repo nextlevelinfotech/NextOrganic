@@ -4,7 +4,7 @@
 <section class="login col-10 col-md-6 p-t-32 col-xl-4 mx-auto  module">
     <h2>Login</h2>
     <form #Form="ngForm">
-        
+
         <div class="mb-3">
             <label for="">Username or Email address</label>
             <input type="text" class="form-control" name="userName" [(ngModel)]="service.loginModel.username" required>
@@ -12,11 +12,108 @@
         </div>
         <div class="mb-3">
             <label for="">Password</label>
-            <input type="password" class="form-control" name="password" [(ngModel)]="service.loginModel.password"  required>
+            <input type="password" class="form-control" name="password" [(ngModel)]="service.loginModel.password"
+                required>
 
+        </div>
+        <div class="Lflex">
+            <div>
+                <span class="forgot-link" (click)="openPopup()">Forgot Password ?</span>
+            </div>
         </div>
         <button type="submit" class="btn btn-secondary  w-100 m-t-8" (click)="loginSubmit()">Login</button>
         <p class="m-t-12 text-center"> Don't have an account? <a routerLink="/register" class="btnLink">Sign Up</a>
         </p>
     </form>
 </section>
+
+<!-- Overlay -->
+<div class="popup-overlay" *ngIf="showPopup"></div>
+<div class="popup-overlay" *ngIf="showChangePswPopup"></div>
+
+
+
+<!-- Popup -->
+<div class="popup-container w-520" *ngIf="showPopup">
+    <div class="popup-header">
+        <p class="mb-0 section-title">Send OTP To Your Email Address</p>
+        <span class="close-btn" (click)="closePopup()">×</span>
+    </div>
+
+    <div class="popup-body">
+        <form #forgotForm="ngForm">
+            <div class="form-group mb-2 ">
+                <label>Email</label>
+                <input autocomplete="off" class="form-control mb-2" type="text" name="email" [(ngModel)]="model.email"
+                    required />
+
+                <!-- Response message -->
+                <p *ngIf="status === 'success'" class="success">
+                    <i class="fa-regular fa-circle-check me-1"></i> {{ message }}
+                </p>
+
+                <p *ngIf="status === 'error'" class="error">
+                    <i class="fa-regular fa-circle-xmark me-1"></i> {{ message }}
+                </p>
+
+                <p *ngIf="status === 'empty'" class="empty">
+                    <i class="fa-regular fa-circle-xmark me-1"></i> {{ message }}
+                </p>
+            </div>
+
+
+            <button class="btn btn-secondary" type="button" (click)="forgotPassword()" [disabled]="isLoading">
+                {{ isLoading ? 'Processing...' : ' Send Reset Link' }}
+            </button>
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+<div class="popup-container w-520" *ngIf="showChangePswPopup">
+    <div class="popup-header">
+        <p class="mb-0 section-title">Change Password</p>
+        <span class="close-btn" (click)="closeChangePswPopup()">×</span>
+    </div>
+
+    <div class="popup-body">
+        <form #changePswForm="ngForm">
+            <div class="form-group mb-2 ">
+                <label>OTP</label>
+                <input autocomplete="off" class="form-control mb-2" type="text" name="otp"
+                    [(ngModel)]="this.service.changePswModel.otp" required />
+
+            </div>
+            <div class="form-group mb-2 ">
+                <label>Email</label>
+                <input autocomplete="off" class="form-control mb-2" type="text" name="email"
+                    [(ngModel)]="this.service.changePswModel.email" required />
+
+            </div>
+
+            <div class="form-group mb-2 relative">
+                <label>New Password</label>
+                <input autocomplete="off" class="form-control  mb-2" [type]="isPasswordVisible ? 'text' : 'password'"
+                    name="password" [(ngModel)]="this.service.changePswModel.newPassword" required />
+                <i class="fa fa-fw field-icon toggle-password changePassword-eye-icon"
+                    [ngClass]="{'fa-eye': !isPasswordVisible, 'fa-eye-slash': isPasswordVisible}"
+                    (click)="togglePasswordVisibility()"></i>
+            </div>
+
+
+            <button class="btn btn-secondary" type="button" (click)="changePassword()" [disabled]="isLoading">
+                {{ isLoading ? 'Processing...' : 'Change Password' }}
+            </button>
+
+        </form>
+
+
+    </div>
+
+
+</div>
+

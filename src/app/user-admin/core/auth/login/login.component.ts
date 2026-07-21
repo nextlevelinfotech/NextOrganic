@@ -13,8 +13,39 @@ declare var $: any;
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements AfterViewInit {
-  isLoginLoading: boolean = false
+
   selectedUserId!: number;
+
+
+  showPopup: boolean = false;
+  showChangePswPopup: boolean = false;
+
+  showRegisterPopup: boolean = false;
+
+  isLoginLoading: boolean = false;
+  isLoading: boolean = false;
+
+  openPopup() {
+    this.showPopup = true;
+  }
+
+  closePopup() {
+    this.showPopup = false;
+    this.status = null;
+
+    this.model.email = '';
+  }
+
+  closeChangePswPopup() {
+    this.showChangePswPopup = false;
+
+    this.service.changePswModel.email = '';
+    this.service.changePswModel.otp = '';
+    this.service.changePswModel.newPassword = '';
+  }
+
+
+
   constructor(
     private toastr: ToastrService,
     private router: Router,
@@ -23,6 +54,14 @@ export class LoginComponent implements AfterViewInit {
     private el: ElementRef,
     private authService: AuthService,
   ) { }
+
+
+  // Password Toggle
+  isPasswordVisible = false;
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
   ngAfterViewInit(): void { }
 
 
@@ -66,8 +105,8 @@ export class LoginComponent implements AfterViewInit {
           this.isLoginLoading = false;
           return;
         }
-        
-    
+
+
         this.authService.setToken(response?.token);
         this.authService.setUserId(response.userId);
         this.toastr.success('Login successful');
@@ -91,6 +130,80 @@ export class LoginComponent implements AfterViewInit {
   }
 
 
+  // Forgot password
+  status: 'success' | 'error' | 'empty' | null = null;
+
+  model = {
+    email: '',
+  };
+
+  message: any = '';
+
+  forgotPassword() {
+    this.status = null;
+    this.isLoading = true;
+
+    if (!this.model.email) {
+      this.message = 'Email is required';
+      this.status = 'empty';
+      this.isLoading = false;
+      return;
+    }
+
+    this.service.forgotPassword(this.model.email).subscribe({
+      next: (response: any) => {
+        this.message = response;
+        this.status = 'success';
+        this.toastr.success('OTP has sent to Email');
+        this.showChangePswPopup = true;
+        this.isLoading = false;
+        this.showPopup = false;
+        this.status = null;
+
+        this.model.email = '';
+      },
+      error: () => {
+        this.message = 'Something went wrong';
+        this.status = 'error';
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false; // ✅ unlock button after response
+      },
+    });
+  }
+
+  changePassword() {
+    this.isLoading = true;
+
+    const payload = {
+      email: this.service.changePswModel.email,
+      otp: this.service.changePswModel.otp,
+      newPassword: this.service.changePswModel.newPassword,
+    };
+
+    this.service.changePassword(payload).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.toastr.success(response);
+        this.showChangePswPopup = false;
+        this.isLoading = false;
+
+        this.service.changePswModel.email = '';
+        this.service.changePswModel.otp = '';
+        this.service.changePswModel.newPassword = '';
+      },
+      error: () => {
+        this.toastr.error('error in password reset');
+        this.showChangePswPopup = true;
+        this.isLoading = false;
+      },
+
+      complete: () => {
+        this.isLoading = false; // ✅ unlock button after response
+      },
+    });
+  }
 
 
 }

@@ -1,6 +1,6 @@
 <a href="" class="btn btn-primary"><i class="ri-arrow-left-long-line"></i> Go Back</a>
 
-<section class="register col-10 col-xl-5 mx-auto p-t-32 module">
+<section class="register col-10 col-xl-4 mx-auto p-t-32 module">
     <h2 class="m-b-40">Register</h2>
     <form #registerForm="ngForm">
 
@@ -40,9 +40,14 @@
         </div>
 
 
-        <button type="submit" class="btn btn-primary" (click)="postRegister()">
+        <button type="submit" class="btn btn-primary  w-100" (click)="postRegister()">
             Register
         </button>
+        <p class="m-t-12 text-center">If You Already have an account.
+            <a routerLink="/login" class="btnLink">
+                Please Login
+            </a>
+        </p>
 
     </form>
 

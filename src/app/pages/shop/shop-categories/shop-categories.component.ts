@@ -113,6 +113,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
       next: (res: any) => {
         this.isLoading = false;
         this.categoryList = res;
+        this.categoryList = this.categoryList.filter((item: any) => item.isActive === true);
       },
       error: (err: any) => { this.isLoading = false; },
     });
