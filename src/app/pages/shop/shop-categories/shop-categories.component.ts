@@ -22,6 +22,7 @@ declare var $: any;
 export class ShopCategoriesComponent implements AfterViewInit, OnInit {
   showPopup: boolean = false;
   isLoading: boolean = false;
+  isSubmitting: boolean = false; // POST को लागि छुट्टै Variable
 
   showSuccessToast: boolean = false;
   categoryList: any[] = [];
@@ -53,7 +54,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
   minPrice!: HTMLElement;
   maxPrice!: HTMLElement;
 
-  public baseUrl = environment.apiBaseUrl
+  public baseUrl = environment.apiBaseUrl;
 
 
   constructor(
@@ -76,7 +77,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
         // यदि URL मा id छ भने (जस्तै: ?id=3)
         this.selectedCategoryId = Number(params['id']);
       } else {
-        // 🌟 थपिएको भाग: यदि URL मा id छैन भने (All मा क्लिक गर्दा) 
+        // 🌟 यदि URL मा id छैन भने (All मा क्लिक गर्दा) 
         // id लाई 0 बनाएर सबै प्रोडक्ट देखाउने
         this.selectedCategoryId = 0;
       }
@@ -84,6 +85,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
       this.applyFilters();
     });
   }
+
   ngAfterViewInit(): void {
     // Get Elements
     this.minRange = document.getElementById('minRange') as HTMLInputElement;
@@ -94,12 +96,16 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
     this.maxPrice = document.getElementById('maxPrice') as HTMLElement;
 
     // Slider Events 
-    this.minRange.addEventListener('input', () => { this.updatePrice(); this.applyFilters(); });
-    this.maxRange.addEventListener('input', () => { this.updatePrice(); this.applyFilters(); });
+    if (this.minRange && this.maxRange) {
+      this.minRange.addEventListener('input', () => { this.updatePrice(); this.applyFilters(); });
+      this.maxRange.addEventListener('input', () => { this.updatePrice(); this.applyFilters(); });
+    }
 
     // Input Events 
-    this.minInput.addEventListener('input', () => { this.updateInputs(); this.applyFilters(); });
-    this.maxInput.addEventListener('input', () => { this.updateInputs(); this.applyFilters(); });
+    if (this.minInput && this.maxInput) {
+      this.minInput.addEventListener('input', () => { this.updateInputs(); this.applyFilters(); });
+      this.maxInput.addEventListener('input', () => { this.updateInputs(); this.applyFilters(); });
+    }
 
     // Initial Update
     this.updatePrice();
@@ -203,23 +209,28 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
   // --- UI Interactions ---
 
   openPopup(packet: any) {
-
     const event = packet.clickEvent;
     const product = packet.productData;
 
-    event.preventDefault();
-    event.stopPropagation();
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
+    this.quantity = 1; // Popup खोल्दा quantity रिसेट गर्ने
     this.showPopup = true;
     this.singleProduct = product;
     this.productId = product.id;
     this.maxQty = product.stockQuantity;
   }
+
   closePopup() {
     this.showPopup = false;
   }
 
   updatePrice(): void {
+    if (!this.minRange || !this.maxRange) return;
+
     let minVal = parseInt(this.minRange.value);
     let maxVal = parseInt(this.maxRange.value);
 
@@ -232,13 +243,15 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
       this.maxRange.value = maxVal.toString();
     }
 
-    this.minInput.value = minVal.toString();
-    this.maxInput.value = maxVal.toString();
-    this.minPrice.innerText = minVal.toString();
-    this.maxPrice.innerText = maxVal.toLocaleString();
+    if (this.minInput) this.minInput.value = minVal.toString();
+    if (this.maxInput) this.maxInput.value = maxVal.toString();
+    if (this.minPrice) this.minPrice.innerText = minVal.toString();
+    if (this.maxPrice) this.maxPrice.innerText = maxVal.toLocaleString();
   }
 
   updateInputs(): void {
+    if (!this.minInput || !this.maxInput) return;
+
     let minVal = parseInt(this.minInput.value);
     let maxVal = parseInt(this.maxInput.value);
 
@@ -247,10 +260,10 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
       this.minInput.value = minVal.toString();
     }
 
-    this.minRange.value = minVal.toString();
-    this.maxRange.value = maxVal.toString();
-    this.minPrice.innerText = minVal.toString();
-    this.maxPrice.innerText = maxVal.toLocaleString();
+    if (this.minRange) this.minRange.value = minVal.toString();
+    if (this.maxRange) this.maxRange.value = maxVal.toString();
+    if (this.minPrice) this.minPrice.innerText = minVal.toString();
+    if (this.maxPrice) this.maxPrice.innerText = maxVal.toLocaleString();
   }
 
   filterPrice(): void {
@@ -269,11 +282,11 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
     }
   }
 
+
   createCart() {
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
       this.toastr.error('Please login to add products to cart');
-      this.isLoading = false;
       this.closePopup();
       return;
     }
@@ -281,24 +294,28 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
     let payload = {
       productId: this.productId,
       quantity: this.quantity
-    }
+    };
 
-    this.isLoading = true;
+    this.isSubmitting = true;
+
     this.service.postCart(payload).subscribe({
       next: (res: any) => {
-
         this.cartEventService.notifyCartUpdate(true);
-        this.fetchProductList();
-        this.isLoading = false;
         this.showSuccessToast = true;
+        this.isSubmitting = false;
 
         setTimeout(() => {
           this.showSuccessToast = false;
           this.closePopup();
         }, 800);
       },
-      error: (err: any) => { this.isLoading = false; },
-      complete: () => { this.isLoading = false; },
+      error: (err: any) => {
+        this.toastr.error('Failed to add product to cart');
+        this.isSubmitting = false;
+      }, complete: () => {
+
+        this.isSubmitting = false; //  unlock button after response
+      },
     });
   }
 

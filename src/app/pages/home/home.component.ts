@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   isLoading: boolean = false;
   showSuccessToast = false;
   singleProduct: any = '';
-
+  isSubmitting = false;
   //Add to cart
   quantity: number = 1;
   maxQty!: number;
@@ -186,14 +186,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
       quantity: this.quantity
     }
 
-    this.isLoading = true;
+    this.isSubmitting = true;
     this.service.postCart(payload).subscribe({
       next: (res: any) => {
 
         this.cartEventService.notifyCartUpdate(true);
 
         this.fetchProductList();
-        this.isLoading = false;
+        this.isSubmitting = false;
 
         // Success Toast
         this.showSuccessToast = true;
@@ -205,11 +205,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
       },
       error: (err: any) => {
-        this.isLoading = false;
+        this.isSubmitting = false;
       },
       complete: () => {
 
-        this.isLoading = false; //  unlock button after response
+        this.isSubmitting = false; //  unlock button after response
       },
     });
   }

@@ -40,6 +40,7 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
   relatedProducts: any[] = []; //  थपिएको: रिलेटेड प्रडक्टहरू मात्र राख्नका लागि
   showSuccessToast = false;
   singleProduct: any = '';
+  isSubmitting = false;
 
   //Add to cart
   quantity: number = 1;
@@ -68,7 +69,7 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
     this.productId = product.id;
     this.maxQty = product.stockQuantity;
   }
-  
+
   closePopup() {
     this.showPopup = false;
   }
@@ -132,7 +133,7 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
       });
     });
   }
-  
+
   ngAfterViewInit(): void { }
 
   // Add to cart
@@ -162,21 +163,21 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
       quantity: this.quantity
     }
 
-    this.isLoading = true;
+    this.isSubmitting = true;
     this.service.postCart(payload).subscribe({
       next: (res: any) => {
-        
-        this.isLoading = false;
+
+        this.isSubmitting = false;
         this.cartEventService.notifyCartUpdate();
         this.showSuccessToast = true;
 
         setTimeout(() => {
           this.showSuccessToast = false;
-          this.closePopup();   
+          this.closePopup();
         }, 800);
       },
-      error: (err: any) => { this.isLoading = false; },
-      complete: () => { this.isLoading = false; },
+      error: (err: any) => { this.isSubmitting = false; },
+      complete: () => { this.isSubmitting = false; },
     });
   }
 }

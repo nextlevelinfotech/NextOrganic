@@ -95,11 +95,20 @@
 
 
                     <div class="btns-group m-t-24">
-                        <button class="btn btn-primary" (click)="createCart()"
-                            [disabled]="singleProduct.stockQuantity <= 0">
 
-                            Add To Cart
-                            <i class="ms-1 ri-arrow-right-long-line"></i>
+
+                        <button class="btn btn-primary" (click)="createCart()"
+                            [disabled]="singleProduct?.stockQuantity <= 0 || isSubmitting">
+
+                            <!-- Loading Spinner -->
+                            <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"
+                                aria-hidden="true"></span>
+
+                            <!-- Button Text -->
+                            {{ isSubmitting ? 'Adding...' : 'Add To Cart' }}
+
+                            <!-- Arrow Icon (Only show when not loading) -->
+                            <i *ngIf="!isSubmitting" class="ms-1 ri-arrow-right-long-line"></i>
                         </button>
 
                         <!-- <a [routerLink]="['/shop/checkout']" class="btn btn-outline-primary  me-4">
@@ -158,7 +167,7 @@
 <app-footer></app-footer>
 
 
-<div class="popup-toast" style="top:50%"  *ngIf="showSuccessToast">
+<div class="popup-toast" style="top:50%" *ngIf="showSuccessToast">
     <i class="ri-checkbox-circle-fill"></i>
     <span>Product added to cart successfully.</span>
 </div>

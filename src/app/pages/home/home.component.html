@@ -795,12 +795,21 @@
                             </div>
 
                         </div>
-                        <button class="btn btn-primary" (click)="createCart()"
-                            [disabled]="singleProduct.stockQuantity <= 0">
 
-                            Add To Cart
-                            <i class="ms-1 fa-solid fa-basket-shopping"></i>
+                        <button class="btn btn-primary" (click)="createCart()"
+                            [disabled]="singleProduct?.stockQuantity <= 0 || isSubmitting">
+
+                            <!-- Loading Spinner -->
+                            <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"
+                                aria-hidden="true"></span>
+
+                            <!-- Button Text -->
+                            {{ isSubmitting ? 'Adding...' : 'Add To Cart' }}
+
+                            <!-- Arrow Icon (Only show when not loading) -->
+                            <i *ngIf="!isSubmitting" class="ms-1 ri-arrow-right-long-line"></i>
                         </button>
+
                     </div>
 
                     <a [routerLink]="['/shop/shop-single', singleProduct.id]" class="btn-link mt-4 ">View Full Product<i
