@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Router, RouterModule, ActivatedRoute } from '@angular/router'; 
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from '../../../header/header.component';
 import { FooterComponent } from '../../../footer/footer.component';
 import { FormsModule } from '@angular/forms';
@@ -53,7 +53,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
   minPrice!: HTMLElement;
   maxPrice!: HTMLElement;
 
-  public baseUrl= environment.apiBaseUrl
+  public baseUrl = environment.apiBaseUrl
 
 
   constructor(
@@ -62,7 +62,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
     private cartEventService: CartEventService,
     private router: Router,
     private authService: AuthService,
-    private route: ActivatedRoute 
+    private route: ActivatedRoute
   ) { }
 
 
@@ -70,14 +70,20 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
     this.getCategoryList();
     this.fetchProductList();
 
+    // URL को Query Params परिवर्तन ट्र्याक गर्ने
     this.route.queryParams.subscribe(params => {
       if (params['id']) {
+        // यदि URL मा id छ भने (जस्तै: ?id=3)
         this.selectedCategoryId = Number(params['id']);
-        this.applyFilters(); 
+      } else {
+        // 🌟 थपिएको भाग: यदि URL मा id छैन भने (All मा क्लिक गर्दा) 
+        // id लाई 0 बनाएर सबै प्रोडक्ट देखाउने
+        this.selectedCategoryId = 0;
       }
+
+      this.applyFilters();
     });
   }
-
   ngAfterViewInit(): void {
     // Get Elements
     this.minRange = document.getElementById('minRange') as HTMLInputElement;
@@ -118,7 +124,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
       next: (res: any) => {
         this.isLoading = false;
         this.products = res;
-        this.applyFilters(); 
+        this.applyFilters();
       },
       error: (err: any) => { this.isLoading = false; },
       complete: () => { this.isLoading = false; },
@@ -142,9 +148,10 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
       this.filteredProducts = [];
       return;
     }
-
+    // ओरिजिनल 'products' एरे बिग्रिन नदिन त्यसको एउटा डुप्लिकेट/अस्थायी कपी (tempProducts) बनाउने
     let tempProducts = [...this.products];
 
+    // (यदि selectedCategoryId ० छ भने 'All' भन्ने बुझिन्छ र यो ब्लक स्किप हुन्छ
     // Apply Category Filter
     if (this.selectedCategoryId !== 0) {
       tempProducts = tempProducts.filter(
@@ -195,7 +202,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
   // --- UI Interactions ---
 
   openPopup(packet: any) {
- 
+
     const event = packet.clickEvent;
     const product = packet.productData;
 
@@ -286,7 +293,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
 
         setTimeout(() => {
           this.showSuccessToast = false;
-          this.closePopup();   
+          this.closePopup();
         }, 800);
       },
       error: (err: any) => { this.isLoading = false; },
@@ -303,7 +310,7 @@ export class ShopCategoriesComponent implements AfterViewInit, OnInit {
     }
     // categoryList भित्र selectedCategoryId सँग म्याच हुने अबजेक्ट खोज्छ
     const foundCategory = this.categoryList.find(cat => cat.id === this.selectedCategoryId);
-    
+
     // यदि फेला पर्यो भने नाम फर्काउँछ, नत्र 'Loading...' देखाउँछ
     return foundCategory ? foundCategory.categoryName : 'Loading...';
   }
