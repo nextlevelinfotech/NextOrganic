@@ -16,7 +16,7 @@ import { loginService } from '../../auth/login/login.service';
 })
 export class ProfileComponent implements AfterViewInit, OnInit {
   isLogin: boolean = false;
-  userId: number | null = null;
+  customerId: number | null = null;
   userData: any;
   constructor(
     private authService: AuthService,
@@ -27,10 +27,10 @@ export class ProfileComponent implements AfterViewInit, OnInit {
 
 
   ngOnInit(): void {
-    this.userId = this.authService.getUserId();
+    this.customerId = this.authService.getCustomerId();
 
-    if (this.userId !== null) {
-      this.getUserNameById(this.userId);
+    if (this.customerId !== null) {
+      this.getCustomerNameById(this.customerId);
     }
   }
 
@@ -39,11 +39,11 @@ export class ProfileComponent implements AfterViewInit, OnInit {
 
   }
 
-  getUserNameById(userId: number | null) {
+  getCustomerNameById(customerId: number | null) {
 
-    if (!userId) return;
+    if (!customerId) return;
 
-    this.loginService.getuserbyId(userId).subscribe({
+    this.loginService.getCustomerbyId(customerId).subscribe({
       next: (res: any) => {
         this.userData = res;
         console.log('User Data:', this.userData);

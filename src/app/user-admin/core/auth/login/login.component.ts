@@ -108,7 +108,7 @@ export class LoginComponent implements AfterViewInit {
 
 
         this.authService.setToken(response?.token);
-        this.authService.setUserId(response.userId);
+        this.authService.setCustomerId(response.userId);
         this.toastr.success('Login successful');
         this.router.navigate(['/home']);
       },

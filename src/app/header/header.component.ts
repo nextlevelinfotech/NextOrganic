@@ -26,11 +26,11 @@ import { HeaderService } from './header.service';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
-  isLoading:boolean = false;
+  isLoading: boolean = false;
   categoryList: any[] = [];
   isLogin: boolean = false;
   cartCount: number = 0;
-  userId: number | null = null;
+  customerId: number | null = null;
   private cartSubscription!: Subscription;
 
   userData: any;
@@ -47,10 +47,10 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userId = this.authService.getUserId();
+    this.customerId = this.authService.getCustomerId();
 
-    if (this.userId !== null) {
-      this.getUserNameById(this.userId);
+    if (this.customerId !== null) {
+      this.getCustomerNameById(this.customerId);
     }
 
     if (!this.authService.isLoggedIn()) {
@@ -81,13 +81,13 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
 
-    // Fetch category List
+  // Fetch category List
   fetchcategoryList() {
     this.isLoading = true;
     this.categoryService.getCategories().subscribe({
       next: (res: any) => {
         this.categoryList = res;
-        this.categoryList =  this.categoryList.filter(item=> item.isActive === true);
+        this.categoryList = this.categoryList.filter(item => item.isActive === true);
         console.log(res, 'categoryList')
         this.isLoading = false;
       },
@@ -277,13 +277,14 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
   // }
 
 
-  getUserNameById(userId: number | null) {
+  getCustomerNameById(customerId: number | null) {
 
-    if (!userId) return;
+    if (!customerId) return;
 
-    this.loginService.getuserbyId(userId).subscribe({
+    this.loginService.getCustomerbyId(customerId).subscribe({
       next: (res: any) => {
         this.userData = res;
+        console.log(this.userData, ' this.userData')
       },
       error: (err: any) => {
         console.log(err);

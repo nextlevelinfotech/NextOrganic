@@ -12,7 +12,7 @@ export class Endpoint {
 
   getallusers = '/api/Auth/getallusers'
 
-  getuserbyId = '/api/Auth/getuserbyId?userId='
+  getCustomerbyId = '/api/Auth/getuserbyId?userId='
 
 }
 
