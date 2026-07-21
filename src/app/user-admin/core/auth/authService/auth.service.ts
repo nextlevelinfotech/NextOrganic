@@ -14,12 +14,12 @@ export class AuthService {
   // Save encrypted token
   setToken(token: string) {
     const encryptedToken = this.encrypt.encryptionAES(token);
-    localStorage.setItem('userToken', encryptedToken);
+    localStorage.setItem('customerToken', encryptedToken);
   }
 
   // Access original token (सधैं ताजा टोकन localStorage बाट तान्छ)
-  gettoken() {
-    const storedToken = localStorage.getItem('userToken');
+  getCustomerToken() {
+    const storedToken = localStorage.getItem('customerToken');
 
     if (!storedToken) return null;
 
@@ -33,13 +33,13 @@ export class AuthService {
 
   // Check login (टोकन डिक्रिप्ट गरेर हेर्छ)
   isLoggedIn(): boolean {
-    const token = this.gettoken();
+    const token = this.getCustomerToken();
     return !!token;
   }
 
   // Logout
   logout() {
-    localStorage.removeItem('userToken');
+    localStorage.removeItem('customerToken');
     localStorage.removeItem('customerId');
     // localStorage.clear();
     this.router.navigate(['/home']);

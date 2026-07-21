@@ -1,25 +1,25 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { loginService } from '../../login/login.service';
-import { AuthService } from '../../authService/auth.service';
-
-
+import { AuthService } from '../authService/auth.service'; // Tapaiko AuthService ko path milaunu
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-
-  const service = inject(loginService);
   const authService = inject(AuthService);
 
-  const token = authService.getCustomerToken();
+  // Request Route/URL anusar Token chhhanne
+  const isAdminRequest = req.url.toLowerCase().includes('/admin');
+  
+  const token = isAdminRequest 
+    ? authService.getAdminToken() 
+    : authService.getCustomerToken();
 
   let headers: any = {
     'ngrok-skip-browser-warning': 'true'
   };
 
-  // Add token if exists
   if (token && token !== 'null' && token !== 'undefined') {
     headers['Authorization'] = `Bearer ${token}`;
   }
+
   const authReq = req.clone({
     setHeaders: headers
   });

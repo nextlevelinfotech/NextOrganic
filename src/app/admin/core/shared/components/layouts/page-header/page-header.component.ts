@@ -37,6 +37,7 @@ export class PageHeaderComponent {
   }
   logout() {
     this.authService.logout();
+    
   }
 
 
