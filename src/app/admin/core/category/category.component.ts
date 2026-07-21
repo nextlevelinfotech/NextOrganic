@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 declare var $: any;
 import 'select2';
-
+import Swal from 'sweetalert2';
 export class categoryModel {
   id: number = 0;
   categoryId: number = 0;
@@ -45,7 +45,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
     // Select2 मा भ्यालु चेन्ज हुँदा Angular Model अपडेट गर्ने
     // selectEl.on('change', (e: any) => {
     //   const val = $(e.target).val();
-   
+
 
     //   if (val === 'true') this.service.categoryModel.isActive = true;
     //   else if (val === 'false') this.service.categoryModel.isActive = false;
@@ -80,7 +80,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
           categoryId: res.categoryId ?? 0,
           categoryName: res.categoryName ?? '',
           description: res.description ?? '',
-          isActive: res.isActive, 
+          isActive: res.isActive,
           createdDate: res.createdDate ? res.createdDate.split('T')[0] : ''
         };
 
@@ -111,7 +111,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       this.toastr.error('Description is required.');
       return false;
     }
-    if ( $('#isActive').val() === null ||  $('#isActive').val() === undefined || ( $('#isActive').val() as any) === '') {
+    if ($('#isActive').val() === null || $('#isActive').val() === undefined || ($('#isActive').val() as any) === '') {
       this.toastr.error('Please select if the category is active.');
       return false;
     }
@@ -130,7 +130,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       categoryName: this.service.categoryModel.categoryName,
       description: this.service.categoryModel.description,
       isActive: $('#isActive').val() === 'true' ? true : false,
-      createdDate:new Date().toISOString()
+      createdDate: new Date().toISOString()
     };
 
     if (this.service.categoryModel.id === 0) {
@@ -165,22 +165,60 @@ export class CategoryComponent implements OnInit, AfterViewInit {
   }
 
   // deleteCategory
-  deleteCategory(ID: number) {
-    if (!confirm('Are you sure you want to delete this Category ?')) return;
+  // deleteCategory(ID: number) {
+  //   if (!confirm('Are you sure you want to delete this Category ?')) return;
 
-    this.isLoading = true;
-    this.service.deleteCategory(ID).subscribe({
-      next: (res: any) => {
-        this.toastr.success('Item removed from Category');
-        this.fetchcategoryList();
-        this.isLoading = false;
-      },
-      error: (err: any) => {
-        console.error(err);
-        this.isLoading = false;
+  //   this.isLoading = true;
+  //   this.service.deleteCategory(ID).subscribe({
+  //     next: (res: any) => {
+  //       this.toastr.success('Item removed from Category');
+  //       this.fetchcategoryList();
+  //       this.isLoading = false;
+  //     },
+  //     error: (err: any) => {
+  //       console.error(err);
+  //       this.isLoading = false;
+  //     }
+  //   });
+  // }
+
+
+  deleteCategory(ID: number) {
+    Swal.fire({
+      title: 'Delete Product?',
+      text: 'Are you sure you want to delete this product?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Delete',
+      cancelButtonText: 'Cancel',
+      reverseButtons: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d'
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+        this.isLoading = true;
+
+        this.service.deleteCategory(ID).subscribe({
+          next: (res: any) => {
+            this.toastr.success('Item removed from Product');
+            this.fetchcategoryList();
+            this.isLoading = false;
+          },
+          error: (err: any) => {
+            console.error(err);
+            this.toastr.error('Failed to delete product');
+            this.isLoading = false;
+          }
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        this.toastr.error('Delete cancelled');
       }
+
     });
   }
+
+
 
   reset() {
     this.service.categoryModel = {

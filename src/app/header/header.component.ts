@@ -87,6 +87,7 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
     this.categoryService.getCategories().subscribe({
       next: (res: any) => {
         this.categoryList = res;
+        this.categoryList =  this.categoryList.filter(item=> item.isActive === true);
         console.log(res, 'categoryList')
         this.isLoading = false;
       },
