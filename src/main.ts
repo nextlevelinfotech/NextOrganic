@@ -38,8 +38,8 @@ bootstrapApplication(AppComponent, {
     // यहाँ एउटै HTTP क्लाइन्टभित्र दुवै इन्टरसेप्टरहरू लिस्टमा राखिएका छन्
     provideHttpClient(
       withInterceptors([
+        userAdminInterceptor,
         adminInterceptor,
-        userAdminInterceptor
       ])
     )
   ]
