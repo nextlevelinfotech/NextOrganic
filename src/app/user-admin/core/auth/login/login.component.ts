@@ -4,8 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { loginService } from './login.service';
-import { AuthService } from '../authService/auth.service';
-import { EncryptionService } from '../encryptionservice/encryption.service';
+import { EncryptionService } from '../../../../shared-services/encryptionservice/encryption.service';
+import { AuthService } from '../../../../shared-services/authService/auth.service';
+
 declare var $: any;
 @Component({
   selector: 'app-login',
@@ -107,7 +108,7 @@ export class LoginComponent implements AfterViewInit {
         }
 
 
-        this.authService.setToken(response?.token);
+        this.authService.setCustomerToken(response?.token);
         this.authService.setCustomerId(response.userId);
         this.toastr.success('Login successful');
         this.router.navigate(['/home']);

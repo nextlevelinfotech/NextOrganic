@@ -8,8 +8,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ShopCommonService } from '../../../common/service/shop-common.service';
 import { CartEventService } from '../../../common/service/cart-event.service';
 import { ProductCardComponent } from '../../../components/product-card/product-card.component';
-import { AuthService } from '../../../user-admin/core/auth/authService/auth.service';
 import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../shared-services/authService/auth.service';
 
 declare var $: any;
 

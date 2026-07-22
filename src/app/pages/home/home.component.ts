@@ -10,10 +10,10 @@ import { ProductCardComponent } from '../../components/product-card/product-card
 import { FormsModule } from '@angular/forms';
 import { CartEventService } from '../../common/service/cart-event.service';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../user-admin/core/auth/authService/auth.service';
 
 import Splide from '@splidejs/splide';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../shared-services/authService/auth.service';
 
 @Component({
   selector: 'app-home',

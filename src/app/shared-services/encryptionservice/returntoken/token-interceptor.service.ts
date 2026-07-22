@@ -1,31 +1,62 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from '../authService/auth.service';
+import { AuthService } from '../../authService/auth.service';
+
+// export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
+//   const authService = inject(AuthService);
+
+//   let activeToken: string | null = null;
+
+//   // Request Path / URL herera Token match garne (Conflict huna nadine)
+//   if (req.url.includes('/products')) {
+//     activeToken = authService.getAdminToken();
+//   } 
+//   // Future roles ko lagi yassari thapne:
+//   // else if (req.url.includes('/vendor')) { activeToken = authService.getVendorToken(); }
+//   else {
+//     activeToken = authService.getCustomerToken();
+//   }
+
+//   // Fallback: Yadi URL bata payena bhane matrai Priority Array check garne
+//   if (!activeToken) {
+//     const availableTokens = [
+//       authService.getAdminToken(),
+//       authService.getCustomerToken()
+//     ];
+//     activeToken = availableTokens.find(token => !!token && token !== 'null' && token !== 'undefined') || null;
+//   }
+
+//   let headers: any = { 'ngrok-skip-browser-warning': 'true' };
+
+//   if (activeToken && activeToken !== 'null' && activeToken !== 'undefined') {
+//     headers['Authorization'] = `Bearer ${activeToken}`;
+//   }
+
+//   return next(req.clone({ setHeaders: headers }));
+// };
+
+
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
 
-  // Request ko target URL check garne
-  const isAdminRequest = req.url.toLowerCase().includes('/admin');
+  // Active Role haruko Priority Hierarchy List
+  const availableTokens = [
 
-  // Request Route anusar Right Token hanne:
-  // Admin route ho bhane Admin Token, natra Customer Token
-  const token = isAdminRequest 
-    ? authService.getAdminToken() 
-    : authService.getCustomerToken();
+    // authService.getVendorToken(),   // Future Role 1
+    // authService.getManagerToken(),  // Future Role 2
+    authService.getAdminToken(),
+    authService.getCustomerToken(),
+  ];
 
-  let headers: any = {
-    'ngrok-skip-browser-warning': 'true'
-  };
+  // System le jo log-in chha tesko pahilo valid token linchha
+  const activeToken = availableTokens.find(token => !!token && token !== 'null' && token !== 'undefined');
 
-  // Valid token xa bhane Authorization Header ma set garne
-  if (token && token !== 'null' && token !== 'undefined') {
-    headers['Authorization'] = `Bearer ${token}`;
+  let headers: any = { 'ngrok-skip-browser-warning': 'true' };
+
+  if (activeToken) {
+    headers['Authorization'] = `Bearer ${activeToken}`;
   }
 
-  const authReq = req.clone({
-    setHeaders: headers
-  });
-
-  return next(authReq);
+  return next(req.clone({ setHeaders: headers }));
 };

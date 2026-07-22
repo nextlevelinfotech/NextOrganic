@@ -6,12 +6,12 @@ import { RouterModule } from '@angular/router';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartSidebarComponent } from '../components/cart-sidebar/cart-sidebar.component';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from '../user-admin/core/auth/authService/auth.service';
 import { ShopCommonService } from '../common/service/shop-common.service';
 import { CartEventService } from '../common/service/cart-event.service';
 import { Subscription } from 'rxjs';
 import { loginService } from '../user-admin/core/auth/login/login.service';
 import { HeaderService } from './header.service';
+import { AuthService } from '../shared-services/authService/auth.service';
 
 @Component({
   selector: 'app-header',

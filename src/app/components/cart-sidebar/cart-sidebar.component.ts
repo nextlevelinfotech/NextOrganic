@@ -7,8 +7,8 @@ import { Subscription } from 'rxjs';
 import { CartEventService } from '../../common/service/cart-event.service';
 import { ShopCommonService } from '../../common/service/shop-common.service';
 import { forkJoin } from 'rxjs';
-import { AuthService } from '../../user-admin/core/auth/authService/auth.service';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../shared-services/authService/auth.service';
 declare var jQuery: any;
 declare var $: any; // 🌟 $ को एरर नआओस् भन्नका लागि
 

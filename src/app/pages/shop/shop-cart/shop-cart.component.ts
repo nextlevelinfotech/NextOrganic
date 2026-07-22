@@ -8,8 +8,8 @@ import { HeaderComponent } from '../../../header/header.component';
 import { FooterComponent } from '../../../footer/footer.component';
 import { ShopCommonService } from '../../../common/service/shop-common.service';
 import { CartEventService } from '../../../common/service/cart-event.service';
-import { AuthService } from '../../../user-admin/core/auth/authService/auth.service';
 import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../shared-services/authService/auth.service';
 
 
 @Component({

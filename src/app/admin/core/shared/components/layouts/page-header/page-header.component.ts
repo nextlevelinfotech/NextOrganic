@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../../Auth/authService/auth.service';
+
 import { AdminloginService } from '../../../../Auth/login/adminlogin/adminlogin/adminlogin.service';
+import { AuthService } from '../../../../../../shared-services/authService/auth.service';
 
 @Component({
   selector: 'app-page-header',
@@ -36,7 +37,7 @@ export class PageHeaderComponent {
     this.menuToggle.emit();
   }
   logout() {
-    this.authService.logout();
+    this.authService.logoutAdmin();
     
   }
 

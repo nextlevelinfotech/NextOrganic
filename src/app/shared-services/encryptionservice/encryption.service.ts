@@ -6,7 +6,7 @@ import * as CryptoTS from 'crypto-ts';
 })
 export class EncryptionService {
   // Secret key lai euta constant ma rakheko
-  private readonly secretKey = 'nextrestro @1234'; 
+  private readonly secretKey = 'next@1234'; 
 
   constructor() {}
 

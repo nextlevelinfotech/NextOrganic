@@ -1,6 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EncryptionService } from '../../../encryptionservice/encryption.service';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';

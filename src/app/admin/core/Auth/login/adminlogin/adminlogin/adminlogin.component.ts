@@ -14,8 +14,10 @@ import {
 
 declare var $: any;
 import 'select2';
-import { EncryptionService } from '../../../encryptionservice/encryption.service';
-import { AuthService } from '../../../authService/auth.service';
+
+import { AuthService } from '../../../../../../shared-services/authService/auth.service';
+import { EncryptionService } from '../../../../../../shared-services/encryptionservice/encryption.service';
+
 
 @Component({
   selector: 'app-adminlogin',
@@ -129,7 +131,7 @@ export class AdminloginComponent implements AfterViewInit {
         if (response?.token) {
           this.isLoginLoading = false;
 
-          this.authService.setToken(response?.token); // store token
+          this.authService.setAdminToken(response?.token); // store token
            this.authService.setUserId(response.userId);
           // console.log('Stored token:', localStorage.getItem('token'));
           // console.log('Decrypted token:', this.authService.gettoken());

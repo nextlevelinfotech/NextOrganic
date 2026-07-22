@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from '../../auth/authService/auth.service';
+
 import { loginService } from '../../auth/login/login.service';
+import { AuthService } from '../../../../shared-services/authService/auth.service';
 
 @Component({
   selector: 'app-profile',

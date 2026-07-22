@@ -3,7 +3,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import { LayoutComponent } from './admin/core/shared/components/layouts/layout/layout.component';
 import { UserLayoutComponent } from './user-admin/core/shared/components/user-layout/user-layout.component';
-import { authGuard } from './admin/core/Auth/Authguard/auth.guard';
+import { adminAuthGuard } from './shared-services/Authguard/auth.guard';
+
 
 export const routes: Routes = [
   {
@@ -99,7 +100,7 @@ export const routes: Routes = [
                 (m) => m.ProductsComponent,
 
               ),
-            canActivate: [authGuard],
+            canActivate: [adminAuthGuard],
           },
           {
             path: 'admin-orders',
@@ -108,7 +109,7 @@ export const routes: Routes = [
                 (m) => m.OrdersComponent,
 
               ),
-            canActivate: [authGuard],
+            canActivate: [adminAuthGuard],
           },
           {
             path: 'category',
@@ -117,7 +118,7 @@ export const routes: Routes = [
                 (m) => m.CategoryComponent,
 
               ),
-            canActivate: [authGuard],
+            canActivate: [adminAuthGuard],
           },
         ],
       },
