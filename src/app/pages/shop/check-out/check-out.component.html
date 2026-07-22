@@ -119,35 +119,42 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="payment-method m-t-32">
-                            <h3>Payment</h3>
-                            <p>All transactions are secure and encrypted.</p>
+                        <div class="payment-method d-flex flex-wrap justify-content-between gap-3 m-t-32">
+                            <div class="payment-method-left">
+                                <h3>Payment</h3>
+                                <p>All transactions are secure and encrypted.</p>
 
-                            <!-- <div class="payment-card">
-                                <div class="payment-card-header">
-                                    <div class="payment-card-header-left clr-dark">
-                                        <input type="radio" id="esewa" name="paymentMethod" value="esewa"
-                                            [(ngModel)]="service.checkoutModel.paymentMethod" required>
-                                        <label for="esewa" class="mb-0">Esewa</label>
+                                <!-- <div class="payment-card">
+                                    <div class="payment-card-header">
+                                        <div class="payment-card-header-left clr-dark">
+                                            <input type="radio" id="esewa" name="paymentMethod" value="esewa"
+                                                [(ngModel)]="service.checkoutModel.paymentMethod" required>
+                                            <label for="esewa" class="mb-0">Esewa</label>
+                                        </div>
+                                        <div class="payment-card-header-right">
+                                            <img width="80px" src="../../../../assets/img/payment-methods/esewa.png" alt="">
+                                        </div>
                                     </div>
-                                    <div class="payment-card-header-right">
-                                        <img width="80px" src="../../../../assets/img/payment-methods/esewa.png" alt="">
-                                    </div>
-                                </div>
-                            </div> -->
+                                </div> -->
 
-                            <div class="payment-card">
-                                <div class="payment-card-header">
-                                    <div class="payment-card-header-left clr-dark">
-                                        <input type="radio" id="cashDelivery" name="paymentMethod" value="cash"
-                                            [(ngModel)]="service.checkoutModel.paymentMethod" required>
-                                        <label for="cashDelivery" class="mb-0">Cash on delivery</label>
-                                    </div>
-                                    <div class="payment-card-header-right">
-                                        <img width="40px" src="../../../../assets/img/payment-methods/money.png" alt="">
+                                <div class="payment-card">
+                                    <div class="payment-card-header">
+                                        <div class="payment-card-header-left clr-dark">
+                                            <input type="radio" id="cashDelivery" name="paymentMethod" value="cash"
+                                                [(ngModel)]="service.checkoutModel.paymentMethod" required>
+                                            <label for="cashDelivery" class="mb-0">Cash on delivery</label>
+                                        </div>
+                                        <div class="payment-card-header-right">
+                                            <img width="40px" src="../../../../assets/img/payment-methods/money.png"
+                                                alt="">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                             <div class="payment-method-right">
+                                <img src="assets/img/qr-code.jpg" alt="" width="140px">
+                             </div>
+
                             <button type="submit" class="btn btn-primary m-t-24" [disabled]="isLoading"
                                 (click)="postCheckOut(checkoutForm)">
                                 {{ isLoading ? 'Processing...' : 'Proceed to checkout' }}
