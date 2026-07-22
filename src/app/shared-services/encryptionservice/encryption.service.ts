@@ -17,6 +17,7 @@ export class EncryptionService {
     return ciphertext.toString();
   }
 
+ 
   // Decrypt
   decryptionAES(msg: any): string {
     if (!msg) return '';
