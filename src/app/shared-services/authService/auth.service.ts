@@ -12,6 +12,27 @@ export class AuthService {
   ) { }
 
   // ==========================================
+  // GLOBAL ACTIVE ROLE MANAGEMENT
+  // ==========================================
+
+  // Active Role Set Garne ('ADMIN', 'CUSTOMER', 'VENDOR', etc.)
+  setActiveRole(role: string) {
+    if (role) {
+      localStorage.setItem('activeRole', role.toUpperCase());
+    }
+  }
+
+  // Active Role Tānne (Interceptor le use garchha)
+  getActiveRole(): string | null {
+    return localStorage.getItem('activeRole');
+  } 
+
+  // Clear Active Role
+  clearActiveRole() {
+    localStorage.removeItem('activeRole');
+  }
+
+  // ==========================================
   // 1. ADMIN AUTHENTICATION METHODS
   // ==========================================
 
@@ -20,6 +41,9 @@ export class AuthService {
     if (!token) return;
     const encryptedToken = this.encrypt.encryptionAES(token);
     localStorage.setItem('adminToken', encryptedToken);
+    
+    // Automatically tracking Active Role
+    this.setActiveRole('ADMIN');
   }
 
   // Admin Token Tānne
@@ -41,7 +65,7 @@ export class AuthService {
   }
 
   // Admin User ID Set Garne
-  setUserId(userId: number) {
+   setUserId(userId: number) {
     if (userId !== undefined && userId !== null) {
       localStorage.setItem('adminUserId', userId.toString());
     }
@@ -60,6 +84,12 @@ export class AuthService {
   logoutAdmin() {
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminUserId');
+
+    // Admin Logout huda activeRole clear garne
+    if (this.getActiveRole() === 'ADMIN') {
+      this.clearActiveRole();
+    }
+
     this.router.navigate(['/admin-login']);
   }
 
@@ -73,6 +103,9 @@ export class AuthService {
     if (!token) return;
     const encryptedToken = this.encrypt.encryptionAES(token);
     localStorage.setItem('customerToken', encryptedToken);
+
+    // Automatically tracking Active Role
+    this.setActiveRole('CUSTOMER');
   }
 
   // Customer Token Tānne
@@ -88,7 +121,7 @@ export class AuthService {
     }
   }
 
-  // Backward Compatibility (yedi purano component le gettoken() use gareko chha bhane)
+  // Backward Compatibility
   gettoken(): string | null {
     return this.getCustomerToken();
   }
@@ -118,7 +151,18 @@ export class AuthService {
   logout() {
     localStorage.removeItem('customerToken');
     localStorage.removeItem('customerId');
+
+    // Customer Logout huda activeRole clear garne
+    if (this.getActiveRole() === 'CUSTOMER') {
+      this.clearActiveRole();
+    }
+
+    this.router.navigate(['/home']);
+  }
+
+  // Global Session Clear (Troubleshooting / Reset ko lagi)
+  clearAllSession() {
+    localStorage.clear();
     this.router.navigate(['/home']);
   }
 }
-
