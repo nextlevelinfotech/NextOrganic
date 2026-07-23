@@ -127,7 +127,9 @@
             <mat-tab label="Description">
                 <div class="m-t-24">
                     <section class="nutrition-section">
-                        <div [innerHTML]="product.description"></div>
+
+                        <!-- <div class="product-details" [innerHTML]="product.description"></div> -->
+                        <div [innerHTML]="formattedDescription"></div>
 
                         <div class="large-banner large-banner--shop"><img src="../../../assets/img/natural-img.jpg"
                                 alt="banner">
@@ -149,7 +151,7 @@
         </mat-tab-group>
 
         <!-- Related Products Section -->
-        <div class="row">
+        <div class="row m-t-40">
             @for(product of (relatedProducts | slice:0:4); track product.id) {
             <div class="col-md-4 col-lg-3">
                 <app-product-card [product]="product" [isHomePage]="false" (addToCartClick)="openPopup($event)">

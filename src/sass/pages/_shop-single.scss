@@ -146,6 +146,20 @@
   font-weight: 400;
 }
 
+.product-details{
+    display:flex;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+.product-details .detail-column{
+    flex:1;
+    min-width:280px;
+}
+
+
+
+
 @media (max-width: 768px) {
   .nutrition-section {
     grid-template-columns: 1fr;

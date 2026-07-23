@@ -68,6 +68,7 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
     this.singleProduct = product;
     this.productId = product.id;
     this.maxQty = product.stockQuantity;
+
   }
 
   closePopup() {
@@ -80,7 +81,8 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
       next: (res: any) => {
         this.isLoading = false;
         this.products = res;
-        this.applyRelatedProductsFilter(); //  प्रडक्ट लिस्ट आएपछि फिल्टर चलाउने
+        // ADD THIS
+        this.applyRelatedProductsFilter();
       },
       error: (err: any) => { this.isLoading = false; },
       complete: () => { this.isLoading = false; },
@@ -128,7 +130,8 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
         next: (res: any) => {
           this.product = res;
           this.maxQty = res.stockQuantity;
-          this.applyRelatedProductsFilter(); // 🔥 सिंगल प्रडक्टको डाटा आएपछि पनि फिल्टर चलाउने
+          this.formattedDescription = this.formatDescription(res.description);
+          this.applyRelatedProductsFilter();
         }
       });
     });
@@ -180,4 +183,39 @@ export class ShopSingleComponent implements AfterViewInit, OnInit {
       complete: () => { this.isSubmitting = false; },
     });
   }
+
+  formattedDescription: any = '';
+
+  private formatDescription(html: string): string {
+
+    if (!html) return '';
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    const container = document.createElement('div');
+    container.className = 'product-details';
+
+    let currentColumn: HTMLDivElement | null = null;
+
+    Array.from(doc.body.children).forEach((node) => {
+
+      if (/^H[1-6]$/i.test(node.tagName)) {
+        currentColumn = document.createElement('div');
+        currentColumn.className = 'detail-column';
+        container.appendChild(currentColumn);
+      }
+
+      if (!currentColumn) {
+        currentColumn = document.createElement('div');
+        currentColumn.className = 'detail-column';
+        container.appendChild(currentColumn);
+      }
+
+      currentColumn.appendChild(node.cloneNode(true));
+    });
+
+    return container.outerHTML;
+  }
+
 }
