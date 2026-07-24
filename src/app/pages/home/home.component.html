@@ -520,7 +520,7 @@
 
             <div class="counter-box">
                 <i class="fa-regular fa-user"></i>
-                <h3>1M +</h3>
+                <h3>10,000 +</h3>
                 <p>Happy Customer</p>
             </div>
         </div>
@@ -604,7 +604,7 @@
 
             </div>
 
-            <a href="#" class="btn btn-white">Purchase <i class="ri-arrow-right-long-line"></i></a>
+            <a href="#" class="btn btn-white">Shop Now <i class="ri-arrow-right-long-line"></i></a>
         </div>
     </div>
 
@@ -759,18 +759,18 @@
             <div class="col-md-6">
 
                 <div class="product-single-content">
-                    <h3 class="product-single-title mb-2">{{ singleProduct.productName }}</h3>
+                    <h3 class="product-single-title mb-4">{{ singleProduct.productName }}</h3>
 
-                    <h4 class="product-single-price">{{singleProduct.price}}</h4>
+                    <h4 class="product-single-price">Rs {{singleProduct.price}}</h4>
                     <div class="badge mb-3"
-                        [ngClass]="singleProduct.stockQuantity > 0 ? 'text-bg-success' : 'text-bg-danger'">
+                        [ngClass]="singleProduct.stockQuantity > 0 ? 'text-bg-success d-none' : 'text-bg-danger'">
 
                         <!-- {{ singleProduct.stockQuantity > 0
                         ? ('In Stock ' + singleProduct.stockQuantity)
                         : 'Out of Stock' }} -->
 
                         {{ singleProduct.stockQuantity > 0
-                        ? ('In Stock ' )
+                        ? ''
                         : 'Out of Stock' }}
 
                     </div>

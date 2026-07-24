@@ -30,7 +30,7 @@
                                         'bg-danger': item.orderStatus?.toLowerCase() === 'cancelled',
                                         'bg-info text-dark': item.orderStatus?.toLowerCase() === 'shipped'
                                         }">
-                                            {{ item.orderStatus }}
+                                          {{ item.orderStatus?.toUpperCase() }}
                                         </span>
                                     </td>
                                     <td>Rs. {{ item.totalAmount | number:'1.2-2' }}</td>

@@ -32,7 +32,7 @@
             </div>
             <div class="col-md-6">
                 <div class="product-single-content">
-                    <h3 class="product-single-title mb-2">{{product?.productName}}</h3>
+                    <h3 class="product-single-title mb-3">{{product?.productName}}</h3>
                     <!-- <div class="product-single-rating m-b-24">
 
                         <i class="fa-solid fa-star"></i>
@@ -42,12 +42,12 @@
                         <i class="fa-solid fa-star"></i>
 
                     </div> -->
-                    <h4 class="product-single-price">{{product?.price}}</h4>
-                    <div class="badge mb-3"
-                        [ngClass]="product.stockQuantity > 0 ? 'text-bg-success' : 'text-bg-danger'">
+                    <h4 class="product-single-price">Rs {{product?.price}}</h4>
+                    <div  class="badge mb-3"
+                        [ngClass]="product.stockQuantity > 0 ? 'text-bg-success d-none' : 'text-bg-danger'">
 
                         {{ product.stockQuantity > 0
-                        ? ('In Stock ')
+                        ? ''
                         : 'Out of Stock' }}
 
                     </div>
@@ -95,10 +95,10 @@
 
 
                     <div class="btns-group m-t-24">
-
+                        
 
                         <button class="btn btn-primary" (click)="createCart()"
-                            [disabled]="singleProduct?.stockQuantity <= 0 || isSubmitting">
+                            [disabled]="product?.stockQuantity <= 0 || isSubmitting">
 
                             <!-- Loading Spinner -->
                             <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status"

@@ -127,7 +127,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         // 2. Yedi active pani bhayeko ra isFeatured pani true bhayeko chuttai chainxa bhane:
         // this.featuredProducts = res.filter((product: any) => product.isActive && product.isFeatured);
 
-        console.log(this.products, 'Filtered Active Products');
+        console.log(this.products, ' Products');
       },
       error: (err: any) => { this.isLoading = false; },
       complete: () => { this.isLoading = false; },
