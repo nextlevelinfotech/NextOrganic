@@ -11,7 +11,7 @@
                         <th>S.N.</th>
                         <th>OrderNo</th>
                         <th>Order Id</th>
-                        <th>DeliveryCharge</th>
+                        <!-- <th>DeliveryCharge</th> -->
                         <th>Order Status</th>
                         <th>Total Amount</th>
                         <th>Action</th>
@@ -22,7 +22,7 @@
                         <td>{{ i + 1 }}</td>
                         <td>{{ item.orderNo }}</td>
                         <td>#{{ item.orderId }}</td>
-                        <td>Rs. {{ item.deliveryCharge }}</td>
+                        <!-- <td>Rs. {{ item.deliveryCharge }}</td> -->
                         <td>
                             <span class="badge" [ngClass]="{
                                         'bg-warning text-dark': item.orderStatus === 'Pending',

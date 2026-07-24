@@ -14,6 +14,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   // -------------------------------------------------------------
   if (activeRole === 'ADMIN') {
     token = authService.getAdminToken();
+
   } else if (activeRole === 'CUSTOMER') {
     token = authService.getCustomerToken();
   }
@@ -48,8 +49,8 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   // -------------------------------------------------------------
   // HEADERS SETTING
   // -------------------------------------------------------------
-  let headers: Record<string, string> = { 
-    'ngrok-skip-browser-warning': 'true' 
+  let headers: Record<string, string> = {
+    'ngrok-skip-browser-warning': 'true'
   };
 
   if (token && token !== 'null' && token !== 'undefined') {

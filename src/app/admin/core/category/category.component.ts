@@ -116,6 +116,18 @@ export class CategoryComponent implements OnInit, AfterViewInit {
       return false;
     }
 
+    const isDuplicate = this.categoryList.some(item => {
+      const sameName = item.categoryName?.toLowerCase().trim() === model.categoryName?.toLowerCase().trim();
+      if (model.id === 0) {
+        return sameName;
+      } else {
+        return sameName && item.id !== model.id;
+      }
+    });
+    if (isDuplicate) {
+      this.toastr.error('This Category Name already exists!', 'Duplicate Entry');
+      return false;
+    }
     return true;
   }
 
@@ -209,6 +221,11 @@ export class CategoryComponent implements OnInit, AfterViewInit {
             console.error(err);
             this.toastr.error('Failed to delete product');
             this.isLoading = false;
+            if (err.error && err.error.message) {
+              this.toastr.error('This category contains items and cannot be deleted.');
+            } else {
+              this.toastr.error('This category contains items and cannot be deleted.');
+            }
           }
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {

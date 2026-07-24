@@ -23,7 +23,7 @@ export class CartSidebarComponent implements AfterViewInit, OnInit, OnDestroy {
   isLocalUpdate: boolean = false; // 🌟 आफ्नै पेजको अलार्म ट्र्याक गर्न थपिएको फ्ल्याग
   cartList: any[] = [];
   cartTotalPrice: number = 0;
-  shippingCharge: number = 100;
+  shippingCharge: number = 0;
   private cartSubscription!: Subscription;
 
   public baseurl = environment.apiBaseUrl;

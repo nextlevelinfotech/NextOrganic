@@ -25,7 +25,7 @@ export class ShopCartComponent implements OnInit, OnDestroy {
   cartList: any[] = [];
   cartTotalPrice: number = 0;
 
-  shippingCharge: number = 100;
+  shippingCharge: number = 0;
   private cartSubscription!: Subscription;
 
   public baseurl = environment.apiBaseUrl;

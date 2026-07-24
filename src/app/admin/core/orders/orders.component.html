@@ -10,10 +10,10 @@
                                     <th>Serial no.</th>
                                     <th>OrderNo</th>
                                     <th>Order Id</th>
-                                    <th>DeliveryCharge</th>
+                                    <!-- <th>DeliveryCharge</th> -->
                                     <th>Order Status</th>
                                     <th>Total Amount</th>
-                                    <th>Grand Amount</th>
+                                    <!-- <th>Grand Amount</th> -->
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -22,7 +22,7 @@
                                     <td>{{ i + 1 }}</td>
                                     <td>{{ item.orderNo }}</td>
                                     <td>#{{ item.orderId }}</td>
-                                    <td>Rs. {{ item.deliveryCharge | number:'1.2-2' }}</td>
+                                    <!-- <td>Rs. {{ item.deliveryCharge | number:'1.2-2' }}</td> -->
                                     <td>
                                         <span class="badge" [ngClass]="{
                                         'bg-warning text-dark': item.orderStatus?.toLowerCase() === 'pending',
@@ -34,7 +34,7 @@
                                         </span>
                                     </td>
                                     <td>Rs. {{ item.totalAmount | number:'1.2-2' }}</td>
-                                    <td class="fw-bold text-primary">Rs. {{ item.grandAmount | number:'1.2-2' }}</td>
+                                    <!-- <td class="fw-bold text-primary">Rs. {{ item.grandAmount | number:'1.2-2' }}</td> -->
                                     <td style="width: 215px;">
                                         <button class="btn btn-sm btn-primary me-1" (click)="openPopup(item.orderId)">
                                             <i class="fa fa-eye"></i> View
